@@ -1,0 +1,9 @@
+compile_commands.json
+*.a
+*.o
+*.d
+*.out
+.build/
+vgcore.*
+minishell
+minishell_debug

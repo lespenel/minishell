@@ -6,12 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 09:13:30 by ccouble           #+#    #+#             */
-/*   Updated: 2024/01/14 22:48:45 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/02/28 01:06:12 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_VECTOR_H
-# define FT_VECTOR_H
+#ifndef VECTOR_H
+# define VECTOR_H
 
 # include <stddef.h>
 
@@ -26,13 +26,13 @@ typedef struct s_vector
 
 }	t_vector;
 
-int		ft_add_vector(t_vector *this, const void *data, size_t count);
-void	*ft_get_vector(t_vector *this, size_t i);
-int		ft_set_value_vector(t_vector *this, const void *data, size_t i);
-int		ft_reallocate_vector(t_vector *this);
-void	ft_clear_vector(t_vector *this);
-void	ft_remove_vector(t_vector *this, size_t i);
-void	ft_init_vector(t_vector *this, size_t elemsize);
-void	ft_set_alloc_size(t_vector *this, size_t count);
+int		add_vector(t_vector *this, const void *data, size_t count);
+void	*get_vector(t_vector *this, size_t i);
+int		set_value_vector(t_vector *this, const void *data, size_t i);
+int		reallocate_vector(t_vector *this);
+void	clear_vector(t_vector *this);
+void	remove_vector(t_vector *this, size_t i);
+void	init_vector(t_vector *this, size_t elemsize);
+void	set_alloc_size(t_vector *this, size_t count);
 
 #endif

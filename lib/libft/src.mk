@@ -53,11 +53,11 @@ SRC = \
 	  util/ft_getenv.c \
 	  util/ft_swap.c \
 	  \
-	  vector/ft_add_vector.c \
-	  vector/ft_clear_vector.c \
-	  vector/ft_get_vector.c \
-	  vector/ft_init_vector.c \
-	  vector/ft_reallocate_vector.c \
-	  vector/ft_remove_vector.c \
-	  vector/ft_set_alloc_size.c \
-	  vector/ft_set_value_vector.c \
+	  vector/add_vector.c \
+	  vector/at_vector.c \
+	  vector/clear_vector.c \
+	  vector/init_vector.c \
+	  vector/reallocate_vector.c \
+	  vector/remove_vector.c \
+	  vector/set_alloc_size.c \
+	  vector/set_value_vector.c \

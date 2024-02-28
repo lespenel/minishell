@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:38:34 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/27 02:55:55 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/02/28 01:13:56 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ft_mem.h"
-#include "ft_vector.h"
+#include "vector.h"
 
 static int		read_from_fd(int fd, t_buffer *buf, t_vector *line);
 static int		add_str_to_line(t_vector *line, char *s, size_t n);
@@ -26,7 +26,7 @@ char	*get_next_line(int fd)
 	t_vector		line;
 	char			*nl;
 
-	ft_init_vector(&line, sizeof(char));
+	init_vector(&line, sizeof(char));
 	nl = ft_memchr(buf.buf + buf.start, '\n', buf.end - buf.start);
 	while (nl == NULL)
 	{
@@ -67,7 +67,7 @@ static int	add_str_to_line(t_vector *line, char *s, size_t n)
 	i = 0;
 	while (i < n)
 	{
-		if (ft_add_vector(line, s + i, 1))
+		if (add_vector(line, s + i, 1))
 			return (1);
 		++i;
 	}

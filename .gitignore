@@ -3,6 +3,8 @@ compile_commands.json
 *.o
 *.d
 *.out
+.cache/
+cache/
 .build/
 vgcore.*
 minishell

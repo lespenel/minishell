@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_vector.c                                    :+:      :+:    :+:   */
+/*   ft_init_vector.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/14 22:47:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/01/14 22:48:00 by ccouble          ###   ########.fr       */
+/*   Created: 2023/11/30 09:51:24 by ccouble           #+#    #+#             */
+/*   Updated: 2024/02/28 01:09:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_vector.h"
+#include "vector.h"
 
-void	*ft_get_vector(t_vector *this, size_t i)
+void	init_vector(t_vector *this, size_t elemsize)
 {
-	return (this->array + i * this->elemsize);
+	this->elemsize = elemsize;
+	this->allocated = 0;
+	this->size = 0;
+	this->array = NULL;
 }

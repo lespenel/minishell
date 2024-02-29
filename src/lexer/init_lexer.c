@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   at_vector.c                                        :+:      :+:    :+:   */
+/*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/14 22:47:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/28 01:08:58 by ccouble          ###   ########.fr       */
+/*   Created: 2024/02/26 21:32:48 by lespenel          #+#    #+#             */
+/*   Updated: 2024/02/28 01:04:35 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "vector.h"
 
-void	*at_vector(t_vector *this, size_t i)
+void	init_lexer(t_lexer *token_tab)
 {
-	return (this->array + i * this->elemsize);
+	init_vector(token_tab, sizeof(t_lexer_tok));
 }

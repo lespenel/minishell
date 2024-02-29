@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/01 00:28:58 by lespenel         ###   ########.fr       */
+/*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
+/*   Updated: 2024/02/29 20:04:56 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include <stddef.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include <stdlib.h>
 
-int	main(int argc, char **argv, char **envp)
+int	print_lexer(t_lexer *token_tab)
 {
-	const char	*prompt = "minishell $> ";
-	char		*str;
+	size_t		i;
+	t_lexer_tok	*token;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	str = readline(prompt);
-	if (str == NULL)
-		return (1);
-	while (str)
+	i = 0;
+	while (i < token_tab->size)
 	{
-		free(str);
-		str = readline(prompt);
+		token = at_vector(token_tab, i);
+		if (printf("content = %s | token = %d\n",
+				token->content, token->type) == -1)
+			return (-1);
+		i++;
 	}
-	rl_clear_history();
 	return (0);
 }

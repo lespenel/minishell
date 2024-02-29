@@ -1,36 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clear_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/01 00:28:58 by lespenel         ###   ########.fr       */
+/*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
+/*   Updated: 2024/02/29 20:05:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
-#include <readline/readline.h>
+#include "vector.h"
+#include <stddef.h>
 #include <stdlib.h>
 
-int	main(int argc, char **argv, char **envp)
+int	clear_lexer(t_lexer *token_tab)
 {
-	const char	*prompt = "minishell $> ";
-	char		*str;
+	size_t		i;
+	t_lexer_tok	*token;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	str = readline(prompt);
-	if (str == NULL)
-		return (1);
-	while (str)
+	i = 0;
+	if (token_tab == NULL)
+		return (-1);
+	while (i < token_tab->size)
 	{
-		free(str);
-		str = readline(prompt);
+		token = (t_lexer_tok *)at_vector(token_tab, i);
+		if (token->content)
+		{
+			free(token->content);
+			token->type = 0;
+		}
+		i++;
 	}
-	rl_clear_history();
+	free(token_tab->array);
+	token_tab->array = NULL;
+	token_tab->size = 0;
+	token_tab->elemsize = 0;
+	token_tab->allocated = 0;
 	return (0);
 }

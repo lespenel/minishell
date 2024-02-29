@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/28 21:01:57 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/02/29 20:04:56 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	print_lexer(t_lexer *token_tab)
 	while (i < token_tab->size)
 	{
 		token = at_vector(token_tab, i);
-		if (printf("content = %s | token = %d\n", token->content, token->type) == -1)
+		if (printf("content = %s | token = %d\n",
+				token->content, token->type) == -1)
 			return (-1);
 		i++;
 	}

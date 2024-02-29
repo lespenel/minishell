@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/28 23:56:06 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/02/29 20:05:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-int		clear_lexer(t_lexer *token_tab)
+int	clear_lexer(t_lexer *token_tab)
 {
 	size_t		i;
 	t_lexer_tok	*token;

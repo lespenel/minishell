@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 02:34:21 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/29 02:45:08 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/02/29 20:04:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_word(char c)
 	return (0);
 }
 
-int	is_operand(char	c)
+int	is_operand(char c)
 {
 	if (c == '|' || c == '&' || c == ';' || c == ',' || c == '('
 		|| c == ')' || c == '<' || c == '>')

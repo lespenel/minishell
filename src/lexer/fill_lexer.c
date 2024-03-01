@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/01 05:44:10 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/01 07:25:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,27 @@ int	fill_lexer(t_lexer *lexer, char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (is_quote(s + i))
+		if (is_quote(s[i]))
 		{
-			j = is_quote(s + i);
-			add_quoted_word_tok(lexer, s + i + 1, j);
+			j = to_next_quote(s + i);
+			printf("j = %ld\n", j);
+			if (j == 0)
+				return (printf("Erreur de quote\n"));
+			if (add_quoted_word_tok(lexer, s + i + 1, j) == -1)
+				return (-1);
 			i += j + 1;
 		}
-		else if (add_word_tok(lexer, s + i, &i) == -1)
-			return (-1);
-		else if (add_operator_tok(lexer, s + i) == -1)
-			return (-1);
-		else
-			i++;
+		else if (is_word(s[i]))
+		{
+			if (add_word_tok(lexer, s + i, &i) == -1)
+				return (-1);
+		}
+		else if (is_operand(s[i]))
+		{
+			if (add_operator_tok(lexer, s + i) == -1)
+				return (-1);
+		}
+		i++;
 	}
 	return (0);
 }

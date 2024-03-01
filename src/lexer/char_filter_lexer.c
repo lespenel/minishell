@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 02:34:21 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/29 20:04:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/01 06:18:28 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_word(char c)
 {
-	if (is_operand(c) == 0 && is_blank(c) == 0)
+	if (is_operand(c) == 0 && is_blank(c) == 0 && is_quote(c) == 0)
 		return (1);
 	return (0);
 }
@@ -34,7 +34,14 @@ int	is_blank(char c)
 	return (0);
 }
 
-int	is_quote(char *s)
+int	is_quote(char c)
+{
+	if (c == '\'' || c == '\"')
+		return (1);
+	return (0);
+}
+
+int	to_next_quote(char *s)
 {
 	size_t	j;
 	char	c;

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/01 05:45:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/01 07:18:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		print_lexer(t_lexer *lexer);
 
 int		is_operand(char c);
 int		is_blank(char c);
-int		is_quote(char *str);
+int		to_next_quote(char *str);
 int		is_word(char c);
+int		is_quote(char c);
 
 #endif

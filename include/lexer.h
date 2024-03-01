@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/29 02:48:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/01 05:45:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 typedef enum e_lex_type
 {
 	WORD,
+	WORD_SQUOTED,
+	WORD_DQUOTED,
 	OPERAND, //‘&&’, ‘&’, ‘;’, ‘;;’, ‘;&’, ‘;;&’, ‘|’, ‘|&’, ‘(’, or ‘)’. 
 	REDIRECT_IN,
 	REDIRECT_OUT,
@@ -33,13 +35,13 @@ typedef struct s_lexer_tok
 
 typedef t_vector	t_lexer;
 
-void	init_lexer(t_lexer *token_tab);
-int		clear_lexer(t_lexer *token_tab);
-int		fill_lexer(t_lexer *token_tab, char *str_usr);
-int		check_lexer(t_lexer *token_tab);
-int		print_lexer(t_lexer *token_tab);
+void	init_lexer(t_lexer *lexer);
+int		clear_lexer(t_lexer *lexer);
+int		fill_lexer(t_lexer *lexer, char *s);
+int		check_lexer(t_lexer *lexer);
+int		print_lexer(t_lexer *lexer);
 
-int		is_operand(char	c);
+int		is_operand(char c);
 int		is_blank(char c);
 int		is_quote(char *str);
 int		is_word(char c);

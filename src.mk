@@ -6,3 +6,5 @@ SRC = \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
 	  lexer/char_filter_lexer.c \
+	  \
+	  parser/prepare_execution.c \

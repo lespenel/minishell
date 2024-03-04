@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:30:38 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/01 02:54:18 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/01 03:06:55 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
+#include <stddef.h>
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	const char	*prompt = "minishell $> ";
-	char		*str;
+	size_t	i;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	str = readline(prompt);
-	if (str == NULL)
-		return (1);
-	while (str)
+	i = 0;
+	while (src[i] && i < n)
 	{
-		free(str);
-		str = readline(prompt);
-		if (str == NULL)
-			break ;
+		dest[i] = src[i];
+		++i;
 	}
-	rl_clear_history();
-	return (0);
+	while (i < n)
+	{
+		dest[i] = '\0';
+		++i;
+	}
+	return (dest);
 }

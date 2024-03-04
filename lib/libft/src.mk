@@ -11,6 +11,12 @@ SRC = \
 	  char/ft_tolower.c \
 	  char/ft_toupper.c \
 	  \
+	  hashmap/destroy_hashmap.c \
+	  hashmap/getvalue_hashmap.c \
+	  hashmap/hash_key.c \
+	  hashmap/init_hashmap.c \
+	  hashmap/setvalue_hashmap.c \
+	  \
 	  io/ft_putchar_fd.c \
 	  io/ft_putendl_fd.c \
 	  io/ft_putnbr_fd.c \

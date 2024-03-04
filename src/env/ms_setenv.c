@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   ms_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 16:30:21 by ccouble           #+#    #+#             */
-/*   Updated: 2024/01/01 11:16:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/04 07:58:36 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 09:25:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_string.h>
-#include <stdio.h>
+#include "env.h"
+#include "ft_string.h"
+#include <stdlib.h>
 
-char	*ft_getenv(char *envp[], char *name)
+int	ms_setenv(t_env *env, char *key, char *value)
 {
-	size_t	i;
-
-	while (*envp)
+	key = ft_strdup(key);
+	if (key == NULL)
+		return (-1);
+	value = ft_strdup(value);
+	if (value == NULL)
 	{
-		i = 0;
-		while (envp[0][i] == name[i] && envp[0][i])
-		{
-			++i;
-		}
-		if (envp[0][i] == '=' && name[i] == '\0')
-			return (*envp + i + 1);
-		++envp;
+		free(key);
+		return (-1);
 	}
-	return (NULL);
+	if (setvalue_hashmap(env, key, value) == -1)
+	{
+		free(key);
+		free(value);
+		return (-1);
+	}
+	return (0);
 }

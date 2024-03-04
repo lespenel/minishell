@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:55:53 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 08:06:54 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/04 10:05:57 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_env(t_env *env, char *envp[])
 		value = ft_strtok(*envp, "=");
 		value = ft_strtok(NULL, "=");
 		if (value)
-			add_env(env, *envp, value);
+			ms_setenv(env, *envp, value);
 		++envp;
 	}
 	return (0);

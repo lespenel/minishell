@@ -1,7 +1,8 @@
 SRC = \
-	  env/add_env.c \
 	  env/destroy_env.c \
 	  env/init_env.c \
+	  env/ms_getenv.c \
+	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
 	  lexer/init_lexer.c \

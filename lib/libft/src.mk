@@ -55,8 +55,6 @@ SRC = \
 	  string/ft_strtrim.c \
 	  string/ft_substr.c \
 	  \
-	  util/ft_get_path.c \
-	  util/ft_getenv.c \
 	  util/ft_swap.c \
 	  \
 	  vector/add_vector.c \

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:08:57 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:47:01 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 		}
 		if (ret == -1)
 			return (-1);
-		i++;
+		++i;
 	}
 	return (0);
 }
@@ -125,7 +125,7 @@ static int	get_operand_token(const char *operand_type[], char *s)
 	{
 		if (ft_strncmp(operand_type[i], s, ft_strlen(operand_type[i])) == 0)
 			return (i);
-		i++;
+		++i;
 	}
 	return (-1);
 }

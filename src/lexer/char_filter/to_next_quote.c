@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   to_next_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:30:38 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/04 13:15:17 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/04 13:16:42 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
+#include <sys/types.h>
 
-int	main(int argc, char **argv, char **envp)
+int	to_next_quote(char *s)
 {
-	const char	*prompt = "minishell $> ";
-	char		*str;
+	ssize_t	i;
+	char	c;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	str = readline(prompt);
-	if (str == NULL)
-		return (1);
-	while (str)
+	i = 0;
+	c = '\'';
+	if (s[i] == '\'' || s[i] == '\"')
+		c = s[i];
+	if (s[i] == c)
 	{
-		free(str);
-		str = readline(prompt);
-		if (str == NULL)
-			break ;
+		while (s[i])
+		{
+			i++;
+			if (s[i] == c)
+				return (i);
+		}
 	}
-	rl_clear_history();
 	return (0);
 }

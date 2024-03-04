@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/01 07:18:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:08:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 
 # include "vector.h"
 
+# define METACHAR "|&;()><"
+# define BLANK " \t\n"
+
 typedef enum e_lex_type
 {
-	WORD,
-	WORD_SQUOTED,
-	WORD_DQUOTED,
-	OPERAND, //‘&&’, ‘&’, ‘;’, ‘;;’, ‘;&’, ‘;;&’, ‘|’, ‘|&’, ‘(’, or ‘)’. 
-	REDIRECT_IN,
-	REDIRECT_OUT,
+	LOGICAL_OR,
+	LOGICAL_AND,
 	APPEND,
 	HERE_DOC,
+	PIPE,
+	OPEN_BRACE,
+	CLOSE_BRACE,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	WORD,
 }	t_lex_type;
 
 typedef struct s_lexer_tok

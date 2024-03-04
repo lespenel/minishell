@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 05:26:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 10:13:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/04 12:44:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	setvalue_hashmap(t_hashmap *hashmap, char *key, char *value)
 		{
 			free(existing->key);
 			free(existing->value);
-			return (set_value_vector(hashmap->map + hash, &pair, 1));
+			return (set_value_vector(hashmap->map + hash, &pair, i));
 		}
 		++i;
 	}

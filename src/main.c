@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 08:21:39 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/04 12:42:39 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ int	main(int argc, char **argv, char *envp[])
 	(void)argv;
 	if (init_minishell(&minishell, envp) == -1)
 		return (1);
+	print_env(&minishell.env);
+	ms_setenv(&minishell.env, "PATH", "/");
+	printf("\n\n\n");
+	print_env(&minishell.env);
 	str = readline(prompt);
 	while (str)
 	{

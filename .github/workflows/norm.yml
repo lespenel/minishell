@@ -1,4 +1,4 @@
-name: Compile
+name: Norm
 
 on:
   push:

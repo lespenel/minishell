@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/02/29 02:48:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:08:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 
 # include "vector.h"
 
+# define METACHAR "|&;()><"
+# define BLANK " \t\n"
+
 typedef enum e_lex_type
 {
-	WORD,
-	OPERAND, //‘&&’, ‘&’, ‘;’, ‘;;’, ‘;&’, ‘;;&’, ‘|’, ‘|&’, ‘(’, or ‘)’. 
-	REDIRECT_IN,
-	REDIRECT_OUT,
+	LOGICAL_OR,
+	LOGICAL_AND,
 	APPEND,
 	HERE_DOC,
+	PIPE,
+	OPEN_BRACE,
+	CLOSE_BRACE,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	WORD,
 }	t_lex_type;
 
 typedef struct s_lexer_tok
@@ -33,15 +40,16 @@ typedef struct s_lexer_tok
 
 typedef t_vector	t_lexer;
 
-void	init_lexer(t_lexer *token_tab);
-int		clear_lexer(t_lexer *token_tab);
-int		fill_lexer(t_lexer *token_tab, char *str_usr);
-int		check_lexer(t_lexer *token_tab);
-int		print_lexer(t_lexer *token_tab);
+void	init_lexer(t_lexer *lexer);
+int		clear_lexer(t_lexer *lexer);
+int		fill_lexer(t_lexer *lexer, char *s);
+int		check_lexer(t_lexer *lexer);
+int		print_lexer(t_lexer *lexer);
 
-int		is_operand(char	c);
+int		is_operand(char c);
 int		is_blank(char c);
-int		is_quote(char *str);
+int		to_next_quote(char *str);
 int		is_word(char c);
+int		is_quote(char c);
 
 #endif

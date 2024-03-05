@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   destroy_hashmap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/03 04:51:28 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/03 04:54:32 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#include "hashmap.h"
+#include "vector.h"
 
-void	ft_swap(int *a, int *b);
+void	destroy_hashmap(t_hashmap *hashmap)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (i < HASHMAP_SIZE)
+	{
+		clear_vector(hashmap->map + i);
+		++i;
+	}
+}

@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/05 08:27:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#ifndef EXPANDER_H
+# define EXPANDER_H
 
-void	ft_swap(int *a, int *b);
+# include "lexer.h"
+
+int	expand_tokens(t_lexer *lexer, char *envp[]);
 
 #endif

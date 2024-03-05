@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/03 03:55:53 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 10:05:57 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#include "env.h"
+#include "ft_string.h"
+#include "hashmap.h"
+#include <stdlib.h>
 
-void	ft_swap(int *a, int *b);
+int	init_env(t_env *env, char *envp[])
+{
+	char	*value;
 
-#endif
+	init_hashmap(env);
+	while (*envp)
+	{
+		value = ft_strtok(*envp, "=");
+		value = ft_strtok(NULL, "=");
+		if (value)
+			ms_setenv(env, *envp, value);
+		++envp;
+	}
+	return (0);
+}

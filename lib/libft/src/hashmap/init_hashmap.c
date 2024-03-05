@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   init_hashmap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 16:30:21 by ccouble           #+#    #+#             */
-/*   Updated: 2024/01/01 11:16:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/04 07:40:07 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 07:42:15 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_string.h>
-#include <stdio.h>
+#include "hashmap.h"
+#include "vector.h"
 
-char	*ft_getenv(char *envp[], char *name)
+void	init_hashmap(t_hashmap *hashmap)
 {
 	size_t	i;
 
-	while (*envp)
+	i = 0;
+	while (i < HASHMAP_SIZE)
 	{
-		i = 0;
-		while (envp[0][i] == name[i] && envp[0][i])
-		{
-			++i;
-		}
-		if (envp[0][i] == '=' && name[i] == '\0')
-			return (*envp + i + 1);
-		++envp;
+		init_vector(hashmap->map + i, sizeof(t_pair));
+		++i;
 	}
-	return (NULL);
 }

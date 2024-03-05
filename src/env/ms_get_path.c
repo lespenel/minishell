@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_path.c                                      :+:      :+:    :+:   */
+/*   ms_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 11:13:28 by ccouble           #+#    #+#             */
-/*   Updated: 2024/01/10 05:24:47 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/04 12:27:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <unistd.h>
 #include "ft_string.h"
 #include "ft_mem.h"
-#include "ft_util.h"
+#include "env.h"
 
 static char	*search_envpath(char *file, char *space, char *envpath);
 
-char	*ft_get_path(char *file, char *envp[])
+char	*ms_get_path(t_env *env, char *file)
 {
 	char		*envpath;
 	char *const	space = ft_strchr(file, ' ');
@@ -27,7 +27,7 @@ char	*ft_get_path(char *file, char *envp[])
 		return (ft_strndup(file, space - file));
 	if (space == NULL && ft_strchr(file, '/'))
 		return (ft_strdup(file));
-	envpath = ft_getenv(envp, "PATH");
+	envpath = ms_getenv(env, "PATH");
 	if (envpath == NULL)
 		return (NULL);
 	envpath = ft_strdup(envpath);

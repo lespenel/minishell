@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/03 03:52:19 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 12:27:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#ifndef ENV_H
+# define ENV_H
 
-void	ft_swap(int *a, int *b);
+# include "hashmap.h"
+
+typedef t_hashmap	t_env;
+
+int		init_env(t_env *env, char *envp[]);
+void	destroy_env(t_env *env);
+void	print_env(t_env *env);
+int		ms_setenv(t_env *env, char *key, char *value);
+char	*ms_getenv(t_env *env, char *key);
+char	*ms_get_path(t_env *env, char *file);
 
 #endif

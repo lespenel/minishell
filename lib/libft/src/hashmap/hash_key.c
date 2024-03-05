@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   hash_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: maxperei <maxperei@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/02/24 16:32:30 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 09:24:32 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#include <stddef.h>
 
-void	ft_swap(int *a, int *b);
+size_t	hash_key(const char *key)
+{
+	size_t	hash;
 
-#endif
+	hash = 5381;
+	while (*key)
+	{
+		hash = (hash << 5) + hash + *key;
+		++key;
+	}
+	return (hash);
+}

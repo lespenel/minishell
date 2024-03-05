@@ -1,18 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util.h                                          :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 14:36:26 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/04 11:45:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/03 06:19:33 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/04 07:33:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_UTIL_H
-# define FT_UTIL_H
+#include "env.h"
+#include "hashmap.h"
+#include "vector.h"
+#include <stdio.h>
 
-void	ft_swap(int *a, int *b);
+void	print_env(t_env *env)
+{
+	size_t		i;
+	size_t		j;
+	t_vector	*vector;
+	t_pair		*pair;
 
-#endif
+	i = 0;
+	while (i < HASHMAP_SIZE)
+	{
+		vector = env->map + i;
+		j = 0;
+		while (j < vector->size)
+		{
+			pair = at_vector(vector, j);
+			printf("%s=%s\n", pair->key, pair->value);
+			++j;
+		}
+		++i;
+	}
+}

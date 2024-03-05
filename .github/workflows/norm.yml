@@ -7,8 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  norminette:
     runs-on: ubuntu-latest
 
     steps:

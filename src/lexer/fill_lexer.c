@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:47:01 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:31:34 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 
 	i = 0;
 	ret = 0;
+	init_lexer(lexer);
 	while (s[i])
 	{
 		if (is_word(s[i]))
@@ -43,6 +44,8 @@ int	fill_lexer(t_lexer *lexer, char *s)
 			return (-1);
 		++i;
 	}
+	if (add_newline_tok(lexer) == -1)
+		return (-1);
 	return (0);
 }
 

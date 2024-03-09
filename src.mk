@@ -11,6 +11,7 @@ SRC = \
 	  lexer/fill_lexer.c \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
+	  lexer/add_newline_tok.c \
 	  lexer/char_filter/is_blank.c \
 	  lexer/char_filter/is_operand.c \
 	  lexer/char_filter/is_word.c \

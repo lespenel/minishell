@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/10 07:09:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/11 08:27:02 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,47 @@
 #include "lexer.h"
 #include "vector.h"
 #include "wildcard.h"
-#include "parser.h"
+
+int	iterate_to_filenames(t_wildcard *match, char *s);
+int	add_match_tok(t_wildcard *matches, char *s);
 
 int	expand_wildcard(t_env *env, t_lexer *lexer)
 {
 	size_t		i;
-	t_wildcard	maches;
+	t_wildcard	match;
 	t_lexer_tok	*token;
 
-	init_lexer(&maches);
+	init_lexer(&match);
 	i = 0;
 	while (i < lexer->size)
 	{
 		token = at_vector(lexer, i);
 		if (token->type == WORD && ft_strchr(token->content, '*'))
 		{
-			get_ls_vector(env, &maches);
+			get_files_ls(env, &match);
+			iterate_to_filenames(&match, token->content);
 		}
 		++i;
 	}
+	print_lexer(&match);
 	return (0);
 }
 
-int	find_matches_wildcard(t_wildcard *match, char *s)
+int	iterate_to_filenames(t_wildcard *match, char *s)
 {
 	size_t		i;
-	char		*next;
 	t_wildcard	new_match;
 	t_lexer_tok	*match_tok;
 
 	init_lexer(&new_match);
 	i = 0;
-	next = ft_strchr(s, '*');
 	while (i < match->size)
 	{
 		match_tok = at_vector(match, i);
-		if (ft_strncmp(match_tok->content, s, s - next) == 0)
+		if (is_wildcard_match(s, match_tok->content))
 		{
+			add_match_tok(&new_match, match_tok->content);
+			printf("match = %s\n", match_tok->content);
 		}
 		i++;
 	}
@@ -63,19 +67,24 @@ int	find_matches_wildcard(t_wildcard *match, char *s)
 	return (0);
 }
 
-int	add_match_tok(t_wildcard *matches)
+int	add_match_tok(t_wildcard *matches, char *s)
 {
-	t_lexer_tok token;
+	t_lexer_tok	token;
 
 	token.content = ft_strdup(s);
+	if (token.content == NULL)
+		return (-1);
+	token.type = WORD;
+	if (add_vector(matches, &token, 1) == -1)
+		return (-1);
+	return (0);
 }
 
-int	get_ls_vector(t_env *env, t_wildcard *matches)
+int	get_files_ls(t_env *env, t_wildcard *matches)
 {
 	DIR				*dir;
 	struct dirent	*entry;
-	t_lexer_tok		token;
-	char	*wd;
+	char			*wd;
 
 	wd = ms_getenv(env, "PWD");
 	if (wd == NULL)
@@ -86,14 +95,11 @@ int	get_ls_vector(t_env *env, t_wildcard *matches)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		token.content = ft_strdup(entry->d_name);
-		if (token.content == NULL)
-			return (-1);
-		token.type = WORD;
-		if (add_vector(matches, &token , 1) == -1)
+		if (add_match_tok(matches, entry->d_name) == -1)
 			return (-1);
 		entry = readdir(dir);
 	}
+	print_lexer(matches);
 	closedir(dir);
 	return (0);
 }

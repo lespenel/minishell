@@ -19,5 +19,7 @@ SRC = \
 	  lexer/char_filter/to_next_quote.c \
 	  \
 	  parser/validate_input.c \
+	  parser/wildcard_expansion.c \
+	  parser/is_wildcard_match.c \
 	  \
 	  main.c \

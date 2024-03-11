@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/09 18:59:28 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/11 06:08:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 	else if (token->type == CLOSE_BRACE)
 	{
 		if (brace <= 0)
-			return (dprintf(2, SYNTAX_ERR, ")"));
+			return (dprintf(2, SYNTAX_ERR, ")") == -1);
 		brace--;
 	}
 	else if (token->type == NEWLINE)

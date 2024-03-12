@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/11 08:27:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:07:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(int argc, char **argv, char *envp[])
 			return (dprintf(2, "Lexer error\n"));
 		if (validate_input(&lexer) == -1)
 			return (dprintf(2, "Parser error\n"));
-		print_lexer(&lexer);
 		expand_wildcard(&minishell.env, &lexer);
+		print_lexer(&lexer);
 		clear_lexer(&lexer);
 		add_history(str);
 	}

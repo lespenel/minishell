@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_newline_tok.c                                  :+:      :+:    :+:   */
+/*   add_lexer_at.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:11:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/12 00:11:05 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/12 00:09:05 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/12 01:24:45 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "ft_string.h"
 #include "vector.h"
+#include "lexer.h"
 
-int	add_newline_tok(t_lexer *lexer)
+int	add_lexer_at(t_lexer *lexer, t_lexer *new_lex, size_t index)
 {
-	t_lexer_tok	token;
+	t_lexer *token;
+	size_t	i;
 
-	token.content = ft_strdup("newline");
-	if (token.content == NULL)
-		return (-1);
-	token.type = NEWLINE;
-	if (add_vector(lexer, &token, 1) == -1)
-		return (-1);
+	i = 0;
+	remove_vector(lexer, index);
+	while (i < new_lex->size)
+	{
+		token = at_vector(new_lex, i);
+		if (add_vector_at(lexer, token, index + i) == -1)
+			return (-1);
+		++i;
+	}
 	return (0);
 }

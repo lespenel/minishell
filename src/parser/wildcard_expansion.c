@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/11 08:27:02 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:06:03 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int	expand_wildcard(t_env *env, t_lexer *lexer)
 		{
 			get_files_ls(env, &match);
 			iterate_to_filenames(&match, token->content);
+			if (match.size > 0)
+			{
+				if (add_lexer_at(lexer, &match, i) == -1)
+					return (-1);
+				i += match.size;
+			}
 		}
 		++i;
 	}

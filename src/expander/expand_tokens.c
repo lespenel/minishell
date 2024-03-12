@@ -6,21 +6,25 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/05 08:40:59 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:33:09 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "ft_string.h"
-#include "ft_mem.h"
+#include "minishell.h"
+#include "vector.h"
 
-static int	replace_env(t_lexer_tok *token, char *envp[]);
-static int	replace_singular(t_lexer_tok *token, char *dollarptr, size_t len);
+static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i);
+static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
 
-//TODO: Handle quotes properly, and the no quote variable expand case
-int	expand_tokens(t_lexer *lexer, char *envp[])
+int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 {
 	size_t		i;
 	t_lexer_tok	*token;
@@ -31,58 +35,156 @@ int	expand_tokens(t_lexer *lexer, char *envp[])
 		token = at_vector(lexer, i);
 		if (token->type == WORD)
 		{
-			replace_env(token, envp);
+			if (expand_word(minishell, lexer, i) == -1)
+				return (-1);
 		}
+		++i;
 	}
 	return (0);
 }
 
-static int	replace_env(t_lexer_tok *token, char *envp[])
+static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
+{
+	char	*word;
+	ssize_t	wlen;
+	size_t	j;
+	t_lexer	newlexer;
+	t_vector	newstring;
+
+	init_lexer(&newlexer);
+	word = ((t_lexer_tok *)at_vector(lexer, i))->content;
+	remove_vector(lexer, i);
+	init_vector(&newstring, sizeof(char));
+	j = 0;
+	while (word[j])
+	{
+		wlen = treat_substring(minishell, &newlexer, &newstring, word + j);
+		if (wlen == -1)
+			return (-1);
+		j += wlen;
+	}
+	print_lexer(&newlexer);
+	write(2, newstring.array, newstring.size);
+	write(2, "\n", 1);
+	return (0);
+}
+
+static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
+{
+	ssize_t	(*f)(t_minishell *, t_lexer *, t_vector *, char *);
+
+	if (*s == '\'')
+		f = treat_squote;
+	else if (*s == '"')
+		f = treat_dquote;
+	else
+		f = treat_noquote;
+	return (f(minishell, lexer, new, s));
+}
+
+static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value);
+
+static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
 {
 	size_t	i;
-	char	*dollarptr;
+	size_t	j;
+	char	*value;
 
-	(void)envp;
-	dollarptr = ft_strchr(token->content, '$');
-	while (dollarptr)
+	(void)lexer;
+	i = 0;
+	j = 0;
+	dprintf(2, "noquote treats %s\n", s);
+	while (s[i] && s[i] != '"' && s[i] != '\'')
 	{
-		i = 1;
-		while (dollarptr[i] && dollarptr[i] != ' ' && dollarptr[i]
-			!= '\t' && dollarptr[i] != '$')
-			++i;
-		if (i == 1)
-			dollarptr = ft_strchr(dollarptr + 1, '$');
-		else
+		dprintf(2, "noquote handling %s\n", s + i);
+		if (s[i] == '$')
 		{
-			replace_singular(token, dollarptr, i);
-			dollarptr = ft_strchr(token->content, '$');
+			add_vector(new, s + j, i - j);
+			++i;
+			j = i;
+			while (s[i] && s[i] != '"' && s[i] != '\'' && s[i] != '$')
+				++i;
+			value = ms_getenv(&minishell->env, s + j, i - j);
+			if (value != NULL)
+				kaboul(lexer, new, value);
+			j = i;
+		}
+		else
+			++i;
+	}
+	add_vector(new, s + j, i - j);
+	return (i);
+}
+
+static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value)
+{
+	t_lexer_tok	token;
+	char		*var;
+	char		*tok;
+
+	var = ft_strdup(value);
+	tok = ft_strtok(var, " ");
+	dprintf(2, "kaboul\n");
+	while (tok)
+	{
+		add_vector(new, tok, ft_strlen(tok));
+		tok = ft_strtok(NULL, " ");
+		if (tok)
+		{
+			token.type = WORD;
+			token.content = new->array;
+			add_vector(lexer, &token, 1);
+			init_vector(new, sizeof(char));
 		}
 	}
+	free(var);
 	return (0);
 }
 
-static int	replace_singular(t_lexer_tok *token, char *dollarptr, size_t len)
+static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
 {
-	const char	c = dollarptr[len];
-	char		*env;
-	size_t		envlen;
-	size_t		alloc;
-	char		*s;
+	size_t	i;
+	size_t	j;
+	char	*value;
 
-	dollarptr[len] = '\0';
-	env = getenv(dollarptr + 1);
-	if (env == NULL)
-		env = "";
-	envlen = ft_strlen(env);
-	dollarptr[len] = c;
-	alloc = (ft_strlen(token->content) + envlen + 1) - len;
-	s = malloc(alloc * sizeof(char));
-	ft_memcpy(s, token->content, dollarptr - token->content);
-	ft_memcpy(s + (dollarptr - token->content), env, envlen);
-	ft_memcpy(s + (dollarptr - token->content) + envlen, dollarptr + len,
-		(token->content + ft_strlen(token->content)) - dollarptr - len);
-	s[envlen + ft_strlen(token->content) - len] = '\0';
-	free(token->content);
-	token->content = s;
-	return (0);
+	(void)lexer;
+	i = 1;
+	j = 0;
+	dprintf(2, "dquote treats %s\n", s);
+	while (s[i] != '"')
+	{
+		if (s[i] == '$')
+		{
+			add_vector(new, s + j, i - j);
+			++i;
+			j = i;
+			while (s[i] != '"' && s[i] != ' ' && s[i] != '$')
+				++i;
+			value = ms_getenv(&minishell->env, s + j, i - j);
+			if (value != NULL)
+				add_vector(new, value, ft_strlen(value));
+			j = i;
+		}
+		else
+			++i;
+	}
+	++i;
+	add_vector(new, s + j, i - j);
+	return (i);
+}
+
+static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
+{
+	size_t	i;
+
+	(void)lexer;
+	(void)minishell;
+	dprintf(2, "squote treats %s\n", s);
+	i = 1;
+	while (s[i] != '\'')
+		++i;
+	++i;
+	if (add_vector(new, s, i) == -1)
+		return (-1);
+	return (i);
 }

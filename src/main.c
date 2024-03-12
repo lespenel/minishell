@@ -6,12 +6,17 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:30:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:00:27 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
+#include "lexer.h"
+#include "parser.h"
+#include "lexer.h"
+#include "minishell.h"
+#include "expander.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -25,18 +30,19 @@ int	main(int argc, char **argv, char *envp[])
 	const char	*prompt = "minishell $> ";
 	t_minishell	minishell;
 	char		*str;
+	t_lexer		lexer;
 
 	(void)argc;
 	(void)argv;
 	if (init_minishell(&minishell, envp) == -1)
 		return (1);
-	print_env(&minishell.env);
-	ms_setenv(&minishell.env, "PATH", "/");
-	printf("\n\n\n");
-	print_env(&minishell.env);
 	str = readline(prompt);
 	while (str)
 	{
+		init_lexer(&lexer);
+		fill_lexer(&lexer, str);
+		print_lexer(&lexer);
+		expand_tokens(&minishell, &lexer);
 		free(str);
 		str = readline(prompt);
 		if (str == NULL)

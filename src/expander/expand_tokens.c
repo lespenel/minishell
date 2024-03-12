@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/12 16:33:09 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/12 22:01:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@
 static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i);
 static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
 static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value);
 static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
 static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
 
 int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 {
 	size_t		i;
+	ssize_t		res;
 	t_lexer_tok	*token;
 
 	i = 0;
@@ -35,14 +37,17 @@ int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 		token = at_vector(lexer, i);
 		if (token->type == WORD)
 		{
-			if (expand_word(minishell, lexer, i) == -1)
+			res = expand_word(minishell, lexer, i);
+			if (res == -1)
 				return (-1);
+			i += res;
 		}
-		++i;
+		else
+			++i;
 	}
 	return (0);
 }
-
+//TODO : handle only one variable expanding into nothing
 static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 {
 	char	*word;
@@ -63,10 +68,14 @@ static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 			return (-1);
 		j += wlen;
 	}
-	print_lexer(&newlexer);
-	write(2, newstring.array, newstring.size);
-	write(2, "\n", 1);
-	return (0);
+	t_lexer_tok token;
+	token.type = WORD;
+	token.content = newstring.array;
+	add_vector(&newlexer, &token, 1);
+	merge_vector(lexer, &newlexer, i);
+	ssize_t res = newlexer.size;
+	clear_vector(&newlexer);
+	return (res);
 }
 
 static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
@@ -82,8 +91,6 @@ static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector 
 	return (f(minishell, lexer, new, s));
 }
 
-static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value);
-
 static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
 {
 	size_t	i;
@@ -93,10 +100,8 @@ static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *n
 	(void)lexer;
 	i = 0;
 	j = 0;
-	dprintf(2, "noquote treats %s\n", s);
 	while (s[i] && s[i] != '"' && s[i] != '\'')
 	{
-		dprintf(2, "noquote handling %s\n", s + i);
 		if (s[i] == '$')
 		{
 			add_vector(new, s + j, i - j);
@@ -124,7 +129,6 @@ static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value)
 
 	var = ft_strdup(value);
 	tok = ft_strtok(var, " ");
-	dprintf(2, "kaboul\n");
 	while (tok)
 	{
 		add_vector(new, tok, ft_strlen(tok));
@@ -150,7 +154,6 @@ static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *ne
 	(void)lexer;
 	i = 1;
 	j = 0;
-	dprintf(2, "dquote treats %s\n", s);
 	while (s[i] != '"')
 	{
 		if (s[i] == '$')
@@ -179,7 +182,6 @@ static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *ne
 
 	(void)lexer;
 	(void)minishell;
-	dprintf(2, "squote treats %s\n", s);
 	i = 1;
 	while (s[i] != '\'')
 		++i;

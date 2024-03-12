@@ -6,14 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/12 15:00:27 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:19:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
 #include "lexer.h"
-#include "parser.h"
 #include "lexer.h"
 #include "minishell.h"
 #include "expander.h"
@@ -43,6 +42,8 @@ int	main(int argc, char **argv, char *envp[])
 		fill_lexer(&lexer, str);
 		print_lexer(&lexer);
 		expand_tokens(&minishell, &lexer);
+		dprintf(2, "\nEXPANDED : \n\n");
+		print_lexer(&lexer);
 		free(str);
 		str = readline(prompt);
 		if (str == NULL)

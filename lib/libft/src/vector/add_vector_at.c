@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 01:47:35 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/12 09:22:19 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 09:26:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	add_vector_at(t_vector *this, const void *new, size_t at)
 		if (reallocate_vector(this))
 			return (-1);
 	}
-	ft_memmove(this->array + (at + 1) * this->elemsize, 
-			this->array + at * this->elemsize,
-			(this->size - at) * this->elemsize);
+	ft_memmove(this->array + (at + 1) * this->elemsize,
+		this->array + at * this->elemsize,
+		(this->size - at) * this->elemsize);
 	ft_memcpy(this->array + (at * this->elemsize), new, this->elemsize);
 	this->size += 1;
 	return (0);

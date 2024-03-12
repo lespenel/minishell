@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 01:47:35 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/12 01:57:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 02:10:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	add_vector_at(t_vector *this, const void *new, size_t at)
 	while (i < (this->size - at))
 	{
 		ft_memcpy(this->array + (this->size - i) * this->elemsize, this->array
-			+ (this->size - i), this->elemsize);
+			+ (this->size - i - 1) * this->elemsize, this->elemsize);
 		++i;
 	}
 	ft_memcpy(this->array + (at * this->elemsize), new, this->elemsize);

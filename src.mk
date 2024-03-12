@@ -21,6 +21,7 @@ SRC = \
 	  \
 	  parser/validate_input.c \
 	  parser/wildcard_expansion.c \
+	  parser/fill_pattern.c \
 	  parser/is_wildcard_match.c \
 	  \
 	  main.c \

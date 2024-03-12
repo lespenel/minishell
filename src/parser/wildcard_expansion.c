@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/12 01:06:03 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 09:10:00 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,41 @@
 #include "vector.h"
 #include "wildcard.h"
 
-int	iterate_to_filenames(t_wildcard *match, char *s);
-int	add_match_tok(t_wildcard *matches, char *s);
+int	iterate_to_filenames(t_lexer *match, char *s);
+int	add_match_tok(t_lexer *matches, char *s);
 
 int	expand_wildcard(t_env *env, t_lexer *lexer)
 {
 	size_t		i;
-	t_wildcard	match;
+	t_lexer		match;
 	t_lexer_tok	*token;
 
-	init_lexer(&match);
 	i = 0;
 	while (i < lexer->size)
 	{
 		token = at_vector(lexer, i);
 		if (token->type == WORD && ft_strchr(token->content, '*'))
 		{
+			init_lexer(&match);
 			get_files_ls(env, &match);
 			iterate_to_filenames(&match, token->content);
 			if (match.size > 0)
 			{
 				if (add_lexer_at(lexer, &match, i) == -1)
 					return (-1);
-				i += match.size;
+				i += match.size - 1;
 			}
+			clear_lexer(&match);
 		}
 		++i;
 	}
-	print_lexer(&match);
 	return (0);
 }
 
-int	iterate_to_filenames(t_wildcard *match, char *s)
+int	iterate_to_filenames(t_lexer *match, char *s)
 {
 	size_t		i;
-	t_wildcard	new_match;
+	t_lexer		new_match;
 	t_lexer_tok	*match_tok;
 
 	init_lexer(&new_match);
@@ -73,7 +73,7 @@ int	iterate_to_filenames(t_wildcard *match, char *s)
 	return (0);
 }
 
-int	add_match_tok(t_wildcard *matches, char *s)
+int	add_match_tok(t_lexer *matches, char *s)
 {
 	t_lexer_tok	token;
 
@@ -86,7 +86,7 @@ int	add_match_tok(t_wildcard *matches, char *s)
 	return (0);
 }
 
-int	get_files_ls(t_env *env, t_wildcard *matches)
+int	get_files_ls(t_env *env, t_lexer *matches)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -101,6 +101,7 @@ int	get_files_ls(t_env *env, t_wildcard *matches)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
+		printf("entry  = %s\n", entry->d_name);
 		if (add_match_tok(matches, entry->d_name) == -1)
 			return (-1);
 		entry = readdir(dir);

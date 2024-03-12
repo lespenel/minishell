@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 09:13:30 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/28 21:00:52 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:53:02 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_vector
 }	t_vector;
 
 int		add_vector(t_vector *this, const void *data, size_t count);
+int		add_vector_at(t_vector *this, const void *new, size_t at);
 void	*at_vector(t_vector *this, size_t i);
 int		set_value_vector(t_vector *this, const void *data, size_t i);
 int		reallocate_vector(t_vector *this);

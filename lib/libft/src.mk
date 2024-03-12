@@ -59,6 +59,7 @@ SRC = \
 	  util/ft_swap.c \
 	  \
 	  vector/add_vector.c \
+	  vector/add_vector_at.c \
 	  vector/at_vector.c \
 	  vector/clear_vector.c \
 	  vector/init_vector.c \

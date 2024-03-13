@@ -12,7 +12,6 @@ SRC = \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
 	  lexer/add_newline_tok.c \
-	  lexer/add_lexer_at.c \
 	  lexer/char_filter/is_blank.c \
 	  lexer/char_filter/is_operand.c \
 	  lexer/char_filter/is_word.c \
@@ -20,8 +19,10 @@ SRC = \
 	  lexer/char_filter/to_next_quote.c \
 	  \
 	  parser/validate_input.c \
-	  parser/wildcard_expansion.c \
-	  parser/fill_pattern.c \
-	  parser/is_wildcard_match.c \
+	  \
+	  wildcard/expand_wildcards.c \
+	  wildcard/fill_pattern.c \
+	  wildcard/get_matching_filenames.c \
+	  wildcard/is_wildcard_match.c \
 	  \
 	  main.c \

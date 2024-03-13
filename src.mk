@@ -24,5 +24,6 @@ SRC = \
 	  wildcard/fill_pattern.c \
 	  wildcard/get_matching_filenames.c \
 	  wildcard/is_wildcard_match.c \
+	  wildcard/sort_filenames.c \
 	  \
 	  main.c \

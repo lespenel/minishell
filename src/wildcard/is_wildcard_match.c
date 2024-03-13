@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/13 06:50:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:20:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 			if (ret == NULL)
 				return (NULL);
 			else
-				f_name = ret;
+				f_name = ret + ft_strlen(tok->content);
 		}
 		++i;
 	}

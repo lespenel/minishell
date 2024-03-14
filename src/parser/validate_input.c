@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/14 10:06:43 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:10:52 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 	{
 		if (brace <= 0)
 			return (dprintf(2, SYNTAX_ERR, ")"), -1);
-		brace++;
-			return (dprintf(2, SYNTAX_ERR, ")") == -1);
 		brace--;
 	}
 	else if (token->type == NEWLINE)

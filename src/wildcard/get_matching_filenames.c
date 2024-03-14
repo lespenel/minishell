@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 07:17:37 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:35:24 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ static int	get_files_ls(t_env *env, t_lexer *filenames)
 		return (-1);
 	dir = opendir(wd);
 	if (dir == NULL)
-		return (perror("opendir"), -1);
+	{
+		perror("opendir");
+		return (-1);
+	}
 	entry = readdir(dir);
 	while (entry != NULL)
 	{

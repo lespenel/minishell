@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 07:18:11 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:36:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 static int	compare_pattern(t_lexer *pattern, char *f_name);
 static char	*midlle_pattern(t_lexer *pattern, char *f_name);
 static int	check_end_pattern(char *to_find, char *f_name);
-static int	hiden_file(char *raw_pattern, char *f_name);
+static int	hidden_file(char *raw_pattern, char *f_name);
 
 int	is_wildcard_match(t_lexer *pattern, char *raw_pattern, char *f_name)
 {
-	if (hiden_file(raw_pattern, f_name) == 0)
+	if (hidden_file(raw_pattern, f_name) == 0)
 		return (0);
 	if (compare_pattern(pattern, f_name) == 1)
 		return (1);
 	return (0);
 }
 
-static int	hiden_file(char *raw_pattern, char *f_name)
+static int	hidden_file(char *raw_pattern, char *f_name)
 {
 	if (ft_strcmp(f_name, ".") == 0)
 		return (0);
@@ -84,8 +84,7 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 			ret = ft_strnstr(f_name, tok->content, ft_strlen(f_name));
 			if (ret == NULL)
 				return (NULL);
-			else
-				f_name = ret + ft_strlen(tok->content);
+			f_name = ret + ft_strlen(tok->content);
 		}
 		++i;
 	}
@@ -94,13 +93,11 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 
 static int	check_end_pattern(char *to_find, char *f_name)
 {
-	ssize_t	file_l;
-	ssize_t	find_l;
-	ssize_t	i;
+	ssize_t			i;
+	const ssize_t	file_l = ft_strlen(f_name);
+	const ssize_t	find_l = ft_strlen(to_find);
 
 	i = 0;
-	file_l = ft_strlen(f_name);
-	find_l = ft_strlen(to_find);
 	if (file_l < find_l)
 		return (0);
 	while (i != find_l && f_name[file_l - i - 1] == to_find[find_l - i - 1])

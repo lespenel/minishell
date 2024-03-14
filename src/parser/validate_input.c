@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -38,6 +39,8 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 	else if (token->type == CLOSE_BRACE)
 	{
 		if (brace <= 0)
+			return (dprintf(2, SYNTAX_ERR, ")"), -1);
+		brace++;
 			return (dprintf(2, SYNTAX_ERR, ")") == -1);
 		brace--;
 	}

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/14 11:48:52 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:05:03 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ static int	is_logical(t_lexer_tok *tok1);
 int	validate_input(t_lexer *lexer)
 {
 	t_lexer_tok	*token;
+	int			ret;
 
 	if (lexer->size == 0)
 		return (0);
 	token = at_vector(lexer, 0);
 	if (is_logical(token))
 		return (dprintf(2, SYNTAX_ERR, token->content));
-	if (syntax_checker(lexer, 0, 0) == 1)
-		return (1);
-	return (0);
+	ret = syntax_checker(lexer, 0, 0);
+	if (ret == -1)
+		return (-1);
+	return (ret);
 }
 
 static int	syntax_checker(t_lexer *lexer, int index, int brace)

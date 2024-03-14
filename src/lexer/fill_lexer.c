@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 12:21:35 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:06:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static int		add_operand_token(t_lexer *lexer, char *s);
 static int		get_operand_token(const char *operand_type[], char *s);
-static int		add_word_tok(t_lexer *lexer, char *s);
+static ssize_t	add_word_tok(t_lexer *lexer, char *s);
 static ssize_t	get_word_size(char *s);
 
 int	fill_lexer(t_lexer *lexer, char *s)
@@ -50,7 +50,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 	return (add_newline_tok(lexer));
 }
 
-static int	add_word_tok(t_lexer *lexer, char *s)
+static ssize_t	add_word_tok(t_lexer *lexer, char *s)
 {
 	ssize_t		i;
 	t_lexer_tok	token;

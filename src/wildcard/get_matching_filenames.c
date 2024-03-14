@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 09:35:24 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:20:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	get_match(t_lexer *filenames, t_lexer *pattern, char *raw_pattern)
 				return (-1);
 			}
 		}
-		i++;
+		++i;
 	}
 	clear_lexer(pattern);
 	clear_lexer(filenames);

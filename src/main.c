@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 07:33:10 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:54:38 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "wildcard.h"
 #include "minishell.h"
 #include "lexer.h"
-#include "parser.h"
+#include <stdatomic.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -32,19 +32,17 @@ int	main(int argc, char **argv, char *envp[])
 
 	(void)argc;
 	(void)argv;
-	init_minishell(&minishell, envp);
-	str = malloc(sizeof(char));
+	if (init_minishell(&minishell, envp) == -1)
+		return (-1);
+	str = malloc(sizeof(atomic_uint_least16_t) * 29082001);
 	while (str)
 	{
 		free(str);
 		str = readline(prompt);
 		if (str == NULL)
 			break ;
-		if (fill_lexer(&lexer, str) == -1)
-			return (dprintf(2, "Lexer error\n"));
-		if (validate_input(&lexer) == -1)
-			return (dprintf(2, "Parser error\n"));
-		expand_wildcards(&minishell.env, &lexer);
+		if (parse_input(&minishell.env, &lexer, str) == -1)
+			return (-1);
 		print_lexer(&lexer);
 		clear_lexer(&lexer);
 	}

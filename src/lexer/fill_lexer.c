@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/09 18:31:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:43:24 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "lexer.h"
 #include "vector.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static int		add_operand_token(t_lexer *lexer, char *s);
 static int		get_operand_token(const char *operand_type[], char *s);
@@ -33,6 +34,8 @@ int	fill_lexer(t_lexer *lexer, char *s)
 		if (is_word(s[i]))
 		{
 			ret = add_word_tok(lexer, s + i);
+			if (ret == 0)
+				return (dprintf(2, SYNTAX_ERR, "\"\' or `\'"));
 			i += ret - 1;
 		}
 		else if (is_operand(s[i]))
@@ -44,9 +47,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 			return (-1);
 		++i;
 	}
-	if (add_newline_tok(lexer) == -1)
-		return (-1);
-	return (0);
+	return (add_newline_tok(lexer));
 }
 
 static int	add_word_tok(t_lexer *lexer, char *s)
@@ -56,7 +57,7 @@ static int	add_word_tok(t_lexer *lexer, char *s)
 
 	i = get_word_size(s);
 	if (i == -1)
-		return (-1);
+		return (0);
 	if (i > 0)
 	{
 		token.content = malloc(sizeof(char) * (i + 1));

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/14 10:10:52 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:48:52 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ static int	is_logical(t_lexer_tok *tok1);
 
 int	validate_input(t_lexer *lexer)
 {
+	t_lexer_tok	*token;
+
 	if (lexer->size == 0)
 		return (0);
-	if (syntax_checker(lexer, 0, 0) == -1)
-		return (-1);
+	token = at_vector(lexer, 0);
+	if (is_logical(token))
+		return (dprintf(2, SYNTAX_ERR, token->content));
+	if (syntax_checker(lexer, 0, 0) == 1)
+		return (1);
 	return (0);
 }
 
@@ -34,21 +39,21 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 
 	token = at_vector(lexer, index);
 	if (token->type == OPEN_BRACE)
-		brace++;
+		++brace;
 	else if (token->type == CLOSE_BRACE)
 	{
 		if (brace <= 0)
-			return (dprintf(2, SYNTAX_ERR, ")"), -1);
-		brace--;
+			return (dprintf(2, SYNTAX_ERR, ")"));
+		--brace;
 	}
 	else if (token->type == NEWLINE)
 	{
 		if (brace == 0)
 			return (0);
-		return (dprintf(2, SYNTAX_ERR, "("), -1);
+		return (dprintf(2, SYNTAX_ERR, "("));
 	}
 	if (is_problem(token, at_vector(lexer, index + 1)))
-		return (-1);
+		return (1);
 	return (syntax_checker(lexer, index + 1, brace));
 }
 
@@ -59,9 +64,7 @@ static int	is_problem(t_lexer_tok *tok1, t_lexer_tok *tok2)
 	if (tok2->type == CLOSE_BRACE && tok1->type != WORD)
 		return (dprintf(2, SYNTAX_ERR, tok2->content));
 	if (is_redirect_problem(tok1, tok2))
-	{
 		return (dprintf(2, SYNTAX_ERR, tok2->content));
-	}
 	if (is_logical(tok1) && (is_logical(tok2) || tok2->type == NEWLINE))
 		return (dprintf(2, SYNTAX_ERR, tok1->content));
 	return (0);

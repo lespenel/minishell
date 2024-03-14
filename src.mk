@@ -27,3 +27,4 @@ SRC = \
 	  wildcard/sort_filenames.c \
 	  \
 	  main.c \
+	  parse_input.c \

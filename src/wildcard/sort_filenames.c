@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 09:32:44 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 10:28:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	int	ms_strcmp(char *s1, char *s2)
 	{
 		j = 0;
 		while (s1[j] && s1[j] == s2[j])
-			j++;
+			++j;
 		return (s2[j] - s1[j]);
 	}
 	return (ft_tolower(s1[i]) - ft_tolower(s2[i]));

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 05:51:27 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/13 09:37:50 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 02:13:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "vector.h"
 #include "wildcard.h"
 #include "ft_string.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static	ssize_t	add_quote_tok(t_lexer *pattern, char *raw_pattern);

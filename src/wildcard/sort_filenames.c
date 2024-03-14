@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/13 09:46:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 02:39:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	sort_filenames(t_lexer *filenames)
 	t_lexer_tok	*t2;
 
 	i = 0;
-	if (filenames->size < 2)
+	if (filenames->size < 1)
 		return ;
-	while (i < filenames->size - 2)
+	while (i < filenames->size - 1)
 	{
 		j = 0;
-		while (j < filenames->size - 2)
+		while (j < filenames->size - 1)
 		{
 			t1 = at_vector(filenames, j);
 			t2 = at_vector(filenames, j + 1);
@@ -56,7 +56,7 @@ static	int	ms_strcmp(char *s1, char *s2)
 		j = 0;
 		while (s1[j] && s1[j] == s2[j])
 			j++;
-		return (s1[j] - s2[j]);
+		return (s2[j] - s1[j]);
 	}
 	return (ft_tolower(s1[i]) - ft_tolower(s2[i]));
 }

@@ -6,38 +6,27 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/13 10:20:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:18:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_string.h"
 #include "lexer.h"
 #include "vector.h"
 #include "wildcard.h"
-#include "ft_string.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 static int	compare_pattern(t_lexer *pattern, char *f_name);
 static char	*midlle_pattern(t_lexer *pattern, char *f_name);
-static int	check_end_pattern(char *f_name, char *to_find);
+static int	check_end_pattern(char *to_find, char *f_name);
 static int	hiden_file(char *raw_pattern, char *f_name);
 
-int	is_wildcard_match(char *motif, char *f_name)
+int	is_wildcard_match(t_lexer *pattern, char *raw_pattern, char *f_name)
 {
-	t_lexer	pattern;
-
-	if (hiden_file(motif, f_name) == 0)
+	if (hiden_file(raw_pattern, f_name) == 0)
 		return (0);
-	if (fill_pattern(&pattern, motif) == -1)
-	{
-		clear_lexer(&pattern);
-		return (-1);
-	}
-	if (compare_pattern(&pattern, f_name) == 1)
-	{
-		clear_lexer(&pattern);
-		return (-1);
-	}
-	clear_lexer(&pattern);
+	if (compare_pattern(pattern, f_name) == 1)
+		return (1);
 	return (0);
 }
 
@@ -75,7 +64,7 @@ static int	compare_pattern(t_lexer *pattern, char *f_name)
 	tok = at_vector(pattern, pattern->size - 2);
 	if (tok->type == 0)
 		return (1);
-	if (check_end_pattern(f_name, tok->content) == 1)
+	if (check_end_pattern(tok->content, f_name) == 1)
 		return (1);
 	return (0);
 }
@@ -103,7 +92,7 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 	return (f_name);
 }
 
-static int	check_end_pattern(char *f_name, char *to_find)
+static int	check_end_pattern(char *to_find, char *f_name)
 {
 	ssize_t	file_l;
 	ssize_t	find_l;
@@ -115,6 +104,6 @@ static int	check_end_pattern(char *f_name, char *to_find)
 	if (file_l < find_l)
 		return (0);
 	while (i != find_l && f_name[file_l - i - 1] == to_find[find_l - i - 1])
-		i++;
+		++i;
 	return (i == find_l);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/14 14:07:32 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:18:51 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,12 @@ static int	is_problem(t_lexer_tok *tok1, t_lexer_tok *tok2)
 	if (tok1->type == OPEN_BRACE && tok2->type != WORD
 		&& tok2->type != OPEN_BRACE && tok2->type != CLOSE_BRACE)
 		return (dprintf(2, SYNTAX_ERR, tok2->content));
+	if (tok1->type == CLOSE_BRACE && tok2->type == WORD)
+		return (dprintf(2, SYNTAX_ERR, tok2->content));
+	if (tok2->type == OPEN_BRACE && tok1->type == WORD)
+		return (dprintf(2, SYNTAX_ERR, tok2->content));
 	if (tok2->type == CLOSE_BRACE && tok1->type != WORD
-		&& tok2->type != CLOSE_BRACE && tok2->type != OPEN_BRACE)
+		&& tok1->type != CLOSE_BRACE && tok1->type != OPEN_BRACE)
 		return (dprintf(2, SYNTAX_ERR, tok2->content));
 	if (is_redirect_problem(tok1, tok2))
 		return (dprintf(2, SYNTAX_ERR, tok2->content));

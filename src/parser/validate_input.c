@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   validate_input.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/10 07:14:20 by lespenel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "lexer.h"
 #include "vector.h"
 #include <stdio.h>
@@ -34,12 +22,12 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 
 	token = at_vector(lexer, index);
 	if (token->type == OPEN_BRACE)
-		++brace;
+		brace++;
 	else if (token->type == CLOSE_BRACE)
 	{
 		if (brace <= 0)
 			return (dprintf(2, SYNTAX_ERR, ")"), -1);
-		--brace;
+		brace++;
 	}
 	else if (token->type == NEWLINE)
 	{

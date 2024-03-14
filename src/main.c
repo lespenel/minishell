@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/13 06:25:02 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 07:33:10 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	main(int argc, char **argv, char *envp[])
 
 	(void)argc;
 	(void)argv;
-	if (init_minishell(&minishell, envp) == -1)
-		return (1);
+	init_minishell(&minishell, envp);
 	str = malloc(sizeof(char));
 	while (str)
 	{
@@ -45,13 +44,10 @@ int	main(int argc, char **argv, char *envp[])
 			return (dprintf(2, "Lexer error\n"));
 		if (validate_input(&lexer) == -1)
 			return (dprintf(2, "Parser error\n"));
-		if (expand_wildcards(&minishell.env, &lexer) == -1)
-			return (-1);
+		expand_wildcards(&minishell.env, &lexer);
 		print_lexer(&lexer);
 		clear_lexer(&lexer);
-		add_history(str);
 	}
-	rl_clear_history();
 	destroy_minishell(&minishell);
 	return (0);
 }

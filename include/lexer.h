@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/09 18:30:47 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:12:00 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_lexer(t_lexer *lexer);
 int		clear_lexer(t_lexer *lexer);
 int		fill_lexer(t_lexer *lexer, char *s);
 int		add_newline_tok(t_lexer *lexer);
-int		check_lexer(t_lexer *lexer);
 int		print_lexer(t_lexer *lexer);
 
 int		is_operand(char c);

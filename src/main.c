@@ -6,12 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:30:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:00:40 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
+#include "lexer.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -22,25 +23,26 @@ static void	destroy_minishell(t_minishell *minishell);
 
 int	main(int argc, char **argv, char *envp[])
 {
-	const char	*prompt = "minishell $> ";
 	t_minishell	minishell;
-	char		*str;
+	char		*input;
+	t_lexer		lexer;
 
 	(void)argc;
 	(void)argv;
 	if (init_minishell(&minishell, envp) == -1)
-		return (1);
-	print_env(&minishell.env);
-	ms_setenv(&minishell.env, "PATH", "/");
-	printf("\n\n\n");
-	print_env(&minishell.env);
-	str = readline(prompt);
-	while (str)
+		return (-1);
+	input = malloc(0);
+	while (input)
 	{
-		free(str);
-		str = readline(prompt);
-		if (str == NULL)
+		free(input);
+		input = readline(PROMPT);
+		if (input == NULL)
 			break ;
+		if (parse_input(&minishell.env, &lexer, input) == -1)
+			return (-1);
+		add_history(input);
+		print_lexer(&lexer);
+		clear_lexer(&lexer);
 	}
 	rl_clear_history();
 	destroy_minishell(&minishell);

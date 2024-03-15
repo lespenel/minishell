@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:47:01 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:06:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "lexer.h"
 #include "vector.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static int		add_operand_token(t_lexer *lexer, char *s);
 static int		get_operand_token(const char *operand_type[], char *s);
-static int		add_word_tok(t_lexer *lexer, char *s);
+static ssize_t	add_word_tok(t_lexer *lexer, char *s);
 static ssize_t	get_word_size(char *s);
 
 int	fill_lexer(t_lexer *lexer, char *s)
@@ -27,6 +28,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 
 	i = 0;
 	ret = 0;
+	init_lexer(lexer);
 	while (s[i])
 	{
 		if (is_word(s[i]))
@@ -41,19 +43,21 @@ int	fill_lexer(t_lexer *lexer, char *s)
 		}
 		if (ret == -1)
 			return (-1);
+		else if (ret == 0)
+			return (dprintf(2, SYNTAX_ERR, "\"';&"));
 		++i;
 	}
-	return (0);
+	return (add_newline_tok(lexer));
 }
 
-static int	add_word_tok(t_lexer *lexer, char *s)
+static ssize_t	add_word_tok(t_lexer *lexer, char *s)
 {
 	ssize_t		i;
 	t_lexer_tok	token;
 
 	i = get_word_size(s);
 	if (i == -1)
-		return (-1);
+		return (0);
 	if (i > 0)
 	{
 		token.content = malloc(sizeof(char) * (i + 1));
@@ -106,7 +110,7 @@ static int	add_operand_token(t_lexer *lexer, char *s)
 
 	type = get_operand_token(operand_type, s);
 	if (type == -1)
-		return (-1);
+		return (0);
 	token.content = ft_strdup(operand_type[type]);
 	if (token.content == NULL)
 		return (-1);

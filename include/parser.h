@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/01 04:44:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/11 05:13:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "lexer.h"
 
-int	prepare_execution(t_lexer *lexer, char *envp[]);
+int	validate_input(t_lexer *lexer);
 
 #endif

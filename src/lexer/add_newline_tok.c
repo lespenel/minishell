@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_lexer.c                                      :+:      :+:    :+:   */
+/*   add_newline_tok.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 11:31:27 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/12 00:11:05 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/12 00:11:05 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stddef.h>
-#include <stdio.h>
+#include "ft_string.h"
+#include "vector.h"
 
-int	print_lexer(t_lexer *token_tab)
+int	add_newline_tok(t_lexer *lexer)
 {
-	size_t		i;
-	t_lexer_tok	*token;
+	t_lexer_tok	token;
 
-	i = 0;
-	printf("\n");
-	while (i < token_tab->size)
-	{
-		token = at_vector(token_tab, i);
-		if (printf("content = %-10s | token = %d\n",
-				token->content, token->type) == -1)
-			return (-1);
-		i++;
-	}
-	printf("\n");
+	token.content = ft_strdup("newline");
+	if (token.content == NULL)
+		return (-1);
+	token.type = NEWLINE;
+	if (add_vector(lexer, &token, 1) == -1)
+		return (-1);
 	return (0);
 }

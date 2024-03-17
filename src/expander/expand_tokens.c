@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/12 22:01:48 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:00:58 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 	}
 	return (0);
 }
-//TODO : handle only one variable expanding into nothing
+
 static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 {
 	char	*word;
@@ -69,9 +69,12 @@ static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 		j += wlen;
 	}
 	t_lexer_tok token;
-	token.type = WORD;
-	token.content = newstring.array;
-	add_vector(&newlexer, &token, 1);
+	if (newstring.size != 0)
+	{
+		token.type = WORD;
+		token.content = newstring.array;
+		add_vector(&newlexer, &token, 1);
+	}
 	merge_vector(lexer, &newlexer, i);
 	ssize_t res = newlexer.size;
 	clear_vector(&newlexer);

@@ -5,6 +5,7 @@ SRC = \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  expander/expand_substring.c \
 	  expander/expand_tokens.c \
 	  \
 	  lexer/init_lexer.c \

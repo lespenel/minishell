@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/17 17:00:58 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:37:29 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@
 #include "ft_string.h"
 #include "minishell.h"
 #include "vector.h"
+#include "expander.h"
 
 static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i);
-static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
-static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
-static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value);
-static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
-static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static int	merge_lex(t_lexer *lexer, t_lexer *newl, t_vector *news, size_t i);
 
 int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 {
@@ -50,10 +47,10 @@ int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 
 static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 {
-	char	*word;
-	ssize_t	wlen;
-	size_t	j;
-	t_lexer	newlexer;
+	char		*word;
+	ssize_t		wlen;
+	size_t		j;
+	t_lexer		newlexer;
 	t_vector	newstring;
 
 	init_lexer(&newlexer);
@@ -63,133 +60,39 @@ static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 	j = 0;
 	while (word[j])
 	{
-		wlen = treat_substring(minishell, &newlexer, &newstring, word + j);
+		wlen = expand_substring(minishell, &newlexer, &newstring, word + j);
 		if (wlen == -1)
+		{
+			clear_vector(&newlexer);
+			clear_vector(&newstring);
 			return (-1);
+		}
 		j += wlen;
 	}
-	t_lexer_tok token;
-	if (newstring.size != 0)
-	{
-		token.type = WORD;
-		token.content = newstring.array;
-		add_vector(&newlexer, &token, 1);
-	}
-	merge_vector(lexer, &newlexer, i);
-	ssize_t res = newlexer.size;
-	clear_vector(&newlexer);
-	return (res);
+	return (merge_lex(lexer, &newlexer, &newstring, i));
 }
 
-static ssize_t	treat_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
-{
-	ssize_t	(*f)(t_minishell *, t_lexer *, t_vector *, char *);
-
-	if (*s == '\'')
-		f = treat_squote;
-	else if (*s == '"')
-		f = treat_dquote;
-	else
-		f = treat_noquote;
-	return (f(minishell, lexer, new, s));
-}
-
-static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
-{
-	size_t	i;
-	size_t	j;
-	char	*value;
-
-	(void)lexer;
-	i = 0;
-	j = 0;
-	while (s[i] && s[i] != '"' && s[i] != '\'')
-	{
-		if (s[i] == '$')
-		{
-			add_vector(new, s + j, i - j);
-			++i;
-			j = i;
-			while (s[i] && s[i] != '"' && s[i] != '\'' && s[i] != '$')
-				++i;
-			value = ms_getenv(&minishell->env, s + j, i - j);
-			if (value != NULL)
-				kaboul(lexer, new, value);
-			j = i;
-		}
-		else
-			++i;
-	}
-	add_vector(new, s + j, i - j);
-	return (i);
-}
-
-static ssize_t	kaboul(t_lexer *lexer, t_vector *new, char *value)
+static int	merge_lex(t_lexer *lexer, t_lexer *newl, t_vector *news, size_t i)
 {
 	t_lexer_tok	token;
-	char		*var;
-	char		*tok;
+	ssize_t		res;
 
-	var = ft_strdup(value);
-	tok = ft_strtok(var, " ");
-	while (tok)
+	if (news->size != 0)
 	{
-		add_vector(new, tok, ft_strlen(tok));
-		tok = ft_strtok(NULL, " ");
-		if (tok)
+		token.type = WORD;
+		token.content = news->array;
+		if (add_vector(newl, &token, 1) == -1)
 		{
-			token.type = WORD;
-			token.content = new->array;
-			add_vector(lexer, &token, 1);
-			init_vector(new, sizeof(char));
+			clear_vector(news);
+			return (-1);
 		}
 	}
-	free(var);
-	return (0);
-}
-
-static ssize_t	treat_dquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
-{
-	size_t	i;
-	size_t	j;
-	char	*value;
-
-	(void)lexer;
-	i = 1;
-	j = 0;
-	while (s[i] != '"')
+	if (merge_vector(lexer, newl, i) == -1)
 	{
-		if (s[i] == '$')
-		{
-			add_vector(new, s + j, i - j);
-			++i;
-			j = i;
-			while (s[i] != '"' && s[i] != ' ' && s[i] != '$')
-				++i;
-			value = ms_getenv(&minishell->env, s + j, i - j);
-			if (value != NULL)
-				add_vector(new, value, ft_strlen(value));
-			j = i;
-		}
-		else
-			++i;
-	}
-	++i;
-	add_vector(new, s + j, i - j);
-	return (i);
-}
-
-static ssize_t	treat_squote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
-{
-	size_t	i;
-
-	(void)lexer;
-	(void)minishell;
-	i = 1;
-	while (s[i] != '\'')
-		++i;
-	++i;
-	if (add_vector(new, s, i) == -1)
+		clear_vector(news);
 		return (-1);
-	return (i);
+	}
+	res = newl->size;
+	clear_vector(newl);
+	return (res);
 }

@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 13:00:40 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:31:21 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
 #include "lexer.h"
+#include "builtins.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -25,7 +26,6 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_minishell	minishell;
 	char		*input;
-	t_lexer		lexer;
 
 	(void)argc;
 	(void)argv;
@@ -38,11 +38,13 @@ int	main(int argc, char **argv, char *envp[])
 		input = readline(PROMPT);
 		if (input == NULL)
 			break ;
-		if (parse_input(&minishell.env, &lexer, input) == -1)
+		if (parse_input(&minishell.env, &minishell.lexer, input) == -1)
+			return (-1);
+		if (exec_test(&minishell, &minishell.lexer) == -1)
 			return (-1);
 		add_history(input);
-		print_lexer(&lexer);
-		clear_lexer(&lexer);
+		print_lexer(&minishell.lexer);
+		clear_lexer(&minishell.lexer);
 	}
 	rl_clear_history();
 	destroy_minishell(&minishell);

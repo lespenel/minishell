@@ -2,6 +2,7 @@ SRC = \
 	  builtins/clear_args.c \
 	  builtins/exec_builtins.c \
 	  builtins/exec_test.c \
+	  builtins/get_argc.c \
 	  builtins/get_args.c \
 	  builtins/is_builtin.c \
 	  builtins/ms_cd.c \

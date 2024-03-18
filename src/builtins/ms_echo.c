@@ -6,26 +6,24 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 04:30:10 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/18 05:38:19 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "builtins.h"
 #include "env.h"
+#include "ft_string.h"
 #include <unistd.h>
 
 int	ms_echo(t_env *env, char **args)
 {
-	size_t	i;
-	size_t	argc;
-	int		no_nl;
+	const int	argc = get_argc(args);
+	int			no_nl;
+	int			i;
 
 	(void)env;
 	no_nl = 0;
-	argc = 0;
-	while (args[argc])
-		argc++;
-	if (argc >= 2 && ft_strncmp(args[1], "-n", 2) == 0)
+	if (argc >= 2 && ft_strcmp(args[1], "-n") == 0)
 		no_nl = 1;
 	if (argc == 2 && no_nl)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 03:31:21 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/18 05:16:25 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	destroy_minishell(t_minishell *minishell);
 int	main(int argc, char **argv, char *envp[])
 {
 	t_minishell	minishell;
+	t_lexer		lexer;
 	char		*input;
 
 	(void)argc;
@@ -38,13 +39,13 @@ int	main(int argc, char **argv, char *envp[])
 		input = readline(PROMPT);
 		if (input == NULL)
 			break ;
-		if (parse_input(&minishell.env, &minishell.lexer, input) == -1)
+		if (parse_input(&minishell.env, &lexer, input) == -1)
 			return (-1);
-		if (exec_test(&minishell, &minishell.lexer) == -1)
+		if (exec_test(&minishell, &lexer) == -1)
 			return (-1);
 		add_history(input);
-		print_lexer(&minishell.lexer);
-		clear_lexer(&minishell.lexer);
+		print_lexer(&lexer);
+		clear_lexer(&lexer);
 	}
 	rl_clear_history();
 	destroy_minishell(&minishell);

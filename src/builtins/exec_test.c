@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:30:59 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 04:33:37 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/18 05:12:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ int	exec_test(t_minishell *minishell, t_lexer *lexer)
 				return (-1);
 			if (is_builtin(token->content))
 			{
-				if (exec_builtins(minishell, args, token->content) == -1)
+				if (exec_builtins(minishell, lexer, args) == -1)
 					return (-1);
+				clear_args(args);
 			}
 			else
+			{
 				dprintf(2, CMD_NOT_FOUND, args[0]);
+				clear_args(args);
+			}
 			while (token->type == WORD)
 			{
 				++i;

@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/17 21:10:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/19 04:34:11 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 #include "ft_string.h"
 
 static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s);
+static ssize_t	treat_dquote(t_minishell *minishell, t_vector *new, char *s);
 static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value);
 static int		add_word_lex(t_lexer *lexer, t_vector *word);
-static ssize_t	treat_dquote(t_minishell *minishell, t_vector *new, char *s);
+static int		add_escaping(t_vector *vector, char *s);
 
 ssize_t	expand_substring(t_minishell *minishell, t_lexer *lexer, t_vector *new, char *s)
 {
@@ -53,7 +54,7 @@ static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *n
 	{
 		if (s[i] == '$')
 		{
-			if (add_vector(new, s + j, i - j) == -1)
+			if (i - j > 0 && add_vector(new, s + j, i - j) == -1)
 				return (-1);
 			++i;
 			j = i;
@@ -70,7 +71,7 @@ static ssize_t	treat_noquote(t_minishell *minishell, t_lexer *lexer, t_vector *n
 		else
 			++i;
 	}
-	if (add_vector(new, s + j, i - j) == -1)
+	if (i - j > 0 && add_vector(new, s + j, i - j) == -1)
 		return (-1);
 	return (i);
 }
@@ -96,7 +97,7 @@ static ssize_t	treat_dquote(t_minishell *minishell, t_vector *new, char *s)
 			value = ms_getenv(&minishell->env, s + j, i - j);
 			if (value != NULL)
 			{
-				if (add_vector(new, value, ft_strlen(value)) == -1)
+				if (add_escaping(new, value) == -1)
 					return (-1);
 			}
 			j = i;
@@ -121,7 +122,7 @@ static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
 	tok = ft_strtok(var, " ");
 	while (tok)
 	{
-		if (add_vector(new, tok, ft_strlen(tok)) == -1)
+		if (add_escaping(new, tok) == -1)
 		{
 			free(var);
 			return (-1);
@@ -137,8 +138,28 @@ static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
 	return (0);
 }
 
+static int	add_escaping(t_vector *vector, char *s)
+{
+	size_t	i;
+	
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			if (add_vector(vector, "\\", 1) == -1)
+				return (-1);
+		}
+		if (add_vector(vector, s + i, 1) == -1)
+			return (-1);
+		++i;
+	}
+	return (0);
+}
+
 static int	add_word_lex(t_lexer *lexer, t_vector *word)
 {
+	(void)add_escaping;
 	t_lexer_tok	token;
 
 	token.type = WORD;

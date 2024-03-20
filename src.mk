@@ -2,10 +2,15 @@ SRC = \
 	  env/destroy_env.c \
 	  env/init_env.c \
 	  env/ms_getenv.c \
+	  env/ms_getnenv.c \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  expander/add_escaping.c \
+	  expander/expand_substring.c \
 	  expander/expand_tokens.c \
+	  expander/next_char.c \
+	  expander/treat_noquote.c \
 	  \
 	  lexer/init_lexer.c \
 	  lexer/fill_lexer.c \

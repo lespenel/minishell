@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_getenv.c                                        :+:      :+:    :+:   */
+/*   next_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 16:30:21 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 01:29:15 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/19 22:42:30 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/19 22:45:22 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "hashmap.h"
+#include <stddef.h>
 
-char	*ms_getenv(t_env *env, char *key)
+size_t	next_char(char *s, size_t i)
 {
-	return (getvalue_hashmap(env, key));
+	++i;
+	while (s[i] == '\\')
+	{
+		++i;
+		if (s[i] == '\0')
+			return (i);
+		++i;
+	}
+	return (i);
 }

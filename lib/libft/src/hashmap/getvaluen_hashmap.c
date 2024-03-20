@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_getenv.c                                        :+:      :+:    :+:   */
+/*   getvaluen_hashmap.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 16:30:21 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 01:29:15 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/03 05:32:39 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/12 14:52:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
 #include "hashmap.h"
+#include "vector.h"
+#include "ft_string.h"
 
-char	*ms_getenv(t_env *env, char *key)
+char	*getvaluen_hashmap(t_hashmap *hashmap, const char *key, size_t n)
 {
-	return (getvalue_hashmap(env, key));
+	const size_t	hash = hash_key_n(key, n) % HASHMAP_SIZE;
+	t_vector		*vector;
+	t_pair			*pair;
+	size_t			i;
+
+	vector = hashmap->map + hash;
+	i = 0;
+	while (i < vector->size)
+	{
+		pair = at_vector(vector, i);
+		if (ft_strncmp(pair->key, key, n) == 0)
+			return (pair->value);
+		++i;
+	}
+	return (NULL);
 }

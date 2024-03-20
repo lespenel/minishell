@@ -13,7 +13,9 @@ SRC = \
 	  \
 	  hashmap/destroy_hashmap.c \
 	  hashmap/getvalue_hashmap.c \
+	  hashmap/getvaluen_hashmap.c \
 	  hashmap/hash_key.c \
+	  hashmap/hash_key_n.c \
 	  hashmap/init_hashmap.c \
 	  hashmap/setvalue_hashmap.c \
 	  \

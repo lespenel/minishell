@@ -6,23 +6,25 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/05 08:40:59 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:12:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "ft_string.h"
-#include "ft_mem.h"
+#include <unistd.h>
+#include "minishell.h"
+#include "vector.h"
+#include "expander.h"
 
-static int	replace_env(t_lexer_tok *token, char *envp[]);
-static int	replace_singular(t_lexer_tok *token, char *dollarptr, size_t len);
+static int	expand_word(t_ms *minishell, t_lexer *lexer, size_t i);
+static int	merge_lex(t_lexer *lexer, t_lexer *newl, t_vector *news, size_t i);
 
-//TODO: Handle quotes properly, and the no quote variable expand case
-int	expand_tokens(t_lexer *lexer, char *envp[])
+int	expand_tokens(t_ms *minishell, t_lexer *lexer)
 {
 	size_t		i;
+	ssize_t		res;
 	t_lexer_tok	*token;
 
 	i = 0;
@@ -31,58 +33,67 @@ int	expand_tokens(t_lexer *lexer, char *envp[])
 		token = at_vector(lexer, i);
 		if (token->type == WORD)
 		{
-			replace_env(token, envp);
+			res = expand_word(minishell, lexer, i);
+			if (res == -1)
+				return (-1);
+			i += res;
 		}
-	}
-	return (0);
-}
-
-static int	replace_env(t_lexer_tok *token, char *envp[])
-{
-	size_t	i;
-	char	*dollarptr;
-
-	(void)envp;
-	dollarptr = ft_strchr(token->content, '$');
-	while (dollarptr)
-	{
-		i = 1;
-		while (dollarptr[i] && dollarptr[i] != ' ' && dollarptr[i]
-			!= '\t' && dollarptr[i] != '$')
-			++i;
-		if (i == 1)
-			dollarptr = ft_strchr(dollarptr + 1, '$');
 		else
-		{
-			replace_singular(token, dollarptr, i);
-			dollarptr = ft_strchr(token->content, '$');
-		}
+			++i;
 	}
 	return (0);
 }
 
-static int	replace_singular(t_lexer_tok *token, char *dollarptr, size_t len)
+static int	expand_word(t_ms *minishell, t_lexer *lexer, size_t i)
 {
-	const char	c = dollarptr[len];
-	char		*env;
-	size_t		envlen;
-	size_t		alloc;
-	char		*s;
+	char		*word;
+	ssize_t		wlen;
+	size_t		j;
+	t_lexer		newlexer;
+	t_vector	newstring;
 
-	dollarptr[len] = '\0';
-	env = getenv(dollarptr + 1);
-	if (env == NULL)
-		env = "";
-	envlen = ft_strlen(env);
-	dollarptr[len] = c;
-	alloc = (ft_strlen(token->content) + envlen + 1) - len;
-	s = malloc(alloc * sizeof(char));
-	ft_memcpy(s, token->content, dollarptr - token->content);
-	ft_memcpy(s + (dollarptr - token->content), env, envlen);
-	ft_memcpy(s + (dollarptr - token->content) + envlen, dollarptr + len,
-		(token->content + ft_strlen(token->content)) - dollarptr - len);
-	s[envlen + ft_strlen(token->content) - len] = '\0';
-	free(token->content);
-	token->content = s;
-	return (0);
+	init_lexer(&newlexer);
+	word = ((t_lexer_tok *)at_vector(lexer, i))->content;
+	remove_vector(lexer, i);
+	init_vector(&newstring, sizeof(char));
+	j = 0;
+	while (word[j])
+	{
+		wlen = expand_substr(minishell, &newlexer, &newstring, word + j);
+		if (wlen == -1)
+		{
+			free(word);
+			clear_lexer(&newlexer);
+			clear_vector(&newstring);
+			return (-1);
+		}
+		j += wlen;
+	}
+	free(word);
+	return (merge_lex(lexer, &newlexer, &newstring, i));
+}
+
+static int	merge_lex(t_lexer *lexer, t_lexer *newl, t_vector *news, size_t i)
+{
+	t_lexer_tok	token;
+	ssize_t		res;
+
+	if (news->size != 0)
+	{
+		token.type = WORD;
+		token.content = news->array;
+		if (add_vector(newl, &token, 1) == -1)
+		{
+			clear_vector(news);
+			return (-1);
+		}
+	}
+	if (merge_vector(lexer, newl, i) == -1)
+	{
+		clear_vector(news);
+		return (-1);
+	}
+	res = newl->size;
+	clear_vector(newl);
+	return (res);
 }

@@ -6,13 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 01:20:59 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 01:28:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
-#include "lexer.h"
 #include "lexer.h"
 #include "expander.h"
 #include <stdio.h>
@@ -25,27 +24,28 @@ static void	destroy_minishell(t_ms *ms);
 
 int	main(int argc, char **argv, char *envp[])
 {
-	const char	*prompt = "minishell $> ";
 	t_ms		ms;
-	char		*str;
+	char		*input;
 	t_lexer		lexer;
 
 	(void)argc;
 	(void)argv;
 	if (init_minishell(&ms, envp) == -1)
-		return (1);
-	str = readline(prompt);
-	while (str)
+		return (-1);
+	input = malloc(0);
+	while (input)
 	{
-		init_lexer(&lexer);
-		fill_lexer(&lexer, str);
+		free(input);
+		input = readline(PROMPT);
+		if (input == NULL)
+			break ;
+		if (parse_input(&ms.env, &lexer, input) == -1)
+			return (-1);
+		if (expand_tokens(&ms, &lexer) == -1)
+			return (-1);
+		add_history(input);
 		print_lexer(&lexer);
-		expand_tokens(&ms, &lexer);
-		dprintf(2, "\nEXPANDED : \n\n");
-		print_lexer(&lexer);
-		free(str);
 		clear_lexer(&lexer);
-		str = readline(prompt);
 	}
 	rl_clear_history();
 	destroy_minishell(&ms);

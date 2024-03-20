@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_lexer.c                                      :+:      :+:    :+:   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 11:31:27 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/14 11:53:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stddef.h>
-#include <stdio.h>
+#include "parser.h"
+#include "wildcard.h"
 
-int	print_lexer(t_lexer *token_tab)
+int	parse_input(t_env *env, t_lexer *lexer, char *input)
 {
-	size_t		i;
-	t_lexer_tok	*token;
+	int	ret;
 
-	i = 0;
-	printf("\n");
-	while (i < token_tab->size)
-	{
-		token = at_vector(token_tab, i);
-		if (printf("content = %-10s | token = %d\n",
-				token->content, token->type) == -1)
-			return (-1);
-		i++;
-	}
-	printf("\n");
+	ret = fill_lexer(lexer, input);
+	if (ret == -1)
+		return (-1);
+	else if (ret)
+		return (clear_lexer(lexer));
+	ret = validate_input(lexer);
+	if (ret == -1)
+		return (-1);
+	else if (ret)
+		return (clear_lexer(lexer));
+	if (expand_wildcards(env, lexer) == -1)
+		return (-1);
 	return (0);
 }

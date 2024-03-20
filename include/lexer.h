@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/04 13:08:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:12:00 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define METACHAR "|&;()><"
 # define BLANK " \t\n"
+# define SYNTAX_ERR "minishell: syntax error near unexpected token `%s'\n"
 
 typedef enum e_lex_type
 {
@@ -29,6 +30,7 @@ typedef enum e_lex_type
 	CLOSE_BRACE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
+	NEWLINE,
 	WORD,
 }	t_lex_type;
 
@@ -43,7 +45,7 @@ typedef t_vector	t_lexer;
 void	init_lexer(t_lexer *lexer);
 int		clear_lexer(t_lexer *lexer);
 int		fill_lexer(t_lexer *lexer, char *s);
-int		check_lexer(t_lexer *lexer);
+int		add_newline_tok(t_lexer *lexer);
 int		print_lexer(t_lexer *lexer);
 
 int		is_operand(char c);

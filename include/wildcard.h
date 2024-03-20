@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_lexer.c                                      :+:      :+:    :+:   */
+/*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 11:31:27 by lespenel         ###   ########.fr       */
+/*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/14 07:18:53 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include <stddef.h>
-#include <stdio.h>
+#ifndef WILDCARD_H
+# define WILDCARD_H
 
-int	print_lexer(t_lexer *token_tab)
-{
-	size_t		i;
-	t_lexer_tok	*token;
+# include "env.h"
+# include "lexer.h"
 
-	i = 0;
-	printf("\n");
-	while (i < token_tab->size)
-	{
-		token = at_vector(token_tab, i);
-		if (printf("content = %-10s | token = %d\n",
-				token->content, token->type) == -1)
-			return (-1);
-		i++;
-	}
-	printf("\n");
-	return (0);
-}
+int		expand_wildcards(t_env *env, t_lexer *lexer);
+int		get_matching_filenames(t_env *env, t_lexer *fnames, t_lexer_tok *tok);
+int		fill_pattern(t_lexer *pattern, char *raw_pattern);
+int		is_wildcard_match(t_lexer *pattern, char *raw_pattern, char *f_name);
+void	sort_filenames(t_lexer *filenames);
+
+#endif

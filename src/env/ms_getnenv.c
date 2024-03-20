@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   getnenv.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 04:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/11 05:13:22 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/20 01:29:34 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/20 01:30:24 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "env.h"
+#include "hashmap.h"
 
-# include "lexer.h"
-
-int	validate_input(t_lexer *lexer);
-
-#endif
+char	*ms_getnenv(t_env *env, char *key, size_t n)
+{
+	return (getvaluen_hashmap(env, key, n));
+}

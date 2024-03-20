@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 02:03:00 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:49:21 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "lexer.h"
 #include "expander.h"
 #include "ft_string.h"
+#include "util.h"
 #include <stdlib.h>
 
 static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s);

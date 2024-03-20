@@ -9,7 +9,6 @@ SRC = \
 	  expander/add_escaping.c \
 	  expander/expand_substring.c \
 	  expander/expand_tokens.c \
-	  expander/next_char.c \
 	  expander/treat_noquote.c \
 	  \
 	  lexer/init_lexer.c \
@@ -24,6 +23,8 @@ SRC = \
 	  lexer/char_filter/to_next_quote.c \
 	  \
 	  parser/validate_input.c \
+	  \
+	  util/next_char.c \
 	  \
 	  wildcard/expand_wildcards.c \
 	  wildcard/fill_pattern.c \

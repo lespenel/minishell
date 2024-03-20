@@ -6,17 +6,18 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 01:31:03 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:49:10 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "minishell.h"
 #include "lexer.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include "ft_string.h"
 #include "expander.h"
+#include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s);

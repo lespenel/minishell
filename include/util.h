@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   to_next_quote.c                                    :+:      :+:    :+:   */
+/*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 13:15:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 02:47:46 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/20 02:47:04 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <util.h>
+#ifndef UTIL_H
+# define UTIL_H
 
-int	to_next_quote(char *s)
-{
-	ssize_t	i;
-	char	c;
+#include <stddef.h>
 
-	i = 0;
-	c = s[i];
-	while (s[i])
-	{
-		++i;
-		if (s[i] == c)
-			return (i);
-	}
-	return (0);
-}
+size_t	next_char(char *s, size_t i);
+
+#endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_vector.c                                    :+:      :+:    :+:   */
+/*   add_vector.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 09:19:23 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/28 01:06:38 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:02:24 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	add_vector(t_vector *this, const void *data, size_t count)
 {
 	size_t	currentelem;
 
-	if (count == 0)
-		return (-1);
 	while (this->size + count >= this->allocated)
 	{
 		set_alloc_size(this, count);

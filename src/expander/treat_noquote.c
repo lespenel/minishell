@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 01:31:16 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:03:00 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 	{
 		if (s[i] == '$')
 		{
-			if (i - j > 0 && add_vector(new, s + j, i - j) == -1)
+			if (add_vector(new, s + j, i - j) == -1)
 				return (-1);
 			++i;
 			j = nq_variable(ms, lex, new, s + i);
@@ -44,7 +44,7 @@ ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 		else
 			i = next_char(s, i);
 	}
-	if (i - j > 0 && add_vector(new, s + j, i - j) == -1)
+	if (add_vector(new, s + j, i - j) == -1)
 		return (-1);
 	return (i);
 }

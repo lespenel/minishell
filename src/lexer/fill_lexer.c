@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 04:05:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/20 04:31:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "lexer.h"
 #include "vector.h"
 #include "util.h"
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -76,6 +77,7 @@ static ssize_t	add_word_tok(t_lexer *lexer, char *s)
 static ssize_t	get_word_size(char *s)
 {
 	size_t		i;
+	ssize_t		j;
 	ssize_t		ret;
 
 	i = next_char(s, -1);
@@ -92,7 +94,10 @@ static ssize_t	get_word_size(char *s)
 	}
 	if (i > 0 && s[i - 1] == '\\')
 	{
-		if (i == 1 || s[i - 2] != '\\')
+		j = i - 1;
+		while (j >= 0 && s[j] == '\\')
+			--j;
+		if ((i - 1 - j) % 2)
 			return (-1);
 	}
 	return (i);

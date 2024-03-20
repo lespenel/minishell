@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 01:01:46 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:12:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	expand_word(t_ms *minishell, t_lexer *lexer, size_t i)
 		if (wlen == -1)
 		{
 			free(word);
-			clear_vector(&newlexer);
+			clear_lexer(&newlexer);
 			clear_vector(&newstring);
 			return (-1);
 		}

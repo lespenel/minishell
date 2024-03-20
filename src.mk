@@ -25,6 +25,8 @@ SRC = \
 	  \
 	  parser/validate_input.c \
 	  \
+	  quote_removal/quote_removal.c \
+	  \
 	  wildcard/expand_wildcards.c \
 	  wildcard/fill_pattern.c \
 	  wildcard/get_matching_filenames.c \

@@ -24,6 +24,8 @@ SRC = \
 	  \
 	  parser/validate_input.c \
 	  \
+	  quote_removal/quote_removal.c \
+    \
 	  util/next_char.c \
 	  \
 	  wildcard/expand_wildcards.c \

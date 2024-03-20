@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/17 19:37:29 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 01:01:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "ft_string.h"
 #include "minishell.h"
 #include "vector.h"
 #include "expander.h"
 
-static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i);
+static int	expand_word(t_ms *minishell, t_lexer *lexer, size_t i);
 static int	merge_lex(t_lexer *lexer, t_lexer *newl, t_vector *news, size_t i);
 
-int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
+int	expand_tokens(t_ms *minishell, t_lexer *lexer)
 {
 	size_t		i;
 	ssize_t		res;
@@ -45,7 +44,7 @@ int	expand_tokens(t_minishell *minishell, t_lexer *lexer)
 	return (0);
 }
 
-static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
+static int	expand_word(t_ms *minishell, t_lexer *lexer, size_t i)
 {
 	char		*word;
 	ssize_t		wlen;
@@ -60,15 +59,17 @@ static int	expand_word(t_minishell *minishell, t_lexer *lexer, size_t i)
 	j = 0;
 	while (word[j])
 	{
-		wlen = expand_substring(minishell, &newlexer, &newstring, word + j);
+		wlen = expand_substr(minishell, &newlexer, &newstring, word + j);
 		if (wlen == -1)
 		{
+			free(word);
 			clear_vector(&newlexer);
 			clear_vector(&newstring);
 			return (-1);
 		}
 		j += wlen;
 	}
+	free(word);
 	return (merge_lex(lexer, &newlexer, &newstring, i));
 }
 

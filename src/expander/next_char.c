@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   next_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 00:40:51 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/19 22:42:30 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/19 22:45:22 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <stddef.h>
 
-# include "env.h"
-
-typedef struct s_ms
+size_t	next_char(char *s, size_t i)
 {
-	t_env	env;
-}	t_ms;
-
-#endif
+	++i;
+	while (s[i] == '\\')
+	{
+		++i;
+		if (s[i] == '\0')
+			return (i);
+		++i;
+	}
+	return (i);
+}

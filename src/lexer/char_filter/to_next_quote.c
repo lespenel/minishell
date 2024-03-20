@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:15:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 02:47:46 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:54:28 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	to_next_quote(char *s)
 	c = s[i];
 	while (s[i])
 	{
-		++i;
+		i = next_char(s, i);
 		if (s[i] == c)
 			return (i);
 	}

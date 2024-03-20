@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 13:06:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/20 04:05:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "lexer.h"
 #include "vector.h"
+#include "util.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -77,7 +78,7 @@ static ssize_t	get_word_size(char *s)
 	size_t		i;
 	ssize_t		ret;
 
-	i = 0;
+	i = next_char(s, -1);
 	while (s[i] && is_word(s[i]))
 	{
 		if (is_quote(s[i]))
@@ -87,7 +88,12 @@ static ssize_t	get_word_size(char *s)
 				return (-1);
 			i += ret;
 		}
-		++i;
+		i = next_char(s, i);
+	}
+	if (i > 0 && s[i - 1] == '\\')
+	{
+		if (i == 1 || s[i - 2] != '\\')
+			return (-1);
 	}
 	return (i);
 }

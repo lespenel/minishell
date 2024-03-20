@@ -6,14 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 02:47:04 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/20 04:05:53 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTIL_H
 # define UTIL_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 size_t	next_char(char *s, size_t i);
 

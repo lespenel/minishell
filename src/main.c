@@ -6,14 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 01:33:10 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/20 01:39:21 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "minishell.h"
 #include "lexer.h"
-#include "expander.h"
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
@@ -34,9 +34,7 @@ int	main(int argc, char **argv, char *envp[])
 	input = readline(PROMPT);
 	while (input)
 	{
-		if (parse_input(&ms.env, &lexer, input) == -1)
-			return (-1);
-		if (expand_tokens(&ms, &lexer) == -1)
+		if (parse_input(&ms, &lexer, input) == -1)
 			return (-1);
 		print_lexer(&lexer);
 		clear_lexer(&lexer);

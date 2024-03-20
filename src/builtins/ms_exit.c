@@ -6,11 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 02:05:13 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 06:03:50 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:25:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "ft_char.h"
 #include "ft_string.h"
 #include <stdlib.h>
 #include <limits.h>
@@ -48,11 +49,14 @@ int	ms_exit(t_minishell *minishell, t_lexer *lexer, char **args)
 
 static int	free_exit(t_minishell *ms, t_lexer *lexer, char **args, int ret)
 {
+	int	w;
+
 	clear_lexer(lexer);
 	destroy_env(&ms->env);
 	rl_clear_history();
 	clear_args(args);
-	write(1, "exit\n", 5);
+	w = write(1, "exit\n", 5);
+	(void)w;
 	exit(ret);
 }
 
@@ -62,6 +66,8 @@ static int	get_exit_code(char *nptr)
 	long int		nb;
 	size_t			i;
 
+	while (ft_isspace(*nptr))
+		++nptr;
 	if (len == 20 && ft_strcmp(nptr, "-9223372036854775808") == 0)
 		return (0);
 	i = 0;

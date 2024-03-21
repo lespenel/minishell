@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:57:23 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 07:50:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/21 02:31:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static ssize_t	remove_inquote(t_lexer_tok *token, t_vector *new, size_t i)
 		j = i;
 		while (token->content[i] != '\'')
 			++i;
-		if (add_vector(new, token->content + j, j - i) == -1)
+		if (add_vector(new, token->content + j, i - j) == -1)
 			return (-1);
 		return (i);
 	}

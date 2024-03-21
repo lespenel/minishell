@@ -86,10 +86,13 @@ static ssize_t	remove_inquote(t_lexer_tok *token, t_vector *new, size_t i)
 	return (remove_dquote(token, new, i + 1));
 }
 
+// this is a terrible way to fix this, TODO: remove
 static ssize_t	remove_dquote(t_lexer_tok *token, t_vector *new, size_t i)
 {
 	int	err;
 
+	if (add_vector(new, "", 0) == -1)
+		return (-1);
 	while (token->content[i] != '"')
 	{
 		if (token->content[i] == '\\')

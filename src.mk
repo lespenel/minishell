@@ -6,7 +6,6 @@ SRC = \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
-	  expander/add_escaping.c \
 	  expander/expand_substring.c \
 	  expander/expand_tokens.c \
 	  expander/treat_noquote.c \

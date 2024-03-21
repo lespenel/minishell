@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_alloc_size.c                                   :+:      :+:    :+:   */
+/*   get_ifs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 10:01:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:33:54 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/21 07:28:44 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/21 07:38:30 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include <stddef.h>
+#include "chargroups.h"
+#include "hashmap.h"
+#include "minishell.h"
 
-void	set_alloc_size(t_vector *this, size_t count)
+char	*get_ifs(t_ms *ms)
 {
-	if (this->allocated == 0 || this->size + count >= this->allocated - 1)
-	{
-		if (this->allocated == 0)
-			this->allocated = BASE_ALLOC;
-		else
-			this->allocated *= 2;
-		return ;
-	}
+	char	*ifs;
+
+	ifs = getvalue_hashmap(&ms->env, "IFS");
+	if (ifs == NULL)
+		return (DEFAULT_IFS);
+	return (ifs);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:05:50 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/21 23:13:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include <stdlib.h>
 
 static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s);
-static ssize_t	expand_nq_variable(t_lexer *lex, t_vector *new, char *value);
 static int		add_escaping_nq(t_vector *vector, char *s);
+static ssize_t	expand_nq(t_ms *ms, t_lexer *lex, t_vector *new, char *value);
 static int		add_word_lex(t_lexer *lex, t_vector *word);
 
 ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
@@ -62,21 +62,22 @@ static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 	value = ms_getnenv(&ms->env, s, i);
 	if (value != NULL)
 	{
-		if (expand_nq_variable(lex, new, value) == -1)
+		if (expand_nq(ms, lex, new, value) == -1)
 			return (-1);
 	}
 	return (i);
 }
 
-static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
+static ssize_t	expand_nq(t_ms *ms, t_lexer *lex, t_vector *new, char *value)
 {
+	const char	*ifs = get_ifs(ms);
 	char		*var;
 	char		*tok;
 
 	var = ft_strdup(value);
 	if (var == NULL)
 		return (-1);
-	tok = ft_strtok(var, " ");
+	tok = ft_strtok(var, ifs);
 	while (tok)
 	{
 		if (add_escaping_nq(new, tok) == -1)
@@ -84,8 +85,8 @@ static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
 			free(var);
 			return (-1);
 		}
-		tok = ft_strtok(NULL, " ");
-		if (tok && add_word_lex(lexer, new) == -1)
+		tok = ft_strtok(NULL, ifs);
+		if (tok && add_word_lex(lex, new) == -1)
 		{
 			free(var);
 			return (-1);

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 04:07:12 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:31:56 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "vector.h"
 
-# define METACHAR "|&;()><"
-# define BLANK " \t\n"
 # define SYNTAX_ERR "minishell: syntax error near unexpected token `%s'\n"
 
 typedef enum e_lex_type

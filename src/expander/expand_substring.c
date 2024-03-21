@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 02:49:10 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/21 05:02:15 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s);
+static int		add_escaping_dq(t_vector *vector, char *s);
 
 ssize_t	expand_substr(t_ms *ms, t_lexer *lexer, t_vector *new, char *s)
 {
@@ -79,8 +80,27 @@ static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i)
 	value = ms_getnenv(&ms->env, s + j, i - j);
 	if (value != NULL)
 	{
-		if (add_escaping(new, value) == -1)
+		if (add_escaping_dq(new, value) == -1)
 			return (-1);
 	}
 	return (i);
+}
+
+static int	add_escaping_dq(t_vector *vector, char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (ft_strchr("\\$\"", s[i]))
+		{
+			if (add_vector(vector, "\\", 1) == -1)
+				return (-1);
+		}
+		if (add_vector(vector, s + i, 1) == -1)
+			return (-1);
+		++i;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 02:58:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/21 05:05:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s);
 static ssize_t	expand_nq_variable(t_lexer *lex, t_vector *new, char *value);
+static int		add_escaping_nq(t_vector *vector, char *s);
 static int		add_word_lex(t_lexer *lex, t_vector *word);
 
 ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
@@ -78,7 +79,7 @@ static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
 	tok = ft_strtok(var, " ");
 	while (tok)
 	{
-		if (add_escaping(new, tok) == -1)
+		if (add_escaping_nq(new, tok) == -1)
 		{
 			free(var);
 			return (-1);
@@ -91,6 +92,25 @@ static ssize_t	expand_nq_variable(t_lexer *lexer, t_vector *new, char *value)
 		}
 	}
 	free(var);
+	return (0);
+}
+
+static int	add_escaping_nq(t_vector *vector, char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (ft_strchr("\\'\"", s[i]))
+		{
+			if (add_vector(vector, "\\", 1) == -1)
+				return (-1);
+		}
+		if (add_vector(vector, s + i, 1) == -1)
+			return (-1);
+		++i;
+	}
 	return (0);
 }
 

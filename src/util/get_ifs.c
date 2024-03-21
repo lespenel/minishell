@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_operand.c                                       :+:      :+:    :+:   */
+/*   get_ifs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 13:13:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/21 07:33:30 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/21 07:28:44 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/21 07:38:30 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
 #include "chargroups.h"
-#include "lexer.h"
+#include "hashmap.h"
+#include "minishell.h"
 
-inline int	is_operand(char c)
+char	*get_ifs(t_ms *ms)
 {
-	return (ft_strchr(METACHAR, c) != NULL);
+	char	*ifs;
+
+	ifs = getvalue_hashmap(&ms->env, "IFS");
+	if (ifs == NULL)
+		return (DEFAULT_IFS);
+	return (ifs);
 }

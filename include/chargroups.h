@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_operand.c                                       :+:      :+:    :+:   */
+/*   chargroups.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 13:13:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/21 07:33:30 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/21 07:32:01 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/21 07:32:22 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
-#include "chargroups.h"
-#include "lexer.h"
+#ifndef CHARGROUPS_H
+# define CHARGROUPS_H
 
-inline int	is_operand(char c)
-{
-	return (ft_strchr(METACHAR, c) != NULL);
-}
+# define METACHAR "|&;()><"
+# define DEFAULT_IFS " \t\n"
+
+#endif

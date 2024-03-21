@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 10:20:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:26:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "wildcard.h"
 #include <dirent.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-static int	add_match_tok(t_lexer *filenames, char *s);
+static int	add_word_tok(t_lexer *filenames, char *s);
 static int	get_files_ls(t_env *env, t_lexer *matches);
 static int	get_match(t_lexer *filenames, t_lexer *pattern, char *r_pattern);
 static int	is_wildcard_in_pattern(t_lexer *pattern);
@@ -32,7 +33,8 @@ int	get_matching_filenames(t_env *env, t_lexer *filenames, t_lexer_tok *token)
 		clear_lexer(filenames);
 		return (-1);
 	}
-	if (fill_pattern(&pattern, token->content) == -1)
+	if (fill_pattern(&pattern, token->content) == -1
+		|| remove_backslash(&pattern) == -1)
 	{
 		clear_lexer(&pattern);
 		clear_lexer(filenames);
@@ -93,7 +95,7 @@ static int	get_files_ls(t_env *env, t_lexer *filenames)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (add_match_tok(filenames, entry->d_name) == -1)
+		if (add_word_tok(filenames, entry->d_name) == -1)
 		{
 			closedir(dir);
 			return (-1);
@@ -120,7 +122,7 @@ static int	is_wildcard_in_pattern(t_lexer *pattern)
 	return (0);
 }
 
-static int	add_match_tok(t_lexer *matches, char *s)
+static int	add_word_tok(t_lexer *matches, char *s)
 {
 	t_lexer_tok	token;
 

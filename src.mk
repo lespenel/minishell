@@ -25,13 +25,15 @@ SRC = \
 	  parser/validate_input.c \
 	  \
 	  quote_removal/quote_removal.c \
-    \
+	  \
 	  util/next_char.c \
 	  \
+	  wildcard/add_match_tok.c \
 	  wildcard/expand_wildcards.c \
 	  wildcard/fill_pattern.c \
 	  wildcard/get_matching_filenames.c \
 	  wildcard/is_wildcard_match.c \
+	  wildcard/remove_backslash.c \
 	  wildcard/sort_filenames.c \
 	  \
 	  main.c \

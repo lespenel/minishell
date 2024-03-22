@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/21 07:31:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/22 01:47:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,18 @@ typedef enum e_lex_type
 	REDIRECT_OUT,
 	NEWLINE,
 	WORD,
+	SUBSHELL
 }	t_lex_type;
+
+typedef t_vector	t_lexer;
 
 typedef struct s_lexer_tok
 {
-	char		*content;
 	t_lex_type	type;
+	char		*content;
+	t_lexer		subshell;
 }	t_lexer_tok;
 
-typedef t_vector	t_lexer;
 
 void	init_lexer(t_lexer *lexer);
 int		clear_lexer(t_lexer *lexer);

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/22 03:02:11 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/22 03:03:53 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ static int	create_subshell(t_lexer *lexer, t_lexer_tok *shtoken, size_t i)
 	t_lexer_tok	newtoken;
 	t_lexer		subshell;
 
-	dprintf(2, "emter subshell crea\n");
 	++i;
 	init_lexer(&subshell);
 	token = at_vector(lexer, i);
 	while (token->type != CLOSE_BRACE)
 	{
-		dprintf(2, "creating subshell tok=%d content=%s\n", token->type, token->content);
 		if (token->type == OPEN_BRACE)
 		{
 			newtoken.type = SUBSHELL;
@@ -68,6 +66,5 @@ static int	create_subshell(t_lexer *lexer, t_lexer_tok *shtoken, size_t i)
 	}
 	remove_vector(lexer, i);
 	shtoken->subshell = subshell;
-	dprintf(2, "exit subshell crea\n");
 	return (0);
 }

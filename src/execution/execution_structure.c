@@ -6,19 +6,17 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/22 05:37:48 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/23 05:56:57 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "vector.h"
-#include "ft_mem.h"
-#include <stdio.h>
+#include "execution.h"
 
 static int	create_subshells(t_lexer *lexer);
 static int	fill_newtoken(t_lexer *lexer, size_t i, t_lexer_tok *newtoken);
 static int	create_subshell(t_lexer *lexer, t_lexer_tok *shtoken, size_t i);
-static int	simplify_tokens(t_lexer *lexer);
 
 int	execution_structure(t_lexer *lexer)
 {
@@ -88,20 +86,5 @@ static int	fill_newtoken(t_lexer *lexer, size_t i, t_lexer_tok *newtoken)
 	}
 	else
 		*newtoken = *((t_lexer_tok *)at_vector(lexer, i));
-	return (0);
-}
-
-static int	simplify_tokens(t_lexer *lexer)
-{
-	size_t		i;
-	t_lexer_tok	cmd;
-
-	ft_memset(&cmd, 0, sizeof(t_lexer_tok));
-	cmd.type = COMMAND;
-	i = 0;
-	while (i < lexer->size)
-	{
-		++i;
-	}
 	return (0);
 }

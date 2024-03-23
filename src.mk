@@ -7,6 +7,7 @@ SRC = \
 	  env/print_env.c \
 	  \
 	  execution/execution_structure.c \
+	  execution/simplify_tokens.c \
 	  \
 	  expander/expand_substring.c \
 	  expander/expand_tokens.c \

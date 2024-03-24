@@ -26,15 +26,24 @@ SRC = \
 	  quote_removal/quote_removal.c \
  	  \
 	  util/get_ifs.c \
+	  util/ms_strchr.c \
 	  util/next_char.c \
 	  \
+	  wildcard/pattern/fill_pattern.c \
+	  wildcard/pattern/create_pattern.c \
+	  wildcard/pattern/create_file_pattern.c \
+	  wildcard/pattern/create_dir_pattern.c \
+	  wildcard/pattern/remove_backslash.c \
 	  wildcard/add_match_tok.c \
+	  wildcard/compare_pattern.c \
+	  wildcard/get_file_ls.c \
 	  wildcard/expand_wildcards.c \
-	  wildcard/fill_pattern.c \
+	  wildcard/get_dir_ls.c \
+	  wildcard/get_matching_dirname.c \
 	  wildcard/get_matching_filenames.c \
 	  wildcard/is_wildcard_match.c \
-	  wildcard/remove_backslash.c \
 	  wildcard/sort_filenames.c \
+	  wildcard/wildcard_handling.c \
 	  \
 	  main.c \
 	  parse_input.c \

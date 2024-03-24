@@ -6,11 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 06:33:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:22:48 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "util.h"
 #include "lexer.h"
 #include "vector.h"
 #include "wildcard.h"
@@ -26,12 +27,14 @@ int	expand_wildcards(t_env *env, t_lexer *lexer)
 	t_lexer_tok	*token;
 
 	i = 0;
+	(void)env;
+	init_lexer(&file_names);
 	while (i < lexer->size)
 	{
 		token = at_vector(lexer, i);
-		if (token->type == WORD && ft_strchr(token->content, '*'))
+		if (token->type == WORD && ms_strchr(token->content, '*'))
 		{
-			if (get_matching_filenames(env, &file_names, token) == -1)
+			if (wildcard_handling(&file_names, token->content) == -1)
 				return (-1);
 			ret = add_filename_lexer(lexer, &file_names, i);
 			if (ret == -1)

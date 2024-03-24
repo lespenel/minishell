@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:49:33 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:53:49 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-DIR	*get_file_path(char *path);
+DIR	*get_file_path(t_wildcard *wild, char *path);
 
 int	is_file(char *s)
 {
@@ -49,8 +49,7 @@ int	get_files_ls(t_wildcard *wildcard, t_lexer *fname, char *path)
 	DIR				*dir;
 	struct dirent	*entry;
 
-	(void)wildcard;
-	dir = get_file_path(path);
+	dir = get_file_path(wildcard, path);
 	if (dir == NULL)
 	{
 		perror("opendir");
@@ -75,12 +74,13 @@ int	get_files_ls(t_wildcard *wildcard, t_lexer *fname, char *path)
 	return (0);
 }
 
-DIR	*get_file_path(char *path)
+DIR	*get_file_path(t_wildcard *wild, char *path)
 {
 	char 			*wd;
 	char			*new_wd;
 	DIR				*dir;
 
+	(void)wild;
 	wd = getcwd(NULL, 0);
 	if (wd == NULL)
 		return (NULL);

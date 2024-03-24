@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 20:55:09 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:52:42 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 	ft_memset(&wildcard, 0, sizeof(t_wildcard));
 	init_vector(&wildcard.patterns, sizeof(t_pattern));
 	init_lexer(filenames);
+	wildcard.wd = NULL;
 	wildcard.globignore = ms_getenv(env, "GLOBIGNORE");
 	if (create_pattern(&wildcard, raw_pattern) == -1)
 	{

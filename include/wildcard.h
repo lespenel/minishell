@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:50:28 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:52:21 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_wildcard
 {
 	t_vector	patterns;
 	int			nb_dir;
+	char		*wd;
 	char		*globignore;
 }	t_wildcard;
 

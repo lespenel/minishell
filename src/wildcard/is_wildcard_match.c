@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:47:01 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:58:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	is_wildcard_match(t_wildcard *wild, t_lexer *pattern, char *f_name)
 
 static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 {
-	(void)pattern;
+	t_lexer_tok	*tok;
+
+	tok = at_vector(pattern, 0);
 	printf("globignore = %s\n", globignore);
 	if (ft_strcmp(f_name, ".") == 0)
 		return (0);
@@ -41,7 +43,7 @@ static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 		return (0);
 	if (globignore)
 		return (1);
-	if (f_name[0] == '.')
+	if (f_name[0] == '.' && tok->content[0] != '.')
 		return (0);
 	return (1);
 }
@@ -58,7 +60,7 @@ static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 	{
 	printf("to finde = %s, fname = %s\n", tok->content, f_name);
 		len = ft_strlen(tok->content);
-		if (ft_strncmp(tok->content, f_name, len - 1))
+		if (ft_strncmp(tok->content, f_name, len))
 			return (0);
 		printf("len = %ld\n", len);
 		f_name += len;

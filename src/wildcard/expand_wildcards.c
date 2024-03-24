@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 10:22:48 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:13:23 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	expand_wildcards(t_env *env, t_lexer *lexer)
 		token = at_vector(lexer, i);
 		if (token->type == WORD && ms_strchr(token->content, '*'))
 		{
-			if (wildcard_handling(&file_names, token->content) == -1)
+			if (wildcard_handling(env, &file_names, token->content) == -1)
 				return (-1);
 			ret = add_filename_lexer(lexer, &file_names, i);
 			if (ret == -1)

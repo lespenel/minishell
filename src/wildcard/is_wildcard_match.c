@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 15:47:05 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:59:41 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,31 @@
 static int	compare_pattern_filenames(t_lexer *pattern, char *f_name);
 static char	*midlle_pattern(t_lexer *pattern, char *f_name);
 static int	check_end_pattern(char *to_find, char *f_name);
-//static int	hidden_file(char *raw_pattern, char *f_name);
+static int	hidden_file(t_lexer *pattern, char *f_name, char *gignore);
 
-int	is_wildcard_match(t_lexer *pattern, char *f_name)
+int	is_wildcard_match(char *gignore, t_lexer *pattern, char *f_name)
 {
-//	if (hidden_file(raw_pattern, f_name) == 0)
-//		return (0);
+	if (hidden_file(pattern, f_name, gignore) == 0)
+		return (0);
 	if (compare_pattern_filenames(pattern, f_name) == 1)
 		return (1);
 	return (0);
 }
-/*
-static int	hidden_file(char *raw_pattern, char *f_name)
+
+static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 {
+	(void)pattern;
+	printf("globignore = %s\n", globignore);
 	if (ft_strcmp(f_name, ".") == 0)
 		return (0);
 	if (ft_strcmp(f_name, "..") == 0)
 		return (0);
-	if (raw_pattern[0] != '.' && f_name[0] == '.')
+	if (globignore)
+		return (1);
+	if (f_name[0] == '.')
 		return (0);
 	return (1);
-}*/
+}
 
 static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 {

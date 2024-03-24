@@ -6,10 +6,11 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 16:05:17 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:55:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env.h"
 #include "lexer.h"
 #include "ft_mem.h"
 #include "vector.h"
@@ -47,13 +48,14 @@ void	clear_wildcard(t_wildcard *wildcard)
 	clear_vector(&wildcard->patterns);
 }
 
-int	wildcard_handling(t_lexer *filenames, char *raw_pattern)
+int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 {
 	t_wildcard	wildcard;
 
 	ft_memset(&wildcard, 0, sizeof(t_wildcard));
 	init_vector(&wildcard.patterns, sizeof(t_pattern));
 	init_lexer(filenames);
+	wildcard.globignore = ms_getenv(env, "GLOBIGNORE");
 	if (create_pattern(&wildcard, raw_pattern) == -1)
 	{
 		clear_wildcard(&wildcard);

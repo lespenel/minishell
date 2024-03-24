@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 20:19:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:50:01 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ int	add_dir_tok(t_lexer *filenames, char *s, int directory)
 		return (-1);
 	return (0);
 }
-int	get_dir_ls(t_lexer *filenames, char *path)
+int	get_dir_ls(t_wildcard *wildcard, t_lexer *filenames, char *path)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 
+	(void)wildcard;
 	dir = get_dir_path(path);
 	if (dir == NULL)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 13:52:48 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:10:23 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,34 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	add_file_tok(t_lexer *filenames, char *s, int directory)
+int	add_file_tok(t_lexer *filenames, char *s)
 {
 	t_lexer_tok	token;
 
-	if (ft_strcmp("..", s) == 0 || ft_strcmp(".", s) == 0)
-		return (0);
-	if (s[0] == '.')
-		return (0);
-	if (directory)
-		token.content = ft_strjoin(s, "/");
-	else
-		token.content = ft_strdup(s);
+	token.content = ft_strdup(s);
 	if (token.content == NULL)
 		return (-1);
-	if (directory)
-		token.type = 5;
-	else
-		token.type = WORD;
-	printf("file_tok content = %s\n", token.content);
+	token.type = WORD;
 	if (add_vector(filenames, &token, 1) == -1)
 		return (-1);
 	return (0);
 }
 
-int	get_files_ls(t_env *env, t_lexer *filenames)
+int	get_files_ls(t_lexer *filenames, char *path)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 	char			*wd;
 
-	(void)env;
 	wd = getcwd(NULL, 0);
 	if (wd == NULL)
 		return (-1);
+	if (path)
+	{
+		wd = ft_strjoin_three(wd, "/", path);
+		if (wd == NULL)
+			return (-1);
+	}
 	dir = opendir(wd);
 	if (dir == NULL)
 	{
@@ -61,7 +55,7 @@ int	get_files_ls(t_env *env, t_lexer *filenames)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (add_file_tok(filenames, entry->d_name, 0) == -1)
+		if (add_file_tok(filenames, entry->d_name) == -1)
 		{
 			closedir(dir);
 			return (-1);

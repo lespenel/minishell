@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 14:40:57 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:05:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	wildcard_handling(t_lexer *filenames, char *raw_pattern)
 	print_pattern(&wildcard);
 	if (compare_pattern(&wildcard, filenames) == -1)
 		return (-1);
+	sort_filenames(filenames);
 	print_lexer(filenames);
 	clear_wildcard(&wildcard);
 	(void)filenames;

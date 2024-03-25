@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:58:12 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:18:59 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 	t_lexer_tok	*tok;
 
 	tok = at_vector(pattern, 0);
-	printf("globignore = %s\n", globignore);
 	if (ft_strcmp(f_name, ".") == 0)
 		return (0);
 	if (ft_strcmp(f_name, "..") == 0)
@@ -58,11 +57,9 @@ static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 		return (0);
 	if (tok->type == WORD)
 	{
-	printf("to finde = %s, fname = %s\n", tok->content, f_name);
 		len = ft_strlen(tok->content);
 		if (ft_strncmp(tok->content, f_name, len))
 			return (0);
-		printf("len = %ld\n", len);
 		f_name += len;
 	}
 	if (pattern->size == 1)
@@ -72,7 +69,7 @@ static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 		return (0);
 	tok = at_vector(pattern, pattern->size - 1);
 	if (tok->type == 0)
-		return (printf("oui"), 1);
+		return (1);
 	if (check_end_pattern(tok->content, f_name) == 1)
 		return (1);
 	return (0);

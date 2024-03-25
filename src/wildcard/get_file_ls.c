@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:53:49 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:27:20 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,32 @@ int	add_file_tok(t_lexer *filenames, char *s)
 	return (0);
 }
 
-int	get_files_ls(t_wildcard *wildcard, t_lexer *fname, char *path)
+int	get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path)
 {
 	DIR				*dir;
 	struct dirent	*entry;
+	char			*tmp;
 
-	dir = get_file_path(wildcard, path);
+	dir = get_file_path(w, path);
 	if (dir == NULL)
-	{
-		perror("opendir");
 		return (-1);
-	}
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (is_file(entry->d_name) && path)
+		if (is_file(entry->d_name) && is_wildcard_match(w, pattern, entry->d_name))
 		{
-			if (add_file_tok(fname, ft_strjoin(path, entry->d_name)) == -1)
+			tmp = entry->d_name;
+			if (path)
+			{
+				tmp = ft_strjoin(path, entry->d_name);
+				if (path == NULL)
+					return (-1);
+			}
+			if (add_file_tok(fname, tmp) == -1)
+			{
+				closedir(dir);
 				return (-1);
-		}
-		else if (is_file(entry->d_name) && add_file_tok(fname, entry->d_name) == -1)
-		{
-			closedir(dir);
-			return (-1);
+			}
 		}
 		entry = readdir(dir);
 	}
@@ -77,7 +80,6 @@ int	get_files_ls(t_wildcard *wildcard, t_lexer *fname, char *path)
 DIR	*get_file_path(t_wildcard *wild, char *path)
 {
 	char 			*wd;
-	char			*new_wd;
 	DIR				*dir;
 
 	(void)wild;
@@ -86,15 +88,11 @@ DIR	*get_file_path(t_wildcard *wild, char *path)
 		return (NULL);
 	if (path)
 	{
-		new_wd = ft_strjoin_three(wd, "/", path);
-		free(wd);
-		if (new_wd == NULL)
+		wd = ft_strjoin_three(wd, "/", path);
+		if (wd == NULL)
 			return (NULL);
 	}
-	else
-		new_wd = wd;
-	printf("wd = %s\n", new_wd);
-	dir = opendir(new_wd);
-	free(new_wd);
+	printf("wd = %s\n", wd);
+	dir = opendir(wd);
 	return (dir);
 }

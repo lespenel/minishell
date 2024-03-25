@@ -6,7 +6,10 @@ SRC = \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  execution/execute_commands.c \
 	  execution/execution_structure.c \
+	  execution/get_path.c \
+	  execution/perform_redirections.c \
 	  execution/simplify_tokens.c \
 	  \
 	  expander/expand_substring.c \
@@ -17,6 +20,7 @@ SRC = \
 	  lexer/fill_lexer.c \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
+	  lexer/clear_token.c \
 	  lexer/add_newline_tok.c \
 	  lexer/char_filter/is_blank.c \
 	  lexer/char_filter/is_operand.c \

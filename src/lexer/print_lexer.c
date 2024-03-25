@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 21:43:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/23 23:37:35 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/25 07:03:58 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static void	print_command(t_lexer_tok *token)
 	while (i < token->redirections.size)
 	{
 		redirection = at_vector(&token->redirections, i);
-		printf("redir[%ld]={type=%d, file=%s, fd=%d}\n", i, redirection->type, redirection->file, redirection->fd);
+		printf("redir[%ld]={type=%d, file=%s}\n", i, redirection->type,
+			redirection->file);
 		++i;
 	}
 	printf("exit command\n");

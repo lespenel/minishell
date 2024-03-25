@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 01:39:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/25 06:47:35 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int argc, char **argv, char *envp[])
 	{
 		if (parse_input(&ms, &lexer, input) == -1)
 			return (-1);
-		print_lexer(&lexer);
 		clear_lexer(&lexer);
 		add_history(input);
 		free(input);

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/23 23:25:47 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/24 23:26:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum e_lex_type
 
 typedef t_vector	t_lexer;
 
-typedef struct s_redirection 
+typedef struct s_redirection
 {
 	t_lex_type	type;
 	char		*file;
@@ -53,6 +53,7 @@ typedef struct s_lexer_tok
 }	t_lexer_tok;
 
 void	init_lexer(t_lexer *lexer);
+void	clear_token(t_lexer_tok *token);
 int		clear_lexer(t_lexer *lexer);
 int		fill_lexer(t_lexer *lexer, char *s);
 int		add_newline_tok(t_lexer *lexer);

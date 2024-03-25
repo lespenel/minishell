@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/23 05:56:57 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/25 01:15:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static int	create_subshell(t_lexer *lexer, t_lexer_tok *shtoken, size_t i)
 			return (-1);
 		}
 		if (add_vector(&subshell, &newtoken, 1) == -1)
+		{
+			clear_lexer(&subshell);
 			return (-1);
+		}
 		remove_vector(lexer, i);
 		token = at_vector(lexer, i);
 	}
@@ -79,10 +82,7 @@ static int	fill_newtoken(t_lexer *lexer, size_t i, t_lexer_tok *newtoken)
 	if (token->type == OPEN_BRACE)
 	{
 		if (create_subshell(lexer, newtoken, i + 1) == -1)
-		{
-			clear_lexer(lexer);
 			return (-1);
-		}
 	}
 	else
 		*newtoken = *((t_lexer_tok *)at_vector(lexer, i));

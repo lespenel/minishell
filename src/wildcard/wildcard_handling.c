@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:52:42 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:13:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_pattern(t_wildcard *wildcard)
 	{
 		pattern = at_vector(&wildcard->patterns, i);
 		print_lexer(&pattern->pattern);
-		printf("lexer_type = %d", pattern->type);
+		printf("lexer_type = %d\n", pattern->type);
 		++i;
 	}
 }
@@ -64,9 +64,11 @@ int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 	}
 	print_pattern(&wildcard);
 	if (compare_pattern(&wildcard, filenames) == -1)
+	{
+		clear_wildcard(&wildcard);
 		return (-1);
+	}
 	sort_filenames(filenames);
-	print_lexer(filenames);
 	clear_wildcard(&wildcard);
 	(void)filenames;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:45:40 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 22:35:21 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,21 @@ DIR	*get_dir_path(t_wildcard *wild, char *path)
 	DIR				*dir;
 
 	(void)wild;
-	wd = getcwd(NULL, 0);
+	wd = ft_strdup(wild->wd);
 	if (wd == NULL)
 		return (NULL);
 	if (path)
 	{
-		wd = ft_strjoin_three(wd, "/", path);
-		if (wd == NULL)
-			return (NULL);
+		if (wild->wd[ft_strlen(wild->wd) -1] == '/')
+		{
+			wd = ft_strjoin(wd, path);
+		}
+		else
+		{
+			wd = ft_strjoin_three(wd, "/", path);
+			if (wd == NULL)
+				return (NULL);
+		}
 	}
 	printf("wd = %s\n", wd);
 	dir = opendir(wd);

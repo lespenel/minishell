@@ -49,6 +49,8 @@ SRC = \
 	  string/ft_strlen.c \
 	  string/ft_strcmp.c \
 	  string/ft_strcpy.c \
+	  string/ft_strjoin_fs1.c \
+	  string/ft_strjoin_fs2.c \
 	  string/ft_strncpy.c \
 	  string/ft_strncmp.c \
 	  string/ft_strndup.c \

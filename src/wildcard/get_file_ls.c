@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:27:20 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:11:27 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path)
 
 	dir = get_file_path(w, path);
 	if (dir == NULL)
-		return (-1);
+		return (0);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
@@ -83,14 +83,21 @@ DIR	*get_file_path(t_wildcard *wild, char *path)
 	DIR				*dir;
 
 	(void)wild;
-	wd = getcwd(NULL, 0);
+	wd = ft_strdup(wild->wd);
 	if (wd == NULL)
 		return (NULL);
 	if (path)
 	{
-		wd = ft_strjoin_three(wd, "/", path);
-		if (wd == NULL)
-			return (NULL);
+		if (wild->wd[ft_strlen(wild->wd) -1] == '/')
+		{
+			wd = ft_strjoin(wd, path);
+		}
+		else
+		{
+			wd = ft_strjoin_three(wd, "/", path);
+			if (wd == NULL)
+				return (NULL);
+		}
 	}
 	printf("wd = %s\n", wd);
 	dir = opendir(wd);

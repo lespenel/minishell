@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 05:53:10 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 07:40:01 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/25 23:08:02 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strjoin_three(const char *s1, const char *s2, const char *s3);
+char	*ft_strjoin_fs1(char *s1, const char *s2);
+char	*ft_strjoin_fs2(const char *s1, char *s2);
 char	*ft_strrchr(const char *s, int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strncpy(char *dest, const char *src, size_t n);

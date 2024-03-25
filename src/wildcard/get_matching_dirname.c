@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:23:45 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:32:21 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:43:43 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	get_matching_dirname(t_wildcard *wild, t_lexer *filenames, int nb_dir)
 	if (nb_dir == wild->nb_dir || wild->nb_dir == 0)
 		return (0);
 	pattern = at_vector(&wild->patterns, nb_dir);
+	printf("nb_dir = %d\n", nb_dir);
 	if (nb_dir == 0)
 	{
 		if (get_dir_ls(wild, &pattern->pattern, filenames, NULL) == -1)
@@ -38,18 +39,15 @@ int	for_each_dir(t_wildcard *wild, t_pattern *pattern, t_lexer *filenames)
 {
 	t_lexer_tok	*tok;
 	size_t		i;
-	size_t		old_size;
 	t_lexer		new_dir_lst; 
 
 	i = 0;
-	old_size = filenames->size;
 	init_lexer(&new_dir_lst);
-	while (i < old_size)
+	while (i < filenames->size)
 	{
 	  	tok = at_vector(filenames, i);
 		if (get_dir_ls(wild, &pattern->pattern, &new_dir_lst, tok->content) == -1)
 			return (-1);
-		print_lexer(filenames);
 		++i;
 	}
 	clear_lexer(filenames);

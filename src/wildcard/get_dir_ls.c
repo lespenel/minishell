@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:19:37 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:45:40 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_dir_ls(t_wildcard *w, t_lexer *pattern, t_lexer *filenames, char *path)
 			if (path)
 			{
 				free(tmp);
-				tmp = ft_strjoin(path, entry->d_name);
+				tmp = ft_strjoin_three(path, entry->d_name, "/");
 				if (path == NULL)
 					return (-1);
 			}

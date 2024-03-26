@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:22:00 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 05:22:30 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:15:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "wildcard.h"
 #include <dirent.h>
 
-DIR	*get_dir_path(t_wildcard *wild, char *path)
+DIR	*get_dir_path(t_wild *wild, char *path)
 {
-	char 			*wd;
-	DIR				*dir;
+	char	*wd;
+	DIR		*dir;
 
 	wd = ft_strdup(wild->wd);
 	if (wd == NULL)

@@ -6,17 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 00:26:54 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:14:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
 #include "util.h"
-#include "lexer.h"
-#include "vector.h"
 #include "wildcard.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static ssize_t	add_filename_lexer(t_lexer *lex, t_lexer *fnames, ssize_t i);
 
@@ -28,7 +25,6 @@ int	expand_wildcards(t_env *env, t_lexer *lexer)
 	t_lexer_tok	*token;
 
 	i = 0;
-	(void)env;
 	init_lexer(&file_names);
 	while (i < lexer->size)
 	{

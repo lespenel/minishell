@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 04:50:30 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/26 07:14:27 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 		return (clear_lexer(lexer));
 	if (expand_tokens(ms, lexer) == -1)
 		return (-1);
-	print_lexer(lexer);
 	if (expand_wildcards(&ms->env, lexer) == -1)
 		return (-1);
 	if (quote_removal(lexer) == -1)

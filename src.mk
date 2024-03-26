@@ -35,6 +35,7 @@ SRC = \
 	  wildcard/pattern/create_file_pattern.c \
 	  wildcard/pattern/create_dir_pattern.c \
 	  wildcard/pattern/remove_backslash.c \
+	  wildcard/add_file_tok.c \
 	  wildcard/add_match_tok.c \
 	  wildcard/get_dir_path.c \
 	  wildcard/compare_globignore.c \

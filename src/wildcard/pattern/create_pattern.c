@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:57:29 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 03:14:49 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:54:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "wildcard.h"
 
 static int	get_dir_nb(t_lexer *first_pattern);
-static int	split_pattern(t_wildcard *wildcard, t_lexer *first_pattern);
+static int	split_pattern(t_wild *wildcard, t_lexer *first_pattern);
 
-int	create_pattern(t_wildcard *wildcard, char *raw_pattern)
+int	create_pattern(t_wild *wildcard, char *raw_pattern)
 {
 	t_lexer	first_pattern;
 
@@ -28,7 +28,6 @@ int	create_pattern(t_wildcard *wildcard, char *raw_pattern)
 		clear_lexer(&first_pattern);
 		return (-1);
 	}
-	print_lexer(&first_pattern);
 	wildcard->nb_dir = get_dir_nb(&first_pattern);
 	if (split_pattern(wildcard, &first_pattern) == -1)
 	{
@@ -38,7 +37,7 @@ int	create_pattern(t_wildcard *wildcard, char *raw_pattern)
 	return (0);
 }
 
-static int	split_pattern(t_wildcard *wildcard, t_lexer *first_pattern)
+static int	split_pattern(t_wild *wildcard, t_lexer *first_pattern)
 {
 	int			i;
 	int			nb_dir;
@@ -54,7 +53,7 @@ static int	split_pattern(t_wildcard *wildcard, t_lexer *first_pattern)
 		i += ret;
 		--nb_dir;
 	}
-	if (add_file_pattern(wildcard, first_pattern, i) == -1)
+	if (create_file_pattern(wildcard, first_pattern, i) == -1)
 		return (-1);
 	clear_vector(first_pattern);
 	return (0);

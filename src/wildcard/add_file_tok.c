@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_fs2.c                                   :+:      :+:    :+:   */
+/*   add_file_tok.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 23:07:15 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 05:20:49 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/26 05:56:56 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/26 05:58:02 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include "ft_mem.h"
+#include "wildcard.h"
 #include <stdlib.h>
 
-char	*ft_strjoin_fs2(const char *s1, char *s2)
+int	add_file_tok(t_lexer *filenames, char *s)
 {
-	const size_t	len1 = ft_strlen(s1);
-	const size_t	len2 = ft_strlen(s2);
-	char			*str;
+	t_lexer_tok	token;
 
-	str = malloc((len1 + len2 + 1) * sizeof(char));
-	if (str == NULL)
+	token.content = ft_strdup(s);
+	if (token.content == NULL)
+		return (-1);
+	token.type = WORD;
+	if (add_vector(filenames, &token, 1) == -1)
 	{
-		free(s2);
-		return (NULL);
+		free(token.content);
+		return (-1);
 	}
-	ft_memcpy(str, s1, len1);
-	ft_memcpy(str + len1, s2, len2);
-	str[len1 + len2] = '\0';
-	free(s2);
-	return (str);
+	return (0);
 }

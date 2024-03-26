@@ -6,15 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:18:59 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:55:35 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include "lexer.h"
-#include "vector.h"
 #include "wildcard.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static int	compare_pattern_filenames(t_lexer *pattern, char *f_name);
@@ -22,7 +19,7 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name);
 static int	check_end_pattern(char *to_find, char *f_name);
 static int	hidden_file(t_lexer *pattern, char *f_name, char *gignore);
 
-int	is_wildcard_match(t_wildcard *wild, t_lexer *pattern, char *f_name)
+int	is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name)
 {
 	if (hidden_file(pattern, f_name, wild->globignore) == 0)
 		return (0);
@@ -104,7 +101,6 @@ static int	check_end_pattern(char *to_find, char *f_name)
 	const ssize_t	find_l = ft_strlen(to_find);
 
 	i = 0;
-	printf("to find = %s, fname = %s\n", to_find, f_name);
 	if (file_l < find_l)
 		return (0);
 	while (i != find_l && f_name[file_l - i - 1] == to_find[find_l - i - 1])

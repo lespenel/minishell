@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:27:34 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 22:25:18 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:54:39 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 #include "wildcard.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static int	add_dirname_tok(t_lexer *pattern, t_lexer_tok *tok, ssize_t slash);
 static int	split_dir_tok(t_lexer *pattern, t_lexer_tok *tok);
 static int	fill_dir_pattern(t_pattern *pattern, t_lexer *old_pattern, int i);
 
-int	create_dir_pattern(t_wildcard *wildcard, t_lexer *first_pattern, int i)
+int	create_dir_pattern(t_wild *wildcard, t_lexer *first_pattern, int i)
 {
 	t_pattern	pattern;
 	int			ret;

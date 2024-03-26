@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:40:07 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 13:06:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:54:31 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "vector.h"
 #include "wildcard.h"
 
-int	add_file_pattern(t_wildcard *wildcard, t_lexer *first_pattern, int i)
+int	create_file_pattern(t_wild *wildcard, t_lexer *first_pattern, int i)
 {
 	t_lexer_tok	*tok;
 	t_pattern	pattern;

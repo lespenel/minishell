@@ -6,15 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 05:51:27 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 07:18:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:46:32 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include "wildcard.h"
 #include "ft_string.h"
-#include <stdio.h>
+#include "wildcard.h"
 #include <stdlib.h>
 
 static	ssize_t	add_quote_tok(t_lexer *pattern, char *raw_pattern);

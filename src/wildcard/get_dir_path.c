@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:22:00 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:15:58 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 07:34:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "wildcard.h"
 #include <dirent.h>
+#include <stdlib.h>
 
 DIR	*get_dir_path(t_wild *wild, char *path)
 {
@@ -37,5 +38,6 @@ DIR	*get_dir_path(t_wild *wild, char *path)
 			return (NULL);
 	}
 	dir = opendir(wd);
+	free(wd);
 	return (dir);
 }

@@ -6,7 +6,9 @@ SRC = \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  execution/execute_command.c \
 	  execution/execute_commands.c \
+	  execution/execute_pipeline.c \
 	  execution/execution_structure.c \
 	  execution/get_path.c \
 	  execution/perform_redirections.c \

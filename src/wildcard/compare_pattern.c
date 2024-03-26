@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 23:10:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:10:42 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	get_starting_path(t_wildcard *wildcard)
 	tok = at_vector(&pattern->pattern, 0);
 	if (pattern->type == DIRECTORY && tok->type == WORD)
 	{
+		wildcard->globignore = NULL;
 		wildcard->wd = ft_strdup(tok->content);
 		if (wildcard->wd == NULL)
 			return (-1);
@@ -85,6 +86,9 @@ static int	get_starting_path(t_wildcard *wildcard)
 		if (wildcard->wd == NULL)
 			return (-1);
 	}
+	if (wildcard->nb_dir > 1)
+		wildcard->globignore = NULL;
+	wildcard->wd_size = ft_strlen(wildcard->wd);
 	printf("wd in init == %s\n", wildcard->wd);
 	return (0);
 }

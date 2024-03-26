@@ -31,13 +31,16 @@ SRC = \
 	  \
 	  wildcard/pattern/fill_pattern.c \
 	  wildcard/pattern/create_pattern.c \
+	  wildcard/pattern/create_glob_pattern.c \
 	  wildcard/pattern/create_file_pattern.c \
 	  wildcard/pattern/create_dir_pattern.c \
 	  wildcard/pattern/remove_backslash.c \
 	  wildcard/add_match_tok.c \
+	  wildcard/get_dir_path.c \
+	  wildcard/compare_globignore.c \
 	  wildcard/compare_pattern.c \
-	  wildcard/get_file_ls.c \
 	  wildcard/expand_wildcards.c \
+	  wildcard/get_file_ls.c \
 	  wildcard/get_dir_ls.c \
 	  wildcard/get_matching_dirname.c \
 	  wildcard/get_matching_filenames.c \

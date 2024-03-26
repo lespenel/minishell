@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_fs1.c                                   :+:      :+:    :+:   */
+/*   get_dir_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 22:45:30 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 05:20:31 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/26 05:22:00 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/26 05:22:30 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include "ft_mem.h"
-#include <stdlib.h>
+#include "wildcard.h"
+#include <dirent.h>
 
-char	*ft_strjoin_fs1(char *s1, const char *s2)
+DIR	*get_dir_path(t_wildcard *wild, char *path)
 {
-	const size_t	len1 = ft_strlen(s1);
-	const size_t	len2 = ft_strlen(s2);
-	char			*str;
+	char 			*wd;
+	DIR				*dir;
 
-	str = malloc((len1 + len2 + 1) * sizeof(char));
-	if (str == NULL)
-	{
-		free(s1);
+	wd = ft_strdup(wild->wd);
+	if (wd == NULL)
 		return (NULL);
+	if (path)
+	{
+		if (wild->wd[wild->wd_size -1] == '/')
+			wd = ft_strjoin_fs1(wd, path);
+		else
+		{
+			wd = ft_strjoin_fs1(wd, "/");
+			if (wd == NULL)
+				return (NULL);
+			wd = ft_strjoin_fs1(wd, path);
+		}
+		if (wd == NULL)
+			return (NULL);
 	}
-	ft_memcpy(str, s1, len1);
-	ft_memcpy(str + len1, s2, len2);
-	str[len1 + len2] = '\0';
-	free(s1);
-	return (str);
+	dir = opendir(wd);
+	return (dir);
 }

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:31:47 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:29:50 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	for_each_file(t_wildcard *wild, t_pattern *pattern, t_lexer *filenames)
 	  	tok = at_vector(filenames, i);
 		if (get_files_ls(wild, &pattern->pattern, &new_dir_lst, tok->content) == -1)
 			return (-1);
-		print_lexer(filenames);
 		++i;
 	}
 	clear_lexer(filenames);

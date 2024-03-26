@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 22:35:21 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:23:18 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-DIR	*get_dir_path(t_wildcard *wild, char *path);
-
 int	is_dir(struct dirent *entry)
 {
 	if (ft_strcmp(entry->d_name, ".") == 0)
 		return (0);
 	if (ft_strcmp(entry->d_name, "..") == 0)
 		return (0);
-	if (entry->d_type == 4)
+	if (entry->d_type == 4 || entry->d_type == 10)
 		return (1);
 	return (0);
 }
@@ -46,7 +44,8 @@ int	get_dir_ls(t_wildcard *w, t_lexer *pattern, t_lexer *filenames, char *path)
 		tmp = ft_strjoin(entry->d_name, "/");
 		if (tmp == NULL)
 			return (-1);
-		if (is_dir(entry) && is_wildcard_match(w, pattern, tmp))
+		if (is_dir(entry) && is_wildcard_match(w, pattern, tmp)
+			&& compare_globignore(w, tmp))
 		{
 			if (path)
 			{
@@ -65,31 +64,4 @@ int	get_dir_ls(t_wildcard *w, t_lexer *pattern, t_lexer *filenames, char *path)
 	}
 	closedir(dir);
 	return (0);
-}
-
-DIR	*get_dir_path(t_wildcard *wild, char *path)
-{
-	char 			*wd;
-	DIR				*dir;
-
-	(void)wild;
-	wd = ft_strdup(wild->wd);
-	if (wd == NULL)
-		return (NULL);
-	if (path)
-	{
-		if (wild->wd[ft_strlen(wild->wd) -1] == '/')
-		{
-			wd = ft_strjoin(wd, path);
-		}
-		else
-		{
-			wd = ft_strjoin_three(wd, "/", path);
-			if (wd == NULL)
-				return (NULL);
-		}
-	}
-	printf("wd = %s\n", wd);
-	dir = opendir(wd);
-	return (dir);
 }

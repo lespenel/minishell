@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:07:15 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 23:07:50 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:20:49 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ char	*ft_strjoin_fs2(const char *s1, char *s2)
 
 	str = malloc((len1 + len2 + 1) * sizeof(char));
 	if (str == NULL)
+	{
+		free(s2);
 		return (NULL);
+	}
 	ft_memcpy(str, s1, len1);
 	ft_memcpy(str + len1, s2, len2);
 	str[len1 + len2] = '\0';

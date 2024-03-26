@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 23:13:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:09:03 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,21 @@ void	clear_wildcard(t_wildcard *wildcard)
 	clear_vector(&wildcard->patterns);
 }
 
+void	init_wildcard(t_wildcard *wildcard, t_env *env)
+{
+	(void)env;
+	ft_memset(wildcard, 0, sizeof(t_wildcard));
+	init_vector(&wildcard->patterns, sizeof(t_pattern));
+	init_vector(&wildcard->glob_patterns, sizeof(t_pattern));
+	wildcard->wd = NULL;
+	wildcard->globignore = "*.json:src/";//ms_getenv(env, "GLOBIGNORE");
+}
+
 int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 {
 	t_wildcard	wildcard;
 
-	ft_memset(&wildcard, 0, sizeof(t_wildcard));
-	init_vector(&wildcard.patterns, sizeof(t_pattern));
-	init_lexer(filenames);
-	wildcard.wd = NULL;
-	wildcard.globignore = ms_getenv(env, "GLOBIGNORE");
+	init_wildcard(&wildcard, env);
 	if (create_pattern(&wildcard, raw_pattern) == -1)
 	{
 		clear_wildcard(&wildcard);
@@ -68,8 +74,6 @@ int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 		clear_wildcard(&wildcard);
 		return (-1);
 	}
-	sort_filenames(filenames);
 	clear_wildcard(&wildcard);
-	(void)filenames;
 	return (0);
 }

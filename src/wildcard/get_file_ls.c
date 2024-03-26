@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 23:11:27 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:28:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-DIR	*get_file_path(t_wildcard *wild, char *path);
 
 int	is_file(char *s)
 {
@@ -50,19 +48,20 @@ int	get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path)
 	struct dirent	*entry;
 	char			*tmp;
 
-	dir = get_file_path(w, path);
+	dir = get_dir_path(w, path);
 	if (dir == NULL)
 		return (0);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (is_file(entry->d_name) && is_wildcard_match(w, pattern, entry->d_name))
+		if (is_file(entry->d_name) && is_wildcard_match(w, pattern, entry->d_name) &&
+		compare_globignore(w, entry->d_name))
 		{
 			tmp = entry->d_name;
 			if (path)
 			{
 				tmp = ft_strjoin(path, entry->d_name);
-				if (path == NULL)
+				if (tmp == NULL)
 					return (-1);
 			}
 			if (add_file_tok(fname, tmp) == -1)
@@ -75,31 +74,4 @@ int	get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path)
 	}
 	closedir(dir);
 	return (0);
-}
-
-DIR	*get_file_path(t_wildcard *wild, char *path)
-{
-	char 			*wd;
-	DIR				*dir;
-
-	(void)wild;
-	wd = ft_strdup(wild->wd);
-	if (wd == NULL)
-		return (NULL);
-	if (path)
-	{
-		if (wild->wd[ft_strlen(wild->wd) -1] == '/')
-		{
-			wd = ft_strjoin(wd, path);
-		}
-		else
-		{
-			wd = ft_strjoin_three(wd, "/", path);
-			if (wd == NULL)
-				return (NULL);
-		}
-	}
-	printf("wd = %s\n", wd);
-	dir = opendir(wd);
-	return (dir);
 }

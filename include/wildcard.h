@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/25 05:23:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:23:01 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 # include "env.h"
 # include "lexer.h"
+# include "vector.h"
+# include <dirent.h>
 
 typedef enum e_pattern_type
 {
 	FILENAME,
 	DIRECTORY,
+	NO_STAR,
 } t_pattern_type;
 
 typedef struct	s_pattern
@@ -31,14 +34,20 @@ typedef struct	s_pattern
 typedef struct s_wildcard
 {
 	t_vector	patterns;
+	t_vector	glob_patterns;
 	int			nb_dir;
 	char		*wd;
+	size_t		wd_size;
 	char		*globignore;
 }	t_wildcard;
 
-int	get_dir_ls(t_wildcard *w, t_lexer *pattern, t_lexer *filenames, char *path);
+int		create_glob_pattern(t_wildcard *wild);
+int		compare_globignore(t_wildcard *wild, char *f_name);
+
+DIR		*get_dir_path(t_wildcard *wild, char *path);
+int		get_dir_ls(t_wildcard *w, t_lexer *pattern, t_lexer *filenames, char *path);
 int		add_file_tok(t_lexer *filenames, char *s);
-int	get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path);
+int		get_files_ls(t_wildcard *w, t_lexer *pattern, t_lexer *fname, char *path);
 int		add_dir_tok(t_lexer *filenames, char *s, int directory);
 int		expand_wildcards(t_env *env, t_lexer *lexer);
 int		create_pattern(t_wildcard *wildcard, char *raw_pattern);
@@ -46,7 +55,7 @@ int		create_dir_pattern(t_wildcard *wildcard, t_lexer *first_pattern, int i);
 int		fill_pattern(t_lexer *pattern, char *raw_pattern);
 int		add_file_pattern(t_wildcard *wildcard, t_lexer *first_pattern, int i);
 int		wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern);
-int	is_wildcard_match(t_wildcard *wild, t_lexer *pattern, char *f_name);
+int		is_wildcard_match(t_wildcard *wild, t_lexer *pattern, char *f_name);
 int		get_matching_dirname(t_wildcard *wildcard, t_lexer *filenames, int nb_dir);
 int		get_matching_filenames(t_wildcard *wildcard, t_lexer *filenames);
 int		compare_pattern(t_wildcard *wildcard, t_lexer *filenames);

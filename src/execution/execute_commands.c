@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/25 06:50:39 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/26 02:40:15 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
 
 //static int	execute_pipeline(t_ms *ms, t_lexer *lexer);
 static int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i);

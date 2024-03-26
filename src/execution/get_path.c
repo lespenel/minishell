@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 06:36:16 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/25 06:39:59 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/26 02:40:04 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_path(t_ms *ms, char *name)
 		return (NULL);
 	return (search_envpath(name, envpath));
 }
-
 
 static char	*search_envpath(char *file, char *envpath)
 {

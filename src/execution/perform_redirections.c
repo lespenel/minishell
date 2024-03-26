@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:46:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/25 05:53:27 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/26 02:03:58 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static int	perform_redirection(t_redirection *redirection)
 		return (0);
 	}
 	else if (redirection->type == APPEND)
-		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND);
+		fd = open(redirection->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
-		fd = open(redirection->file, O_CREAT | O_WRONLY | O_TRUNC);
+		fd = open(redirection->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		return (1);
 	if (dup2(fd, 1) == -1)

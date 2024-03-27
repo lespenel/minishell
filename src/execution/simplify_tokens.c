@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:43:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/26 02:36:59 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/27 05:32:00 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ static int	kaboul(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd)
 			return (-1);
 	}
 	else if (token->type == SUBSHELL)
-		return (add_vector(new, token, 1));
+	{
+		if (simplify_tokens(&token->subshell) == -1)
+			return (-1);
+		*cmd = *token;
+	}
 	return (0);
 }
 

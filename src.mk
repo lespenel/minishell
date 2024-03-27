@@ -9,6 +9,7 @@ SRC = \
 	  execution/execute_command.c \
 	  execution/execute_commands.c \
 	  execution/execute_pipeline.c \
+	  execution/execute_subshell.c \
 	  execution/execution_structure.c \
 	  execution/get_path.c \
 	  execution/perform_redirections.c \

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:04:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/27 05:33:10 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/27 07:32:19 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ static int	execute_pipe_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			exit(-1);
 		close(fd[1]);
-		if (token->type == SUBSHELL)
-			exit(execute_commands(ms, &token->subshell));
 		execute_command(ms, token);
 	}
 	close(fdin);
@@ -83,8 +81,6 @@ static int	execute_last_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 				exit(-1);
 			close(fdin);
 		}
-		if (token->type == SUBSHELL)
-			exit(execute_commands(ms, &token->subshell));
 		execute_command(ms, token);
 	}
 	close(fdin);

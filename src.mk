@@ -12,6 +12,7 @@ SRC = \
 	  execution/execute_subshell.c \
 	  execution/execution_structure.c \
 	  execution/get_path.c \
+	  execution/next_token.c \
 	  execution/perform_redirections.c \
 	  execution/simplify_tokens.c \
 	  \

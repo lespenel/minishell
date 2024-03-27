@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/26 06:15:45 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/27 07:32:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	execute_command(t_ms *ms, t_lexer_tok *token)
 
 	if (perform_redirections(token) == -1)
 		return (-1);
+	if (token->type == SUBSHELL)
+		exit(execute_commands(ms, &token->subshell));
 	path = *((char **)at_vector(&token->args, 0));
 	if (ft_strchr(path, '/') == NULL)
 		path = get_path(ms, *((char **)at_vector(&token->args, 0)));
 	if (path == NULL)
 		exit(-1);
 	execv(path, token->args.array);
-	exit(0);
+	exit(127);
 }

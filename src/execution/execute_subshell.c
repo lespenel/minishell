@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/27 05:23:47 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/27 10:10:17 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
 		return (-1);
 	if (pid == 0)
 	{
+		if (perform_redirections(token) == -1)
+			return (-1);
 		exit(execute_commands(ms, &token->subshell));
 	}
 	return (pid);

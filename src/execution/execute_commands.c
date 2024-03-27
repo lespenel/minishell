@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/27 07:30:04 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/27 10:10:43 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static int			end_shell(t_lexer *lexer, size_t i, int exitcode);
-static int			run_command(t_ms *ms, t_lexer *lexer, size_t i);
-static int			execute_single_command(t_ms *ms, t_lexer *lexer, size_t i);
-static size_t		next_command(t_lexer *lexer, size_t i);
-static int			wait_children(pid_t last);
+static int		end_shell(t_lexer *lexer, size_t i, int exitcode);
+static int		run_command(t_ms *ms, t_lexer *lexer, size_t i);
+static int		execute_single_command(t_ms *ms, t_lexer *lexer, size_t i);
+static size_t	next_command(t_lexer *lexer, size_t i);
+static int		wait_children(pid_t last);
 
 int	execute_commands(t_ms *ms, t_lexer *lexer)
 {

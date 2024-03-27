@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:13:30 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:00:36 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 		return (-1);
 	}
 	clear_wildcard(&wildcard);
-	sort_filenames(filenames);
+	sort_filenames(filenames, 0, filenames->size - 1);
 	return (0);
 }
 

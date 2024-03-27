@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 10:28:54 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:59:59 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,46 @@
 #include "wildcard.h"
 #include "lexer.h"
 
+static size_t	array_partition(t_lexer *filenames, ssize_t start, ssize_t end);
 static void		swap_token(t_lexer_tok *t1, t_lexer_tok *t2);
-static int		ft_tolower(int c);
 static int		ms_strcmp(char *s1, char *s2);
+static int		ft_tolower(int c);
 
-void	sort_filenames(t_lexer *filenames)
+void	sort_filenames(t_lexer *filenames, ssize_t start, ssize_t end)
 {
-	size_t		i;
-	size_t		j;
-	t_lexer_tok	*t1;
-	t_lexer_tok	*t2;
+	ssize_t	pivot_index;
 
-	i = 0;
-	if (filenames->size < 1)
-		return ;
-	while (i < filenames->size - 1)
+	if (start < end)
 	{
-		j = 0;
-		while (j < filenames->size - 1)
+		pivot_index = array_partition(filenames, start, end);
+		sort_filenames(filenames, start, pivot_index - 1);
+		sort_filenames(filenames, pivot_index + 1, end);
+	}
+}
+
+static size_t	array_partition(t_lexer *filenames, ssize_t start, ssize_t end)
+{
+	char		*pivot;
+	ssize_t		i;
+	ssize_t		j;
+	t_lexer_tok	*tok;
+
+	i = start;
+	j = start;
+	tok = at_vector(filenames, end);
+	pivot = tok->content;
+	while (i < end)
+	{
+		tok = at_vector(filenames, i);
+		if (ms_strcmp(tok->content, pivot) <= 0)
 		{
-			t1 = at_vector(filenames, j);
-			t2 = at_vector(filenames, j + 1);
-			if (ms_strcmp(t1->content, t2->content) > 0)
-				swap_token(t1, t2);
+			swap_token(at_vector(filenames, j), tok);
 			++j;
 		}
 		++i;
 	}
+	swap_token(at_vector(filenames, j), at_vector(filenames, end));
+	return (j);
 }
 
 static	int	ms_strcmp(char *s1, char *s2)

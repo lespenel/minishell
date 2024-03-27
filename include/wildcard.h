@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:28:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:59:03 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "lexer.h"
 # include "vector.h"
 # include <dirent.h>
+# include <sys/types.h>
 
 typedef enum e_pattern_type
 {
@@ -61,6 +62,6 @@ int		is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name);
 int		get_matching_dirname(t_wild *wildcard, t_lexer *fnames, size_t nb_dir);
 int		get_matching_filenames(t_wild *wildcard, t_lexer *filenames);
 int		remove_backslash(t_lexer *pattern);
-void	sort_filenames(t_lexer *filenames);
+void	sort_filenames(t_lexer *filenames, ssize_t start, ssize_t end);
 
 #endif

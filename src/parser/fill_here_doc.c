@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 12:23:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:22:35 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static int	get_tempfile(char *path)
 	ft_strlcpy(path, "/tmp/minishell-thd.000000", 26);
 	if (open_urandom(path) == -1)
 		return (-1);
+	errno = 0;
 	fd = open(path, O_CREAT | O_RDWR | O_EXCL, 0600);
 	if (fd == -1)
 		return (-1);
@@ -86,6 +87,7 @@ static int	get_tempfile(char *path)
 static int	open_urandom(char *path)
 {
 	int		fd;
+	int		i;
 
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd == -1)
@@ -95,7 +97,19 @@ static int	open_urandom(char *path)
 		close(fd);
 		return (-1);
 	}
+	i = 0;
+	while (access(path, F_OK) == 0 && i < 1000)
+	{
+		if (fill_random_alpha(fd, path) == -1)
+		{
+			close(fd);
+			return (-1);
+		}
+		++i;
+	}
 	close(fd);
+	if (i == 1000)
+		return (-1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/27 14:59:03 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:06:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_wildcard
 	t_vector	glob_patterns;
 	size_t		nb_dir;
 	char		*wd;
+	int			absolute_path;
 	size_t		wd_size;
 	char		*globignore;
 	t_lexer		*f_lst_ptr;

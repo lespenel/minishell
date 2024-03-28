@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:17:39 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:26:32 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include <unistd.h>
 
 static int	get_starting_path(t_wild *wildcard);
-static int	compare_wd(t_wild *wildcard, t_lexer *filenames);
-static int	add_custom_path(t_wild *wildcard, t_lexer *filenames);
+static int	add_absolute_path(t_wild *wildcard, t_lexer *filenames);
+static int	set_absolute_path(t_wild *wildcard, t_pattern *pattern, char *path);
+static int	set_relative_path(t_wild *wildcard);
 
 int	compare_pattern(t_wild *wildcard, t_lexer *filenames)
 {
@@ -30,8 +31,11 @@ int	compare_pattern(t_wild *wildcard, t_lexer *filenames)
 		if (get_matching_filenames(wildcard, filenames) == -1)
 			return (-1);
 	}
-	if (compare_wd(wildcard, filenames) == -1)
-		return (-1);
+	if (wildcard->absolute_path)
+	{
+		if (add_absolute_path(wildcard, filenames) == -1)
+			return (-1);
+	}
 	return (0);
 }
 
@@ -44,18 +48,12 @@ static int	get_starting_path(t_wild *wildcard)
 	tok = at_vector(&pattern->pattern, 0);
 	if (pattern->type == DIRECTORY && tok->type == WORD)
 	{
-		wildcard->globignore = NULL;
-		wildcard->wd = ft_strdup(tok->content);
-		if (wildcard->wd == NULL)
+		if (set_absolute_path(wildcard, pattern, tok->content) == -1)
 			return (-1);
-		clear_lexer(&pattern->pattern);
-		remove_vector(&wildcard->patterns, 0);
-		--wildcard->nb_dir;
 	}
 	else
 	{
-		wildcard->wd = getcwd(NULL, 0);
-		if (wildcard->wd == NULL)
+		if (set_relative_path(wildcard) == -1)
 			return (-1);
 	}
 	if (wildcard->nb_dir > 1)
@@ -64,28 +62,34 @@ static int	get_starting_path(t_wild *wildcard)
 	return (0);
 }
 
-static int	compare_wd(t_wild *wildcard, t_lexer *filenames)
+static int	set_absolute_path(t_wild *wildcard, t_pattern *pattern, char *path)
 {
-	char		*tmp_wd;
-
-	tmp_wd = getcwd(NULL, 0);
-	if (tmp_wd == NULL)
+	wildcard->globignore = NULL;
+	wildcard->wd = ft_strdup(path);
+	if (wildcard->wd == NULL)
 		return (-1);
-	if (ft_strcmp(tmp_wd, wildcard->wd) == 0)
-	{
-		free(tmp_wd);
-		return (0);
-	}
-	else
-	{
-		free(tmp_wd);
-		if (add_custom_path(wildcard, filenames) == -1)
-			return (-1);
-	}
+	clear_lexer(&pattern->pattern);
+	remove_vector(&wildcard->patterns, 0);
+	--wildcard->nb_dir;
+	wildcard->absolute_path = 1;
 	return (0);
 }
 
-static int	add_custom_path(t_wild *wildcard, t_lexer *filenames)
+static int	set_relative_path(t_wild *wildcard)
+{
+	char	*tmp;
+
+	tmp = getcwd(NULL, 0);
+	if (tmp == NULL)
+		return (-1);
+	wildcard->wd = ft_strjoin(tmp, "/");
+	free(tmp);
+	if (wildcard->wd == NULL)
+		return (-1);
+	return (0);
+}
+
+static int	add_absolute_path(t_wild *wildcard, t_lexer *filenames)
 {
 	t_lexer_tok	*tok;
 	size_t		i;

@@ -6,16 +6,19 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 06:55:18 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:40:30 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "wildcard.h"
 #include <dirent.h>
+#include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
-static int	is_dir(struct dirent *entry);
+static int	is_dir(t_wild *wildcard, char *d_name, char *path);
 static int	cmp_dir(t_wild *w, t_lexer *pattern, struct dirent *dir, char *s);
 
 int	get_dir_ls(t_wild *w, t_lexer *pattern, t_lexer *filenames, char *path)
@@ -48,7 +51,7 @@ static int	cmp_dir(t_wild *w, t_lexer *patt, struct dirent *dir, char *path)
 	tmp = ft_strjoin(dir->d_name, "/");
 	if (tmp == NULL)
 		return (-1);
-	if (is_dir(dir) && is_wildcard_match(w, patt, tmp)
+	if (is_dir(w, tmp, path) && is_wildcard_match(w, patt, tmp)
 		&& compare_globignore(w, tmp))
 	{
 		if (path)
@@ -65,12 +68,35 @@ static int	cmp_dir(t_wild *w, t_lexer *patt, struct dirent *dir, char *path)
 		}
 	}
 	free(tmp);
-	return (0);
+	return ((errno == 0) - 1);
 }
 
-static int	is_dir(struct dirent *entry)
+static int	is_dir(t_wild *wildcard, char *d_name, char *path)
 {
-	if (entry->d_type == 4 || entry->d_type == 10)
-		return (1);
-	return (0);
+	struct stat	*buff;
+	char		*path_for_stat;
+	int			ret;
+
+	buff = malloc(sizeof(struct stat));
+	if (buff == NULL)
+		return (-1);
+	if (path)
+		path_for_stat = ft_strjoin_three(wildcard->wd, path, d_name);
+	else
+		path_for_stat = ft_strjoin(wildcard->wd, d_name);
+	if (path_for_stat == NULL)
+	{
+		free(buff);
+		return (-1);
+	}
+	if (stat(path_for_stat, buff))
+	{
+		errno = 0;
+		ret = 0;
+	}
+	else
+		ret = S_ISDIR(buff->st_mode);
+	free(path_for_stat);
+	free(buff);
+	return (ret);
 }

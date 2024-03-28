@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 10:41:13 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:10:04 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static int	syntax_checker(t_lexer *lexer, int index, int brace)
 
 static int	is_problem(t_lexer_tok *tok1, t_lexer_tok *tok2)
 {
-	if (tok1->type == OPEN_BRACE && tok2->type != WORD
-		&& tok2->type != OPEN_BRACE && tok2->type != CLOSE_BRACE)
+	if (tok1->type == OPEN_BRACE && tok2->type == CLOSE_BRACE)
 		return (dprintf(2, SYNTAX_ERR, tok2->content));
 	if (tok1->type == CLOSE_BRACE && tok2->type == WORD)
 		return (dprintf(2, SYNTAX_ERR, tok2->content));

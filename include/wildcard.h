@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 09:06:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:38:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int		compare_globignore(t_wild *wild, char *f_name);
 DIR		*get_dir_path(t_wild *wild, char *path);
 int		get_dir_ls(t_wild *w, t_lexer *pattern, t_lexer *filenames, char *path);
 int		get_files_ls(t_wild *w, t_lexer *pattern, t_lexer *fname, char *path);
-int		add_dir_tok(t_lexer *filenames, char *s, int directory);
 int		add_file_tok(t_lexer *filenames, char *s);
 int		add_match_tok(t_lexer *matches, char *s);
 int		is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name);

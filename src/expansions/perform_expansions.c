@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   perform_expansions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:28:30 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/28 01:41:37 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/28 02:29:36 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "expander.h"
+#include "lexer.h"
+#include "minishell.h"
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+int	perform_expansions(t_ms *ms, t_lexer_tok *token)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
-
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	if (expand_parameters(ms, token) == -1)
+		return (-1);
+	if (quote_removal(token) == -1)
+		return (-1);
+	return (0);
+}

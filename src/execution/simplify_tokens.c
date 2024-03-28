@@ -6,16 +6,16 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:43:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/27 10:07:11 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/28 04:56:57 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "ft_mem.h"
 
-static int	kaboul(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd);
+static int	simplify_token(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd);
+static int	simplify_redirection(t_lexer *lexer, t_lexer_tok *cmd);
 static void	init_command(t_lexer_tok *cmd);
-static int	is_split(t_lexer_tok *token);
 static int	is_redirection(t_lexer_tok *token);
 
 int	simplify_tokens(t_lexer *lexer)
@@ -27,7 +27,7 @@ int	simplify_tokens(t_lexer *lexer)
 	init_command(&cmd);
 	while (lexer->size != 0)
 	{
-		if (kaboul(lexer, &new, &cmd) == -1)
+		if (simplify_token(lexer, &new, &cmd) == -1)
 		{
 			clear_lexer(&new);
 			clear_token(&cmd);
@@ -41,17 +41,18 @@ int	simplify_tokens(t_lexer *lexer)
 		clear_token(&cmd);
 		return (-1);
 	}
+	clear_vector(lexer);
 	*lexer = new;
 	return (0);
 }
 
-static int	kaboul(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd)
+static int	simplify_token(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd)
 {
 	t_lexer_tok		*token;
-	t_redirection	redirection;
 
 	token = at_vector(lexer, 0);
-	if (is_split(token))
+	if (token->type == PIPE
+		|| token->type == LOGICAL_OR || token->type == LOGICAL_AND)
 	{
 		if (add_vector(new, cmd, 1) == -1)
 			return (-1);
@@ -62,13 +63,7 @@ static int	kaboul(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd)
 	else if (token->type == WORD)
 		return (add_vector(&cmd->args, &token->content, 1));
 	else if (is_redirection(token))
-	{
-		redirection.type = token->type;
-		remove_vector(lexer, 0);
-		redirection.file = token->content;
-		if (add_vector(&cmd->redirections, &redirection, 1) == -1)
-			return (-1);
-	}
+		return (simplify_redirection(lexer, cmd));
 	else if (token->type == SUBSHELL)
 	{
 		if (simplify_tokens(&token->subshell) == -1)
@@ -79,19 +74,26 @@ static int	kaboul(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd)
 	return (0);
 }
 
+static int	simplify_redirection(t_lexer *lexer, t_lexer_tok *cmd)
+{
+	t_lexer_tok		*token;
+	t_redirection	redirection;
+
+	token = at_vector(lexer, 0);
+	redirection.type = token->type;
+	remove_vector(lexer, 0);
+	redirection.file = token->content;
+	if (add_vector(&cmd->redirections, &redirection, 1) == -1)
+		return (-1);
+	return (0);
+}
+
 static void	init_command(t_lexer_tok *cmd)
 {
 	ft_memset(cmd, 0, sizeof(t_lexer_tok));
 	cmd->type = COMMAND;
 	init_vector(&cmd->args, sizeof(char *));
 	init_vector(&cmd->redirections, sizeof(t_redirection));
-}
-
-static int	is_split(t_lexer_tok *token)
-{
-	return (token->type == LOGICAL_OR
-		|| token->type == LOGICAL_AND
-		|| token->type == PIPE);
 }
 
 static int	is_redirection(t_lexer_tok *token)

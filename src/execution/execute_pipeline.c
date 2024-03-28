@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:04:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/27 07:32:19 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/28 01:55:07 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ int	execute_pipeline(t_ms *ms, t_lexer *lexer, size_t i)
 static int	execute_pipe_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 {
 	int		fd[2];
+	pid_t	pid;
 
 	if (pipe(fd) == -1)
 		return (-1);
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
 	{
 		close(fd[0]);
 		if (fdin != -1)
@@ -59,7 +63,7 @@ static int	execute_pipe_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			exit(-1);
 		close(fd[1]);
-		execute_command(ms, token);
+		run_command(ms, token);
 	}
 	close(fdin);
 	close(fd[1]);
@@ -81,7 +85,7 @@ static int	execute_last_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 				exit(-1);
 			close(fdin);
 		}
-		execute_command(ms, token);
+		run_command(ms, token);
 	}
 	close(fdin);
 	return (pid);

@@ -1,24 +1,30 @@
 SRC = \
 	  env/destroy_env.c \
+	  env/get_envp.c \
 	  env/init_env.c \
 	  env/ms_getenv.c \
 	  env/ms_getnenv.c \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
-	  execution/execute_command.c \
 	  execution/execute_commands.c \
 	  execution/execute_pipeline.c \
+	  execution/execute_simple_command.c \
 	  execution/execute_subshell.c \
 	  execution/execution_structure.c \
 	  execution/get_path.c \
 	  execution/next_token.c \
 	  execution/perform_redirections.c \
+	  execution/run_command.c \
 	  execution/simplify_tokens.c \
 	  \
-	  expander/expand_substring.c \
-	  expander/expand_tokens.c \
-	  expander/treat_noquote.c \
+	  expansions/parameters/expand_substring.c \
+	  expansions/parameters/expand_parameters.c \
+	  expansions/parameters/treat_noquote.c \
+	  \
+	  expansions/quote_removal/quote_removal.c \
+	  \
+	  expansions/perform_expansions.c \
 	  \
 	  lexer/init_lexer.c \
 	  lexer/fill_lexer.c \
@@ -34,7 +40,6 @@ SRC = \
 	  \
 	  parser/validate_input.c \
 	  \
-	  quote_removal/quote_removal.c \
  	  \
 	  util/get_ifs.c \
 	  util/next_char.c \

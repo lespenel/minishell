@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 02:46:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:30:33 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 # include "minishell.h"
 # include <stdio.h>
 
-int		expand_tokens(t_ms *minishell, t_lexer *lexer);
-ssize_t	expand_substr(t_ms *minishell, t_lexer *lexer, t_vector *new, char *s);
+int		expand_parameters(t_ms *minishell, t_lexer_tok *token);
+ssize_t	expand_substr(t_ms *minishell, t_vector *new, char *s);
 int		add_escaping(t_vector *vector, char *s);
-ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s);
+ssize_t	treat_noquote(t_ms *ms, t_vector *new, char *s);
+int		perform_expansions(t_ms *ms, t_lexer_tok *token);
+int		word_split(t_lexer_tok *token);
+int		quote_removal(t_lexer_tok *token);
 
 #endif

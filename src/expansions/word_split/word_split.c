@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_removal.h                                    :+:      :+:    :+:   */
+/*   word_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 03:57:38 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 03:58:04 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/28 04:30:17 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/28 04:52:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUOTE_REMOVAL_H
-# define QUOTE_REMOVAL_H
+#include "lexer.h"
+#include "vector.h"
 
-# include "lexer.h"
+// needs to be done
+int	word_split(t_lexer_tok *token)
+{
+	size_t			i;
+	t_vector		newtab;
 
-int	quote_removal(t_lexer *lexer);
-
-#endif
+	i = 0;
+	while (i < token->args.size)
+	{
+		init_vector(&newtab, sizeof(char *));
+		++i;
+	}
+	i = 0;
+	while (i < token->redirections.size)
+	{
+		++i;
+	}
+	return (0);
+}

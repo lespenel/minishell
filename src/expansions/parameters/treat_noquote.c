@@ -6,24 +6,22 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 23:13:05 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/28 02:58:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "minishell.h"
-#include "lexer.h"
 #include "expander.h"
 #include "ft_string.h"
 #include "util.h"
+#include <stdio.h>
 #include <stdlib.h>
 
-static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s);
+static ssize_t	nq_variable(t_ms *ms, t_vector *new, char *s);
 static int		add_escaping_nq(t_vector *vector, char *s);
-static ssize_t	expand_nq(t_ms *ms, t_lexer *lex, t_vector *new, char *value);
-static int		add_word_lex(t_lexer *lex, t_vector *word);
 
-ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
+ssize_t	treat_noquote(t_ms *ms, t_vector *new, char *s)
 {
 	size_t	i;
 	ssize_t	j;
@@ -37,7 +35,7 @@ ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 			if (add_vector(new, s + j, i - j) == -1)
 				return (-1);
 			++i;
-			j = nq_variable(ms, lex, new, s + i);
+			j = nq_variable(ms, new, s + i);
 			if (j == -1)
 				return (-1);
 			i += j;
@@ -51,7 +49,7 @@ ssize_t	treat_noquote(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 	return (i);
 }
 
-static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
+static ssize_t	nq_variable(t_ms *ms, t_vector *new, char *s)
 {
 	size_t	i;
 	char	*value;
@@ -62,38 +60,10 @@ static ssize_t	nq_variable(t_ms *ms, t_lexer *lex, t_vector *new, char *s)
 	value = ms_getnenv(&ms->env, s, i);
 	if (value != NULL)
 	{
-		if (expand_nq(ms, lex, new, value) == -1)
+		if (add_escaping_nq(new, value) == -1)
 			return (-1);
 	}
 	return (i);
-}
-
-static ssize_t	expand_nq(t_ms *ms, t_lexer *lex, t_vector *new, char *value)
-{
-	const char	*ifs = get_ifs(ms);
-	char		*var;
-	char		*tok;
-
-	var = ft_strdup(value);
-	if (var == NULL)
-		return (-1);
-	tok = ft_strtok(var, ifs);
-	while (tok)
-	{
-		if (add_escaping_nq(new, tok) == -1)
-		{
-			free(var);
-			return (-1);
-		}
-		tok = ft_strtok(NULL, ifs);
-		if (tok && add_word_lex(lex, new) == -1)
-		{
-			free(var);
-			return (-1);
-		}
-	}
-	free(var);
-	return (0);
 }
 
 static int	add_escaping_nq(t_vector *vector, char *s)
@@ -112,17 +82,5 @@ static int	add_escaping_nq(t_vector *vector, char *s)
 			return (-1);
 		++i;
 	}
-	return (0);
-}
-
-static int	add_word_lex(t_lexer *lexer, t_vector *word)
-{
-	t_lexer_tok	token;
-
-	token.type = WORD;
-	token.content = word->array;
-	if (add_vector(lexer, &token, 1) == -1)
-		return (-1);
-	init_vector(word, sizeof(char));
 	return (0);
 }

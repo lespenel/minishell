@@ -6,13 +6,12 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:02:15 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/28 04:26:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "minishell.h"
-#include "lexer.h"
 #include "ft_string.h"
 #include "expander.h"
 #include "util.h"
@@ -23,7 +22,7 @@ static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s);
 static int		add_escaping_dq(t_vector *vector, char *s);
 
-ssize_t	expand_substr(t_ms *ms, t_lexer *lexer, t_vector *new, char *s)
+ssize_t	expand_substr(t_ms *ms, t_vector *new, char *s)
 {
 	size_t	i;
 
@@ -39,7 +38,7 @@ ssize_t	expand_substr(t_ms *ms, t_lexer *lexer, t_vector *new, char *s)
 	}
 	if (*s == '"')
 		return (treat_dquote(ms, new, s));
-	return (treat_noquote(ms, lexer, new, s));
+	return (treat_noquote(ms, new, s));
 }
 
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s)

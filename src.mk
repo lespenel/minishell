@@ -22,6 +22,8 @@ SRC = \
 	  lexer/char_filter/to_next_quote.c \
 	  \
 	  parser/validate_input.c \
+	  parser/get_here_doc.c \
+	  parser/fill_here_doc.c \
 	  \
 	  quote_removal/quote_removal.c \
  	  \

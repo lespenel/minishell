@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/14 14:18:51 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:41:13 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "parser.h"
 #include "vector.h"
 #include <stdio.h>
 
@@ -31,6 +32,8 @@ int	validate_input(t_lexer *lexer)
 		return (dprintf(2, SYNTAX_ERR, token->content));
 	ret = syntax_checker(lexer, 0, 0);
 	if (ret == -1)
+		return (-1);
+	if (ret == 0 && get_here_doc(lexer) == -1)
 		return (-1);
 	return (ret);
 }

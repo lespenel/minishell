@@ -6,15 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/27 18:40:30 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:36:59 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "wildcard.h"
-#include <dirent.h>
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -89,13 +87,11 @@ static int	is_dir(t_wild *wildcard, char *d_name, char *path)
 		free(buff);
 		return (-1);
 	}
-	if (stat(path_for_stat, buff))
-	{
-		errno = 0;
+	if (stat(path_for_stat, buff) < 0)
 		ret = 0;
-	}
 	else
 		ret = S_ISDIR(buff->st_mode);
+	errno = 0;
 	free(path_for_stat);
 	free(buff);
 	return (ret);

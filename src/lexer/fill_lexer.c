@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/20 04:31:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:33:55 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,7 @@ static int	add_operand_token(t_lexer *lexer, char *s)
 	type = get_operand_token(operand_type, s);
 	if (type == -1)
 		return (0);
-	token.content = ft_strdup(operand_type[type]);
-	if (token.content == NULL)
-		return (-1);
+	token.content = NULL;
 	token.type = type;
 	if (add_vector(lexer, &token, 1) == -1)
 		return (-1);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   fill_here_doc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 11:54:54 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:23:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ int	fill_here_doc(t_vector *vector, char *path, char *limiter)
 	fd = get_tempfile(path);
 	if (fd == -1)
 		return (-1);
-	printf("here doc == %s", (char *)vector->array);
 	if (write(fd, vector->array, vector->size) == -1)
 	{
 		close(fd);
 		return (-1);
 	}
-	if (close(fd) == -1)
-		return (-1);
+	close(fd);
 	return (0);
 }
 

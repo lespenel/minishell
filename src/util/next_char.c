@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_alloc_size.c                                   :+:      :+:    :+:   */
+/*   next_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 10:01:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:33:54 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/19 22:42:30 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/19 22:45:22 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
 #include <stddef.h>
 
-void	set_alloc_size(t_vector *this, size_t count)
+size_t	next_char(char *s, size_t i)
 {
-	if (this->allocated == 0 || this->size + count >= this->allocated - 1)
+	++i;
+	while (s[i] == '\\')
 	{
-		if (this->allocated == 0)
-			this->allocated = BASE_ALLOC;
-		else
-			this->allocated *= 2;
-		return ;
+		++i;
+		if (s[i] == '\0')
+			return (i);
+		++i;
 	}
+	return (i);
 }

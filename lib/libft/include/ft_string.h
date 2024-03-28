@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 05:53:10 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/01 03:06:42 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:40:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strcpy(char *dest, const char *src);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-char	*ft_strtok(char *s, char *delim);
+char	*ft_strtok(char *s, const char *delim);
 char	*ft_strtrim(const char *s1, const char *set);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_itoa(int n);

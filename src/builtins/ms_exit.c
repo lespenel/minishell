@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 02:05:13 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/19 23:25:07 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:47:46 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include <readline/readline.h>
 
 static int	get_exit_code(char *nptr);
-static int	free_exit(t_minishell *ms, t_lexer *lexer, char **args, int ret);
+static int	free_exit(t_ms *ms, t_lexer *lexer, char **args, int ret);
 
-int	ms_exit(t_minishell *minishell, t_lexer *lexer, char **args)
+int	ms_exit(t_ms *minishell, t_lexer *lexer, char **args)
 {
 	const int	argc = get_argc(args);
 	int			ret;
@@ -47,7 +47,7 @@ int	ms_exit(t_minishell *minishell, t_lexer *lexer, char **args)
 	return (127);
 }
 
-static int	free_exit(t_minishell *ms, t_lexer *lexer, char **args, int ret)
+static int	free_exit(t_ms *ms, t_lexer *lexer, char **args, int ret)
 {
 	int	w;
 

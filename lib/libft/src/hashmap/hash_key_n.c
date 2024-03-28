@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_alloc_size.c                                   :+:      :+:    :+:   */
+/*   hash_key_n.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: maxperei <maxperei@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 10:01:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:33:54 by ccouble          ###   ########.fr       */
+/*   Created: 2024/02/24 16:32:30 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/12 14:52:00 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
 #include <stddef.h>
 
-void	set_alloc_size(t_vector *this, size_t count)
+size_t	hash_key_n(const char *key, size_t n)
 {
-	if (this->allocated == 0 || this->size + count >= this->allocated - 1)
+	size_t	i;
+	size_t	hash;
+
+	hash = 5381;
+	i = 0;
+	while (key[i] && i < n)
 	{
-		if (this->allocated == 0)
-			this->allocated = BASE_ALLOC;
-		else
-			this->allocated *= 2;
-		return ;
+		hash = (hash << 5) + hash + key[i];
+		++i;
 	}
+	return (hash);
 }

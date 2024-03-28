@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:16:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:47:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,45 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-static int	init_minishell(t_minishell *minishell, char *envp[]);
-static void	destroy_minishell(t_minishell *minishell);
+static int	init_minishell(t_ms *ms, char *envp[]);
+static void	destroy_minishell(t_ms *ms);
 
 int	main(int argc, char **argv, char *envp[])
 {
-	t_minishell	minishell;
-	t_lexer		lexer;
+	t_ms		ms;
 	char		*input;
+	t_lexer		lexer;
 
 	(void)argc;
 	(void)argv;
-	if (init_minishell(&minishell, envp) == -1)
+	if (init_minishell(&ms, envp) == -1)
 		return (-1);
-	input = malloc(0);
+	input = readline(PROMPT);
 	while (input)
 	{
-		free(input);
-		input = readline(PROMPT);
-		if (input == NULL)
-			break ;
-		if (parse_input(&minishell.env, &lexer, input) == -1)
+		if (parse_input(&ms, &lexer, input) == -1)
 			return (-1);
-		if (exec_test(&minishell, &lexer) == -1)
+		if (exec_test(&ms, &lexer) == -1)
 			return (-1);
-		add_history(input);
 		print_lexer(&lexer);
 		clear_lexer(&lexer);
+		add_history(input);
+		free(input);
+		input = readline(PROMPT);
 	}
 	rl_clear_history();
-	destroy_minishell(&minishell);
+	destroy_minishell(&ms);
 	return (0);
 }
 
-static int	init_minishell(t_minishell *minishell, char *envp[])
+static int	init_minishell(t_ms *ms, char *envp[])
 {
-	if (init_env(&minishell->env, envp) == -1)
+	if (init_env(&ms->env, envp) == -1)
 		return (-1);
 	return (0);
 }
 
-static void	destroy_minishell(t_minishell *minishell)
+static void	destroy_minishell(t_ms *ms)
 {
-	destroy_env(&minishell->env);
+	destroy_env(&ms->env);
 }

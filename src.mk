@@ -16,10 +16,13 @@ SRC = \
 	  env/destroy_env.c \
 	  env/init_env.c \
 	  env/ms_getenv.c \
+	  env/ms_getnenv.c \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  expander/expand_substring.c \
 	  expander/expand_tokens.c \
+	  expander/treat_noquote.c \
 	  \
 	  lexer/init_lexer.c \
 	  lexer/fill_lexer.c \
@@ -33,6 +36,11 @@ SRC = \
 	  lexer/char_filter/to_next_quote.c \
 	  \
 	  parser/validate_input.c \
+	  \
+	  quote_removal/quote_removal.c \
+ 	  \
+	  util/get_ifs.c \
+	  util/next_char.c \
 	  \
 	  wildcard/expand_wildcards.c \
 	  wildcard/fill_pattern.c \

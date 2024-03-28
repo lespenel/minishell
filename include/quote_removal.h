@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_alloc_size.c                                   :+:      :+:    :+:   */
+/*   quote_removal.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 10:01:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 05:33:54 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/20 03:57:38 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/20 03:58:04 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include <stddef.h>
+#ifndef QUOTE_REMOVAL_H
+# define QUOTE_REMOVAL_H
 
-void	set_alloc_size(t_vector *this, size_t count)
-{
-	if (this->allocated == 0 || this->size + count >= this->allocated - 1)
-	{
-		if (this->allocated == 0)
-			this->allocated = BASE_ALLOC;
-		else
-			this->allocated *= 2;
-		return ;
-	}
-}
+# include "lexer.h"
+
+int	quote_removal(t_lexer *lexer);
+
+#endif

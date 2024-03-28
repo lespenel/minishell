@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 12:46:58 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/21 07:40:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef UTIL_H
+# define UTIL_H
 
-# define PROMPT "minishell $> "
+# include "minishell.h"
+# include <stddef.h>
 
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
-{
-	t_env	env;
-}	t_ms;
-
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input);
+char	*get_ifs(t_ms *ms);
+size_t	next_char(char *s, size_t i);
 
 #endif

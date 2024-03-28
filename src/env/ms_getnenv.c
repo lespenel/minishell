@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   getnenv.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 12:46:58 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/20 01:29:34 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/20 01:30:24 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "env.h"
+#include "hashmap.h"
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+char	*ms_getnenv(t_env *env, char *key, size_t n)
 {
-	t_env	env;
-}	t_ms;
-
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	return (getvaluen_hashmap(env, key, n));
+}

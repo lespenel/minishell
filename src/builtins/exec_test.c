@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 00:30:59 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:12:07 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:47:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "vector.h"
 #include <stdio.h>
 
-int	exec_test(t_minishell *minishell, t_lexer *lexer)
+int	exec_test(t_ms *minishell, t_lexer *lexer)
 {
 	t_lexer_tok	*token;
 	size_t		i;

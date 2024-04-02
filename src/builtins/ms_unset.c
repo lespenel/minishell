@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ms_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 06:40:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/17 04:10:46 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/18 03:30:04 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "env.h"
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+int	ms_unset(t_env *env, char **args)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
+	int	argc;
 
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	argc = 0;
+	(void)env;
+	while (args[argc])
+		argc++;
+	if (argc == 1)
+		return (0);
+	return (0);
+}

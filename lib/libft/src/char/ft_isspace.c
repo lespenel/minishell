@@ -6,11 +6,11 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 01:41:32 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/27 01:48:25 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/19 23:25:51 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-inline int	ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	return (c == ' ' || c == '\f' || c == '\n'
 		|| c == '\r' || c == '\t' || c == '\t');

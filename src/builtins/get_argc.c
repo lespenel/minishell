@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_argc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 06:40:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/18 04:47:51 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/18 05:03:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+int	get_argc(char **args)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
+	int	argc;
 
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	argc = 0;
+	while (args[argc])
+		++argc;
+	return (argc);
+}

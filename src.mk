@@ -1,4 +1,18 @@
 SRC = \
+	  builtins/clear_args.c \
+	  builtins/exec_builtins.c \
+	  builtins/exec_test.c \
+	  builtins/get_argc.c \
+	  builtins/get_args.c \
+	  builtins/is_builtin.c \
+	  builtins/ms_cd.c \
+	  builtins/ms_echo.c \
+	  builtins/ms_env.c \
+	  builtins/ms_exit.c \
+	  builtins/ms_export.c \
+	  builtins/ms_pwd.c \
+	  builtins/ms_unset.c \
+	  \
 	  env/destroy_env.c \
 	  env/get_envp.c \
 	  env/init_env.c \

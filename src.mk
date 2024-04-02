@@ -56,6 +56,8 @@ SRC = \
 	  \
 	  parser/validate_input.c \
 	  \
+	  signals/setup_signals_child.c \
+	  signals/setup_signals_interactive.c \
  	  \
 	  util/get_ifs.c \
 	  util/next_char.c \

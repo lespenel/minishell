@@ -6,15 +6,17 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:55:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/02 07:27:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "minishell.h"
 #include "lexer.h"
 #include "vector.h"
 #include "execution.h"
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -28,7 +30,11 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 {
 	size_t		i;
 	t_lexer_tok	*token;
+	int			fdin;
+	int			fdout;
 
+	fdin = dup(STDIN_FILENO);
+	fdout = dup(STDOUT_FILENO);
 	i = 0;
 	while (i < lexer->size)
 	{
@@ -36,12 +42,14 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 		if (token->type == COMMAND || token->type == SUBSHELL)
 			ms->lastexit = run_and_get_result(ms, lexer, i);
 		i = next_command(lexer, i);
-		if (i >= lexer->size)
-			return (0);
 		if (end_shell(lexer, i, ms->lastexit))
-			return (0);
+			break ;
 		++i;
 	}
+	dup2(fdin, STDIN_FILENO);
+	close(fdin);
+	dup2(fdout, STDOUT_FILENO);
+	close(fdout);
 	return (0);
 }
 
@@ -60,13 +68,19 @@ static int	run_and_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 {
 	t_lexer_tok	*token;
 	pid_t		pid;
+	char		**s;
 
 	token = at_vector(lexer, i);
 	pid = -1;
 	if (next_token(lexer, i) == PIPE)
 		pid = execute_pipeline(ms, lexer, i);
 	else if (token->type == COMMAND)
+	{
+		s = at_vector(&token->args, 0);
+		if (is_builtin(*s))
+			return (run_command(ms, token));
 		pid = execute_single_command(ms, lexer, i);
+	}
 	else if (token->type == SUBSHELL)
 		pid = execute_subshell(ms, lexer, i);
 	if (pid == -1)

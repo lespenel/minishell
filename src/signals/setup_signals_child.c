@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   setup_signals_child.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 07:01:42 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:06:16 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/02 12:50:51 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "execution.h"
-#include "vector.h"
+#include <signal.h>
 #include <stdlib.h>
-#include <unistd.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+static void	child_sigint(int sig);
+static void	child_sigquit(int sig);
+
+void	setup_signals_child(void)
 {
-	t_lexer_tok	*token;
-	pid_t		pid;
+	signal(SIGINT, child_sigint);
+	signal(SIGQUIT, child_sigquit);
 
-	token = at_vector(lexer, i);
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
-	{
-		exit(run_command(ms, token));
-	}
-	return (pid);
+}
+
+static void	child_sigint(int sig)
+{
+	exit(126 + sig);
+}
+
+static void	child_sigquit(int sig)
+{
+	exit(126 + sig);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:57:23 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:28:42 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/02 07:12:49 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	quote_removal(t_lexer_tok *token)
 	i = 0;
 	while (i < token->redirections.size)
 	{
-		redirection = at_vector(&token->args, i);
+		redirection = at_vector(&token->redirections, i);
 		if (remove_quotes(&redirection->file) == -1)
 			return (-1);
 		++i;

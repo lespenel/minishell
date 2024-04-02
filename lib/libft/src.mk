@@ -38,6 +38,7 @@ SRC = \
 	  string/ft_atoi.c \
 	  string/ft_atoi_base.c \
 	  string/ft_count_words.c \
+	  string/ft_free_strs.c \
 	  string/ft_itoa.c \
 	  string/ft_split.c \
 	  string/ft_strchr.c \

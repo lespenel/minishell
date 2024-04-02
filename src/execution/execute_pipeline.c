@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:04:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 01:55:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/03/28 17:40:59 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	execute_pipe_cmd(t_ms *ms, t_lexer_tok *token, int fdin)
 		close(fd[1]);
 		run_command(ms, token);
 	}
-	close(fdin);
+	if (fdin != -1)
+		close(fdin);
 	close(fd[1]);
 	return (fd[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:30:33 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/02 05:01:04 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ ssize_t	expand_substr(t_ms *minishell, t_vector *new, char *s);
 int		add_escaping(t_vector *vector, char *s);
 ssize_t	treat_noquote(t_ms *ms, t_vector *new, char *s);
 int		perform_expansions(t_ms *ms, t_lexer_tok *token);
-int		word_split(t_lexer_tok *token);
+int		word_split(t_ms *ms, t_lexer_tok *token);
 int		quote_removal(t_lexer_tok *token);
 
 #endif

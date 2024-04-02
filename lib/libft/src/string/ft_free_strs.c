@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.h                                             :+:      :+:    :+:   */
+/*   ft_free_strs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/02 05:01:50 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 03:27:14 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/02 03:31:56 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTIL_H
-# define UTIL_H
+#include <stdlib.h>
 
-# include "minishell.h"
-# include <stddef.h>
-
-size_t	next_char(char *s, size_t i);
-char	*get_ifs(t_env *env);
-
-#endif
+void	ft_free_strs(char **strs, size_t n)
+{
+	size_t	i;
+	
+	i = 0;
+	while (i < n)
+	{
+		free(strs[i]);
+		++i;
+	}
+	free(strs);
+}

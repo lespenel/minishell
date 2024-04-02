@@ -6,29 +6,69 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:30:17 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:52:42 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/02 06:00:00 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_string.h"
 #include "lexer.h"
+#include "minishell.h"
 #include "vector.h"
+#include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-// needs to be done
-int	word_split(t_lexer_tok *token)
+static int	fill_newtab(t_ms *ms, t_vector *newtab, char *s);
+
+int	word_split(t_ms *ms, t_lexer_tok *token)
 {
-	size_t			i;
-	t_vector		newtab;
+	size_t		i;
+	char		**s;
+	t_vector	newtab;
+	t_redirection	*redirection;
 
 	i = 0;
 	while (i < token->args.size)
 	{
+		s = at_vector(&token->args, i);
 		init_vector(&newtab, sizeof(char *));
-		++i;
+		if (fill_newtab(ms, &newtab, *s) == -1)
+			return (-1);
+		free(*s);
+		remove_vector(&token->args, i);
+		if (merge_vector(&token->args, &newtab, i) == -1)
+		{
+			clear_vector(&newtab);
+			return (-1);
+		}
+		i += newtab.size;
+		clear_vector(&newtab);
 	}
 	i = 0;
 	while (i < token->redirections.size)
 	{
+		redirection = at_vector(&token->redirections, i);
+		init_vector(&redirection->newtab, sizeof(char *));
+		if (fill_newtab(ms, &redirection->newtab, redirection->file) == -1)
+			return (-1);
 		++i;
 	}
+	return (0);
+}
+
+static int	fill_newtab(t_ms *ms, t_vector *newtab, char *s)
+{
+	char	**strs;
+	size_t	i;
+
+	strs = ft_split(s, get_ifs(&ms->env));
+	if (strs == NULL)
+		return (-1);
+	i = 0;
+	while (strs[i])
+		++i;
+	newtab->array = strs;
+	newtab->allocated = i;
+	newtab->size = i;
 	return (0);
 }

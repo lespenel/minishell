@@ -24,6 +24,8 @@ SRC = \
 	  \
 	  expansions/quote_removal/quote_removal.c \
 	  \
+	  expansions/word_split/word_split.c \
+	  \
 	  expansions/perform_expansions.c \
 	  \
 	  lexer/init_lexer.c \

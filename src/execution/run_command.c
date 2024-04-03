@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 07:11:27 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:53:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	run_command(t_ms *ms, t_lexer_tok *token)
 		if (path == NULL)
 		{
 			dprintf(2, "%s: command not found\n",
-		   *((char **)at_vector(&token->args, 0)));
+			   *((char **)at_vector(&token->args, 0)));
 			return (127);
 		}
 		envp = get_envp(&ms->env);

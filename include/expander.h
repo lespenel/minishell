@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 05:01:04 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/03 11:37:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ ssize_t	treat_noquote(t_ms *ms, t_vector *new, char *s);
 int		perform_expansions(t_ms *ms, t_lexer_tok *token);
 int		word_split(t_ms *ms, t_lexer_tok *token);
 int		quote_removal(t_lexer_tok *token);
+int		tilde_expansion(t_ms *ms, t_lexer_tok *token);
 
 #endif

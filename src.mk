@@ -29,8 +29,11 @@ SRC = \
 	  execution/get_path.c \
 	  execution/next_token.c \
 	  execution/perform_redirections.c \
+	  execution/restore_stds.c \
 	  execution/run_command.c \
+	  execution/save_stds.c \
 	  execution/simplify_tokens.c \
+	  execution/wait_children.c \
 	  \
 	  expansions/parameters/expand_substring.c \
 	  expansions/parameters/expand_parameters.c \
@@ -48,6 +51,7 @@ SRC = \
 	  lexer/fill_lexer.c \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
+	  lexer/clear_lexer_except.c \
 	  lexer/clear_token.c \
 	  lexer/add_newline_tok.c \
 	  lexer/char_filter/is_blank.c \

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:40:39 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:47:23 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:05:54 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishell.h"
 # include "lexer.h"
+# include <sys/wait.h>
 
 int			run_command(t_ms *ms, t_lexer_tok *token);
 int			execute_commands(t_ms *ms, t_lexer *lexer);
@@ -26,5 +27,8 @@ int			execution_structure(t_lexer *lexer);
 int			simplify_tokens(t_lexer *lexer);
 char		*get_path(t_ms *ms, char *name);
 t_lex_type	next_token(t_lexer *lexer, size_t i);
+int			wait_children(pid_t last);
+int			save_stds(int fd[2]);
+int			restore_stds(int fd[2]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 07:27:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:15:31 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,36 @@
 #include "lexer.h"
 #include "vector.h"
 #include "execution.h"
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
+static int		execution_loop(t_ms *ms, t_lexer *lexer);
 static int		end_shell(t_lexer *lexer, size_t i, int exitcode);
 static int		run_and_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
-static int		wait_children(pid_t last);
 
 int	execute_commands(t_ms *ms, t_lexer *lexer)
 {
+	int	fd[2];
+
+	if (save_stds(fd) == -1)
+		return (-1);
+	if (execution_loop(ms, lexer) == -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		return (-1);
+	}
+	if (restore_stds(fd) == -1)
+		return (-1);
+	return (0);
+}
+
+static int		execution_loop(t_ms *ms, t_lexer *lexer)
+{
 	size_t		i;
 	t_lexer_tok	*token;
-	int			fdin;
-	int			fdout;
 
-	fdin = dup(STDIN_FILENO);
-	fdout = dup(STDOUT_FILENO);
 	i = 0;
 	while (i < lexer->size)
 	{
@@ -46,10 +56,6 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			break ;
 		++i;
 	}
-	dup2(fdin, STDIN_FILENO);
-	close(fdin);
-	dup2(fdout, STDOUT_FILENO);
-	close(fdout);
 	return (0);
 }
 
@@ -100,28 +106,4 @@ static size_t	next_command(t_lexer *lexer, size_t i)
 		++i;
 	}
 	return (i);
-}
-
-static int	wait_children(pid_t last)
-{
-	int		wstatus;
-	pid_t	pid;
-	int		ret;
-
-	pid = 0;
-	ret = -1;
-	while (pid != -1)
-	{
-		pid = wait(&wstatus);
-		if (pid == last)
-		{
-			if (WIFEXITED(wstatus))
-				ret = WEXITSTATUS(wstatus);
-			if (WIFSIGNALED(wstatus))
-				ret = 128 + WTERMSIG(wstatus);
-		}
-	}
-	if (errno != ECHILD)
-		return (-1);
-	return (ret);
 }

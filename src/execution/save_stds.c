@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   save_stds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:31:22 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 13:04:33 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 13:05:34 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "execution.h"
-#include "vector.h"
-#include <stdlib.h>
 #include <unistd.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+int	save_stds(int fd[2])
 {
-	t_lexer_tok	token;
-	pid_t		pid;
-
-	pid = fork();
-	if (pid == -1)
+	fd[0] = dup(STDIN_FILENO);
+	if (fd[0] == -1)
 		return (-1);
-	if (pid == 0)
+	fd[1] = dup(STDIN_FILENO);
+	if (fd[1] == -1)
 	{
-		clear_lexer_except(lexer, i, &token);
-		exit(run_command(ms, &token));
+		close(fd[0]);
+		return (-1);
 	}
-	return (pid);
+	return (0);
 }

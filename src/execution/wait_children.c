@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   wait_children.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:31:22 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 12:56:22 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 12:56:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "execution.h"
-#include "vector.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include <sys/wait.h>
+#include <errno.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+int	wait_children(pid_t last)
 {
-	t_lexer_tok	token;
-	pid_t		pid;
+	int		wstatus;
+	pid_t	pid;
+	int		ret;
 
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
+	pid = 0;
+	ret = -1;
+	while (pid != -1)
 	{
-		clear_lexer_except(lexer, i, &token);
-		exit(run_command(ms, &token));
+		pid = wait(&wstatus);
+		if (pid == last)
+		{
+			if (WIFEXITED(wstatus))
+				ret = WEXITSTATUS(wstatus);
+			if (WIFSIGNALED(wstatus))
+				ret = 128 + WTERMSIG(wstatus);
+		}
 	}
-	return (pid);
+	if (errno != ECHILD)
+		return (-1);
+	return (ret);
 }

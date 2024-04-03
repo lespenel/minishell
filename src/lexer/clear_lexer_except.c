@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   clear_lexer_except.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:31:22 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 13:16:58 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 13:30:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "execution.h"
-#include "vector.h"
 #include <stdlib.h>
-#include <unistd.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+void	clear_lexer_except(t_lexer *lexer, size_t i, t_lexer_tok *token)
 {
-	t_lexer_tok	token;
-	pid_t		pid;
+	size_t		j;
 
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
+	j = 0;
+	while (j < lexer->size)
 	{
-		clear_lexer_except(lexer, i, &token);
-		exit(run_command(ms, &token));
+		if (i != j)
+			clear_token(at_vector(lexer, j));
+		else
+			*token = *(t_lexer_tok *)at_vector(lexer, j);
+		j++;
 	}
-	return (pid);
+	free(lexer->array);
+	lexer->array = NULL;
+	lexer->size = 0;
+	lexer->elemsize = 0;
+	lexer->allocated = 0;
 }

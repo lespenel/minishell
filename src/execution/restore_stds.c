@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   restore_stds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:31:22 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 13:06:00 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 13:14:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "execution.h"
-#include "vector.h"
-#include <stdlib.h>
 #include <unistd.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+int	restore_stds(int fd[2])
 {
-	t_lexer_tok	token;
-	pid_t		pid;
-
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
+	if (dup2(fd[0], STDIN_FILENO) == -1)
 	{
-		clear_lexer_except(lexer, i, &token);
-		exit(run_command(ms, &token));
+		close(fd[0]);
+		close(fd[1]);
+		return (-1);
 	}
-	return (pid);
+	if (close(fd[0]) == -1)
+	{
+		close(fd[1]);
+		return (-1);
+	}
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+	{
+		close(fd[1]);
+		return (-1);
+	}
+	if (close(fd[1]) == -1)
+		return (-1);
+	return (0);
 }

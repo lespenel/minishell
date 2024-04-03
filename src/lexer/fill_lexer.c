@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 10:33:55 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/03 03:56:24 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "lexer.h"
 #include "vector.h"
 #include "util.h"
+#include "ft_io.h"
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static int		add_operand_token(t_lexer *lexer, char *s);
 static int		get_operand_token(const char *operand_type[], char *s);
@@ -46,7 +46,7 @@ int	fill_lexer(t_lexer *lexer, char *s)
 		if (ret == -1)
 			return (-1);
 		else if (ret == 0)
-			return (dprintf(2, SYNTAX_ERR, "\"';&"));
+			return (ft_dprintf(2, SYNTAX_ERR, ""));
 		++i;
 	}
 	return (add_newline_tok(lexer));

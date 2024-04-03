@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 02:56:53 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/03 03:32:18 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/03 04:01:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	syntax_error(int type)
 	[CLOSE_BRACE] = ")",
 	[REDIRECT_IN] = "<",
 	[REDIRECT_OUT] = ">",
+	[NEWLINE] = "newline",
 	};
 
 	if (ft_dprintf(2, SYNTAX_ERR, operand_type[type]) == -1)

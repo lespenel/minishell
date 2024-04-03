@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/03 03:39:11 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:36:14 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ static int	fill_random_alpha(int fd, char *path)
 {
 	int8_t		i;
 	char		buff[2];
-	const char	alnum[62] = LOW_ALPHA UPPER_ALPHA NUM;
 
 	buff[1] = '\0';
 	i = 0;
@@ -125,7 +124,7 @@ static int	fill_random_alpha(int fd, char *path)
 	{
 		if (read(fd, buff, 1) == -1)
 			return (-1);
-		path[19 + i] = alnum[ft_abs(buff[0] % 62)];
+		path[19 + i] = ALNUM[ft_abs(buff[0] % 62)];
 		++i;
 	}
 	return (0);

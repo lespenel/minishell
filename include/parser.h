@@ -6,16 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 03:40:28 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:35:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define LOW_ALPHA	"abcdefghijklmnopqrstuvwxyz"
-# define UPPER_ALPHA	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-# define NUM	"0123456789"
+# define ALNUM "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 # include "lexer.h"
 

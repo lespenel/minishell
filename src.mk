@@ -5,7 +5,8 @@ SRC = \
 	  builtins/get_argc.c \
 	  builtins/get_args.c \
 	  builtins/is_builtin.c \
-	  builtins/ms_cd.c \
+	  builtins/ms_cd/ms_cd.c \
+	  builtins/ms_cd/get_dir_operand.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
 	  builtins/ms_exit.c \

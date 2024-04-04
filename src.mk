@@ -1,7 +1,6 @@
 SRC = \
 	  builtins/clear_args.c \
 	  builtins/exec_builtins.c \
-	  builtins/exec_test.c \
 	  builtins/get_argc.c \
 	  builtins/get_args.c \
 	  builtins/is_builtin.c \
@@ -24,8 +23,10 @@ SRC = \
 	  execution/stds/save_stds.c \
 	  execution/stds/restore_stds.c \
 	  \
+	  execution/pipeline/execute_pipeline.c \
+	  execution/pipeline/execute_pipe_cmd.c \
+	  \
 	  execution/execute_commands.c \
-	  execution/execute_pipeline.c \
 	  execution/execute_simple_command.c \
 	  execution/execute_subshell.c \
 	  execution/execution_structure.c \

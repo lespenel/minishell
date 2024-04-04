@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 23:25:36 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/24 23:39:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:21:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "vector.h"
 #include <stdlib.h>
 
 static void	clear_subshell(t_lexer_tok *token);
@@ -49,7 +50,7 @@ static void	clear_command(t_lexer_tok *token)
 	}
 	clear_vector(&token->args);
 	i = 0;
-	while (i < token->args.size)
+	while (i < token->redirections.size)
 	{
 		clear_redirection(at_vector(&token->redirections, i));
 		++i;

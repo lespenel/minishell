@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 14:01:38 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:19:20 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 
 	clear_lexer_except(lexer, i, &token);
 	ret = get_result(ms, &token);
+	dprintf(2, "got ret=%d\n", ret);
 	clear_token(&token);
 	destroy_minishell(ms);
 	return (ret);
@@ -56,7 +57,7 @@ static int	get_result(t_ms *ms, t_lexer_tok *token)
 	if (path == NULL)
 	{
 		dprintf(2, "%s: command not found\n",
-		  *((char **)at_vector(&token->args, 0)));
+			*((char **)at_vector(&token->args, 0)));
 		return (127);
 	}
 	envp = get_envp(&ms->env);

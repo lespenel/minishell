@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 10:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 11:45:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:11:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include "minishell.h"
 #include "vector.h"
 #include "ft_string.h"
+#include <stdlib.h>
 #include <unistd.h>
 
 static int	tilde_on_word(t_ms *ms, char **s);
 static int	replace_tilde(t_ms *ms, char **s, size_t i);
 
 int	tilde_expansion(t_ms *ms, t_lexer_tok *token)
-{	
+{
 	size_t			i;
 	t_redirection	*redirection;
 
@@ -81,6 +82,7 @@ static int	replace_tilde(t_ms *ms, char **s, size_t i)
 			clear_vector(&new);
 			return (-1);
 		}
+		free(*s);
 		*s = new.array;
 	}
 	return (0);

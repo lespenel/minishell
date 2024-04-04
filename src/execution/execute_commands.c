@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 17:00:09 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:47:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static int		execution_loop(t_ms *ms, t_lexer *lexer);
 static int		end_shell(t_lexer *lexer, size_t i, int exitcode);
 static int		run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
 
 int	execute_commands(t_ms *ms, t_lexer *lexer)
-{
-	if (execution_loop(ms, lexer) == -1)
-		return (-1);
-	return (0);
-}
-
-static int		execution_loop(t_ms *ms, t_lexer *lexer)
 {
 	size_t		i;
 	t_lexer_tok	*token;

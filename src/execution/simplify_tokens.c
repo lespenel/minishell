@@ -6,12 +6,13 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:43:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:56:57 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:22:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "ft_mem.h"
+#include "vector.h"
 
 static int	simplify_token(t_lexer *lexer, t_lexer *new, t_lexer_tok *cmd);
 static int	simplify_redirection(t_lexer *lexer, t_lexer_tok *cmd);
@@ -83,6 +84,7 @@ static int	simplify_redirection(t_lexer *lexer, t_lexer_tok *cmd)
 	redirection.type = token->type;
 	remove_vector(lexer, 0);
 	redirection.file = token->content;
+	init_vector(&redirection.newtab, sizeof(char *));
 	if (add_vector(&cmd->redirections, &redirection, 1) == -1)
 		return (-1);
 	return (0);

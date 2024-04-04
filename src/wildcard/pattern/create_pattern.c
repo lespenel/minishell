@@ -6,12 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:57:29 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 06:54:07 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:42:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "util.h"
+#include "vector.h"
 #include "wildcard.h"
 
 static int	get_dir_nb(t_lexer *first_pattern);

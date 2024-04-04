@@ -6,20 +6,19 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/27 14:59:59 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:33:25 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "wildcard.h"
-#include "lexer.h"
 
-static size_t	array_partition(t_lexer *filenames, ssize_t start, ssize_t end);
-static void		swap_token(t_lexer_tok *t1, t_lexer_tok *t2);
+static size_t	array_partition(t_vector *fnames, ssize_t start, ssize_t end);
+static void		swap_str(char **s1, char **s2);
 static int		ms_strcmp(char *s1, char *s2);
 static int		ft_tolower(int c);
 
-void	sort_filenames(t_lexer *filenames, ssize_t start, ssize_t end)
+void	sort_filenames(t_vector *filenames, ssize_t start, ssize_t end)
 {
 	ssize_t	pivot_index;
 
@@ -31,28 +30,28 @@ void	sort_filenames(t_lexer *filenames, ssize_t start, ssize_t end)
 	}
 }
 
-static size_t	array_partition(t_lexer *filenames, ssize_t start, ssize_t end)
+static size_t	array_partition(t_vector *filenames, ssize_t start, ssize_t end)
 {
 	char		*pivot;
 	ssize_t		i;
 	ssize_t		j;
-	t_lexer_tok	*tok;
+	char		**s;
 
 	i = start;
 	j = start;
-	tok = at_vector(filenames, end);
-	pivot = tok->content;
+	s = at_vector(filenames, end);
+	pivot = *s;
 	while (i < end)
 	{
-		tok = at_vector(filenames, i);
-		if (ms_strcmp(tok->content, pivot) <= 0)
+		s = at_vector(filenames, i);
+		if (ms_strcmp(*s, pivot) <= 0)
 		{
-			swap_token(at_vector(filenames, j), tok);
+			swap_str(at_vector(filenames, j), s);
 			++j;
 		}
 		++i;
 	}
-	swap_token(at_vector(filenames, j), at_vector(filenames, end));
+	swap_str(at_vector(filenames, j), at_vector(filenames, end));
 	return (j);
 }
 
@@ -74,16 +73,13 @@ static	int	ms_strcmp(char *s1, char *s2)
 	return (ft_tolower(s1[i]) - ft_tolower(s2[i]));
 }
 
-static	void	swap_token(t_lexer_tok *t1, t_lexer_tok *t2)
+static	void	swap_str(char **s1, char **s2)
 {
-	t_lexer_tok	temp;
+	char	*tmp;
 
-	temp.content = t1->content;
-	temp.type = t1->type;
-	t1->content = t2->content;
-	t1->type = t2->type;
-	t2->content = temp.content;
-	t2->type = temp.type;
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
 }
 
 static int	ft_tolower(int c)

@@ -6,21 +6,23 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/27 15:00:36 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:11:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem.h"
 #include "wildcard.h"
+#include <errno.h>
 #include <stdlib.h>
 
-static void	init_wildcard(t_wild *wildcard, t_env *env, t_lexer *filenames);
+static void	init_wildcard(t_wild *wildcard, t_env *env, t_vector *filenames);
 static void	clear_wildcard(t_wild *wildcard);
 
-int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
+int	wildcard_handling(t_env *env, t_vector *filenames, char *raw_pattern)
 {
 	t_wild	wildcard;
 
+	errno = 0;
 	init_wildcard(&wildcard, env, filenames);
 	if (create_pattern(&wildcard, raw_pattern) == -1)
 	{
@@ -34,10 +36,10 @@ int	wildcard_handling(t_env *env, t_lexer *filenames, char *raw_pattern)
 	}
 	clear_wildcard(&wildcard);
 	sort_filenames(filenames, 0, filenames->size - 1);
-	return (0);
+	return (add_backslash(filenames));
 }
 
-static void	init_wildcard(t_wild *wildcard, t_env *env, t_lexer *filenames)
+static void	init_wildcard(t_wild *wildcard, t_env *env, t_vector *filenames)
 {
 	ft_memset(wildcard, 0, sizeof(t_wild));
 	init_vector(&wildcard->patterns, sizeof(t_pattern));

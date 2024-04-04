@@ -6,16 +6,17 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:23:45 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:18:31 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:44:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "vector.h"
 #include "wildcard.h"
 
-static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_lexer *filenames);
+static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_vector *filenames);
 
-int	get_matching_dirname(t_wild *wild, t_lexer *filenames, size_t nb_dir)
+int	get_matching_dirname(t_wild *wild, t_vector *filenames, size_t nb_dir)
 {
 	t_pattern	*pattern;
 
@@ -32,25 +33,25 @@ int	get_matching_dirname(t_wild *wild, t_lexer *filenames, size_t nb_dir)
 	return (get_matching_dirname(wild, filenames, nb_dir + 1));
 }
 
-static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_lexer *filenames)
+static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_vector *filenames)
 {
-	t_lexer_tok	*tok;
+	char		**tok;
 	size_t		i;
-	t_lexer		new_lst;
+	t_vector	new_lst;
 
 	i = 0;
-	init_lexer(&new_lst);
+	init_vector(&new_lst, sizeof(char *));
 	while (i < filenames->size)
 	{
 		tok = at_vector(filenames, i);
-		if (get_dir_ls(wild, &pattern->pattern, &new_lst, tok->content) == -1)
+		if (get_dir_ls(wild, &pattern->pattern, &new_lst, *tok) == -1)
 		{
-			clear_lexer(&new_lst);
+			clear_vector(&new_lst);
 			return (-1);
 		}
 		++i;
 	}
-	clear_lexer(filenames);
+	clear_vector(filenames);
 	*filenames = new_lst;
 	return (0);
 }

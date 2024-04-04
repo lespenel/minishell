@@ -6,15 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:16:57 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:41:53 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 
-static int	for_each_file(t_wild *wild, t_pattern *pattern, t_lexer *filenames);
+static int	for_each_file(t_wild *wild, t_pattern *pattern, t_vector *fnames);
 
-int	get_matching_filenames(t_wild *wildcard, t_lexer *filenames)
+int	get_matching_filenames(t_wild *wildcard, t_vector *filenames)
 {
 	t_pattern	*pattern;
 
@@ -29,27 +29,27 @@ int	get_matching_filenames(t_wild *wildcard, t_lexer *filenames)
 	return (0);
 }
 
-static int	for_each_file(t_wild *wild, t_pattern *pattern, t_lexer *filenames)
+static int	for_each_file(t_wild *wild, t_pattern *pattern, t_vector *filenames)
 {
-	t_lexer_tok	*tok;
+	char		**s;
 	size_t		i;
 	size_t		old_size;
-	t_lexer		new_lst;
+	t_vector	new_lst;
 
 	i = 0;
 	old_size = filenames->size;
-	init_lexer(&new_lst);
+	init_vector(&new_lst, sizeof(char *));
 	while (i < old_size)
 	{
-		tok = at_vector(filenames, i);
-		if (get_files_ls(wild, &pattern->pattern, &new_lst, tok->content) == -1)
+		s = at_vector(filenames, i);
+		if (get_files_ls(wild, &pattern->pattern, &new_lst, *s) == -1)
 		{
-			clear_lexer(&new_lst);
+			clear_vector(&new_lst);
 			return (-1);
 		}
 		++i;
 	}
-	clear_lexer(filenames);
+	clear_vector(filenames);
 	*filenames = new_lst;
 	return (0);
 }

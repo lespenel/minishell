@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 06:55:35 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:51:38 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 	t_lexer_tok	*tok;
 
 	tok = at_vector(pattern, 0);
-	if (ft_strcmp(f_name, ".") == 0)
+	if (ft_strcmp(f_name, ".") == 0 || ft_strcmp(f_name, "./") == 0)
 		return (0);
-	if (ft_strcmp(f_name, "..") == 0)
+	if (ft_strcmp(f_name, "..") == 0 || ft_strcmp(f_name, "../") == 0)
 		return (0);
 	if (globignore)
 		return (1);

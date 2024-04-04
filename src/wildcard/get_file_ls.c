@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 07:19:49 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:22:39 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	cmp_file(t_wild *w, t_lexer *patt, struct dirent *dir, char *path);
 
-int	get_files_ls(t_wild *w, t_lexer *pattern, t_lexer *fname, char *path)
+int	get_files_ls(t_wild *w, t_lexer *pattern, t_vector *fname, char *path)
 {
 	DIR				*dir;
 	struct dirent	*entry;

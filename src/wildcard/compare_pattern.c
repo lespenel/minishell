@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 09:26:32 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:50:36 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include <unistd.h>
 
 static int	get_starting_path(t_wild *wildcard);
-static int	add_absolute_path(t_wild *wildcard, t_lexer *filenames);
+static int	add_absolute_path(t_wild *wildcard, t_vector *filenames);
 static int	set_absolute_path(t_wild *wildcard, t_pattern *pattern, char *path);
 static int	set_relative_path(t_wild *wildcard);
 
-int	compare_pattern(t_wild *wildcard, t_lexer *filenames)
+int	compare_pattern(t_wild *wildcard, t_vector *filenames)
 {
 	if (get_starting_path(wildcard) == -1)
 		return (-1);
@@ -46,7 +46,7 @@ static int	get_starting_path(t_wild *wildcard)
 
 	pattern = at_vector(&wildcard->patterns, 0);
 	tok = at_vector(&pattern->pattern, 0);
-	if (pattern->type == DIRECTORY && tok->type == WORD)
+	if (pattern->type == DIRECTORY && ft_strncmp(tok->content, "/", 1) == 0)
 	{
 		if (set_absolute_path(wildcard, pattern, tok->content) == -1)
 			return (-1);
@@ -89,19 +89,19 @@ static int	set_relative_path(t_wild *wildcard)
 	return (0);
 }
 
-static int	add_absolute_path(t_wild *wildcard, t_lexer *filenames)
+static int	add_absolute_path(t_wild *wildcard, t_vector *filenames)
 {
-	t_lexer_tok	*tok;
+	char		**s;
 	size_t		i;
 	char		*tmp_wd;
 
 	i = 0;
 	while (i < filenames->size)
 	{
-		tok = at_vector(filenames, i);
-		tmp_wd = tok->content;
-		tok->content = ft_strjoin(wildcard->wd, tmp_wd);
-		if (tok->content == NULL)
+		s = at_vector(filenames, i);
+		tmp_wd = *s;
+		*s = ft_strjoin(wildcard->wd, tmp_wd);
+		if (*s == NULL)
 		{
 			free(tmp_wd);
 			return (-1);

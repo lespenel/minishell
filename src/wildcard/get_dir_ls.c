@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 09:36:59 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:18:13 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static int	is_dir(t_wild *wildcard, char *d_name, char *path);
 static int	cmp_dir(t_wild *w, t_lexer *pattern, struct dirent *dir, char *s);
 
-int	get_dir_ls(t_wild *w, t_lexer *pattern, t_lexer *filenames, char *path)
+int	get_dir_ls(t_wild *w, t_lexer *pattern, t_vector *filenames, char *path)
 {
 	DIR				*dir;
 	struct dirent	*entry;

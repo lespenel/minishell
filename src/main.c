@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/02 12:48:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:53:08 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include <unistd.h>
 
 static int	init_minishell(t_ms *ms, char *envp[]);
-static void	destroy_minishell(t_ms *ms);
 
 void	signal_sigquit(int sig)
 {
@@ -60,9 +59,4 @@ static int	init_minishell(t_ms *ms, char *envp[])
 	setup_signals_interactive();
 	ms->lastexit = 0;
 	return (0);
-}
-
-static void	destroy_minishell(t_ms *ms)
-{
-	destroy_env(&ms->env);
 }

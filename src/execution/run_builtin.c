@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_simple_command.c                           :+:      :+:    :+:   */
+/*   run_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 14:01:59 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 16:56:31 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env.h"
+#include "builtins.h"
+#include "expander.h"
 #include "lexer.h"
 #include "execution.h"
-#include "minishell.h"
-#include "vector.h"
+#include "ft_string.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int	execute_single_command(t_ms *ms, t_lexer *lexer, size_t i)
+int	run_builtin(t_ms *ms, t_lexer_tok *token)
 {
-	pid_t		pid;
+	int	ret;
+	int	stds[2];
 
-	pid = fork();
-	if (pid == -1)
+	if (perform_expansions(ms, token) == -1)
 		return (-1);
-	if (pid == 0)
-	{
-		exit(run_command(ms, lexer, i));
-	}
-	return (pid);
+	if (save_stds(stds) == -1)
+		return (-1);
+	if (perform_redirections(token) == -1)
+		return (-1);
+	ret = exec_builtins(ms, NULL, token->args.array);
+	if (restore_stds(stds) == -1)
+		return (-1);
+	return (ret);
 }

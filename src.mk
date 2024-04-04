@@ -21,6 +21,9 @@ SRC = \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
+	  execution/stds/save_stds.c \
+	  execution/stds/restore_stds.c \
+	  \
 	  execution/execute_commands.c \
 	  execution/execute_pipeline.c \
 	  execution/execute_simple_command.c \
@@ -29,9 +32,8 @@ SRC = \
 	  execution/get_path.c \
 	  execution/next_token.c \
 	  execution/perform_redirections.c \
-	  execution/restore_stds.c \
+	  execution/run_builtin.c \
 	  execution/run_command.c \
-	  execution/save_stds.c \
 	  execution/simplify_tokens.c \
 	  execution/wait_children.c \
 	  \
@@ -74,5 +76,6 @@ SRC = \
 	  wildcard/is_wildcard_match.c \
 	  wildcard/sort_filenames.c \
 	  \
+	  destroy_minishell.c \
 	  main.c \
 	  parse_input.c \

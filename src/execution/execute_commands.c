@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:15:31 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/03 17:00:09 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,12 @@
 
 static int		execution_loop(t_ms *ms, t_lexer *lexer);
 static int		end_shell(t_lexer *lexer, size_t i, int exitcode);
-static int		run_and_get_result(t_ms *ms, t_lexer *lexer, size_t i);
+static int		run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
 
 int	execute_commands(t_ms *ms, t_lexer *lexer)
 {
-	int	fd[2];
-
-	if (save_stds(fd) == -1)
-		return (-1);
 	if (execution_loop(ms, lexer) == -1)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		return (-1);
-	}
-	if (restore_stds(fd) == -1)
 		return (-1);
 	return (0);
 }
@@ -50,7 +40,7 @@ static int		execution_loop(t_ms *ms, t_lexer *lexer)
 	{
 		token = at_vector(lexer, i);
 		if (token->type == COMMAND || token->type == SUBSHELL)
-			ms->lastexit = run_and_get_result(ms, lexer, i);
+			ms->lastexit = run_get_result(ms, lexer, i);
 		i = next_command(lexer, i);
 		if (end_shell(lexer, i, ms->lastexit))
 			break ;
@@ -70,7 +60,7 @@ static int	end_shell(t_lexer *lexer, size_t i, int exitcode)
 		|| (token->type == LOGICAL_OR && exitcode == 0));
 }
 
-static int	run_and_get_result(t_ms *ms, t_lexer *lexer, size_t i)
+static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 {
 	t_lexer_tok	*token;
 	pid_t		pid;
@@ -84,7 +74,7 @@ static int	run_and_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 	{
 		s = at_vector(&token->args, 0);
 		if (is_builtin(*s))
-			return (run_command(ms, token));
+			return (run_builtin(ms, token));
 		pid = execute_single_command(ms, lexer, i);
 	}
 	else if (token->type == SUBSHELL)

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:40:39 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 13:05:54 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:58:06 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include "lexer.h"
 # include <sys/wait.h>
 
-int			run_command(t_ms *ms, t_lexer_tok *token);
+int			run_command(t_ms *ms, t_lexer *lexer, size_t i);
+int			run_builtin(t_ms *ms, t_lexer_tok *token);
 int			execute_commands(t_ms *ms, t_lexer *lexer);
 int			execute_single_command(t_ms *ms, t_lexer *lexer, size_t i);
 int			execute_pipeline(t_ms *ms, t_lexer *lexer, size_t i);

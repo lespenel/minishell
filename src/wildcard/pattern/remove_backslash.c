@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 09:31:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/21 11:12:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:39:44 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	get_new_word(t_lexer_tok *tok)
 		}
 		++len;
 	}
-	str = malloc(sizeof(char) * new_len + 1);
+	str = malloc(sizeof(char) * (new_len + 1));
 	if (str == NULL)
 		return (-1);
 	ft_strncpy_no_backslash(str, tok->content, new_len + 1);

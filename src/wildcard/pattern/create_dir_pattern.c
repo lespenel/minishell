@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:27:34 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/26 06:54:39 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:40:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int	add_dirname_tok(t_lexer *pattern, t_lexer_tok *tok, ssize_t slash)
 {
 	t_lexer_tok		new_tok;
 
-	new_tok.content = malloc(sizeof(char) * slash + 2);
+	new_tok.content = malloc(sizeof(char) * (slash + 2));
 	if (new_tok.content == NULL)
 		return (-1);
 	ft_strncpy(new_tok.content, tok->content, slash + 1);

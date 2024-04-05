@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 16:00:19 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:28:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	check_redirections(t_lexer_tok *token)
 		}
 		else
 		{
-			// What I did is bad here
 			dprintf(2, "%s: ambiguous redirect\n", redirection->file);
 			return (-1);
 		}

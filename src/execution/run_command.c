@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 16:19:20 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:32:21 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <unistd.h>
 
 static int	get_result(t_ms *ms, t_lexer_tok *token);
+static int	end_cmd(t_ms *ms, t_lexer_tok *token, char *path);
 
 int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 {
@@ -38,8 +39,7 @@ int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 
 static int	get_result(t_ms *ms, t_lexer_tok *token)
 {
-	char		**envp;
-	char		*path;
+	char	*path;
 
 	if (perform_expansions(ms, token) == -1)
 		return (-1);
@@ -52,6 +52,13 @@ static int	get_result(t_ms *ms, t_lexer_tok *token)
 	path = *((char **)at_vector(&token->args, 0));
 	if (is_builtin(path))
 		return (exec_builtins(ms, NULL, token->args.array));
+	return (end_cmd(ms, token, path));
+}
+
+static int	end_cmd(t_ms *ms, t_lexer_tok *token, char *path)
+{
+	char	**envp;
+
 	if (ft_strchr(path, '/') == NULL)
 		path = get_path(ms, *((char **)at_vector(&token->args, 0)));
 	if (path == NULL)

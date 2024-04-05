@@ -6,10 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:30:17 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 06:00:00 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:34:34 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_mem.h"
+#include "ft_string.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "ft_string.h"
 #include "lexer.h"
 #include "minishell.h"
@@ -19,6 +23,7 @@
 #include <stdlib.h>
 
 static int	fill_newtab(t_ms *ms, t_vector *newtab, char *s);
+static char	**ft_split(const char *s, char *delim);
 
 int	word_split(t_ms *ms, t_lexer_tok *token)
 {
@@ -71,4 +76,37 @@ static int	fill_newtab(t_ms *ms, t_vector *newtab, char *s)
 	newtab->allocated = i;
 	newtab->size = i;
 	return (0);
+}
+
+static char	**ft_split(const char *s, char *delim)
+{
+	size_t	count;
+	char	**strs;
+	size_t	i;
+	size_t	j;
+
+	while (*s && ft_strchr(delim, *s))
+		++s;
+	count = ft_count_words(s, delim);
+	strs = malloc((count + 1) * sizeof(char *));
+	if (strs == NULL)
+		return (NULL);
+	strs[count] = NULL;
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		j = i;
+		while (s[i] && ft_strchr(delim, s[i]) == NULL)
+			++i;
+		strs[count] = malloc(((i - j) + 1) * sizeof(char));
+		if (strs[count] == NULL)
+			return (NULL);
+		strs[count][i - j] = '\0';
+		ft_memcpy(strs[count], s + j, (i - j) * sizeof(char));
+		while (s[i] && ft_strchr(delim, s[i]))
+			++i;
+		++count;
+	}
+	return (strs);
 }

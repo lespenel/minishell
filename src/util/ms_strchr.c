@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.h                                             :+:      :+:    :+:   */
+/*   ms_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 06:31:22 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/22 15:25:37 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/24 10:26:31 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTIL_H
-# define UTIL_H
+#include "util.h"
+#include "lexer.h"
 
-# include "minishell.h"
-# include <stddef.h>
+char	*ms_strchr(char *str, char c)
+{
+	size_t	i;
 
-char	*get_ifs(t_ms *ms);
-char	*ms_strchr(char *str, char c);
-size_t	next_char(char *s, size_t i);
-
-#endif
+	i = 0;
+	i = next_char(str, -1);
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (str + i);
+		if (is_quote(str[i]))
+		{
+			i += to_next_quote(str + i);
+		}
+		i = next_char(str, i);
+	}
+	return (NULL);
+}

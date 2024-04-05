@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   get_dir_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 02:04:53 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/26 05:22:00 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/28 09:31:04 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "parser.h"
+#include "ft_string.h"
 #include "wildcard.h"
-#include "minishell.h"
-#include "expander.h"
-#include "quote_removal.h"
+#include <dirent.h>
+#include <errno.h>
+#include <stdlib.h>
 
-int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
+DIR	*get_dir_path(t_wild *wild, char *path)
 {
-	int	ret;
+	char	*wd;
+	char	*tmp;
+	DIR		*dir;
 
-	(void)ms;
-	ret = fill_lexer(lexer, input);
-	if (ret == -1)
-		return (-1);
-	else if (ret)
-		return (clear_lexer(lexer));
-	ret = validate_input(lexer);
-	if (ret == -1)
-		return (-1);
-	else if (ret)
-		return (clear_lexer(lexer));
-	return (0);
+	wd = ft_strdup(wild->wd);
+	if (wd == NULL)
+		return (NULL);
+	if (path)
+	{
+		tmp = ft_strjoin(wd, path);
+		free(wd);
+		if (tmp == NULL)
+			return (NULL);
+		wd = tmp;
+	}
+	dir = opendir(wd);
+	if (dir == NULL)
+		errno = 0;
+	free(wd);
+	return (dir);
 }

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 00:55:45 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:18:06 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ int	main(int argc, char **argv, char *envp[])
 static int	init_minishell(t_ms *ms, char *envp[])
 {
 	ft_memset(ms, 0, sizeof(t_ms));
-	
 	if (init_env(&ms->env, envp) == -1)
 		return (-1);
 	setup_signals_interactive();
 	if (set_exitcode_str(ms, 0) == -1)
+	{
+		destroy_env(&ms->env);
 		return (-1);
+	}
 	return (0);
 }

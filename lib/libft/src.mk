@@ -19,6 +19,7 @@ SRC = \
 	  hashmap/init_hashmap.c \
 	  hashmap/setvalue_hashmap.c \
 	  \
+	  io/ft_dprintf.c \
 	  io/ft_putchar_fd.c \
 	  io/ft_putendl_fd.c \
 	  io/ft_putnbr_fd.c \

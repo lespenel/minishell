@@ -6,15 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 05:51:27 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 02:13:54 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/03/26 06:46:32 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include "wildcard.h"
 #include "ft_string.h"
-#include <stdio.h>
+#include "wildcard.h"
 #include <stdlib.h>
 
 static	ssize_t	add_quote_tok(t_lexer *pattern, char *raw_pattern);
@@ -48,7 +45,7 @@ int	fill_pattern(t_lexer *pattern, char *raw_pattern)
 		if (ret == -1)
 			return (-1);
 	}
-	return (add_newline_tok(pattern));
+	return (0);
 }
 
 static	ssize_t	add_wildcard_tok(t_lexer *pattern, char *raw_pattern)
@@ -82,7 +79,11 @@ static ssize_t	add_word_tok(t_lexer *pattern, char *raw_pattern)
 
 	size = 0;
 	while (is_not_wildcard(raw_pattern[size]))
+	{
+		if (raw_pattern[size] == '\\')
+			++size;
 		++size;
+	}
 	token.content = malloc(sizeof(char) * size + 1);
 	if (token.content == NULL)
 		return (-1);
@@ -116,7 +117,7 @@ static	ssize_t	add_quote_tok(t_lexer *pattern, char *raw_pattern)
 
 static int	is_not_wildcard(char c)
 {
-	if (c != '*' && is_quote(c) == 0 && c > 32)
+	if (c && c != '*' && is_quote(c) == 0)
 		return (1);
 	return (0);
 }

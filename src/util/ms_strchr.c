@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_newline_tok.c                                  :+:      :+:    :+:   */
+/*   ms_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:11:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 02:01:17 by lespenel         ###   ########.fr       */
+/*   Created: 2024/03/22 15:25:37 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/24 10:26:31 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "util.h"
 #include "lexer.h"
-#include "vector.h"
 
-int	add_newline_tok(t_lexer *lexer)
+char	*ms_strchr(char *str, char c)
 {
-	t_lexer_tok	token;
+	size_t	i;
 
-	token.content = NULL;
-	token.type = NEWLINE;
-	if (add_vector(lexer, &token, 1) == -1)
-		return (-1);
-	return (0);
+	i = 0;
+	i = next_char(str, -1);
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (str + i);
+		if (is_quote(str[i]))
+		{
+			i += to_next_quote(str + i);
+		}
+		i = next_char(str, i);
+	}
+	return (NULL);
 }

@@ -6,51 +6,52 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/14 09:36:12 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:51:38 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include "lexer.h"
-#include "vector.h"
 #include "wildcard.h"
 #include <stdlib.h>
 
-static int	compare_pattern(t_lexer *pattern, char *f_name);
+static int	compare_pattern_filenames(t_lexer *pattern, char *f_name);
 static char	*midlle_pattern(t_lexer *pattern, char *f_name);
 static int	check_end_pattern(char *to_find, char *f_name);
-static int	hidden_file(char *raw_pattern, char *f_name);
+static int	hidden_file(t_lexer *pattern, char *f_name, char *gignore);
 
-int	is_wildcard_match(t_lexer *pattern, char *raw_pattern, char *f_name)
+int	is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name)
 {
-	if (hidden_file(raw_pattern, f_name) == 0)
+	if (hidden_file(pattern, f_name, wild->globignore) == 0)
 		return (0);
-	if (compare_pattern(pattern, f_name) == 1)
+	if (compare_pattern_filenames(pattern, f_name) == 1)
 		return (1);
 	return (0);
 }
 
-static int	hidden_file(char *raw_pattern, char *f_name)
+static int	hidden_file(t_lexer *pattern, char *f_name, char *globignore)
 {
-	if (ft_strcmp(f_name, ".") == 0)
+	t_lexer_tok	*tok;
+
+	tok = at_vector(pattern, 0);
+	if (ft_strcmp(f_name, ".") == 0 || ft_strcmp(f_name, "./") == 0)
 		return (0);
-	if (ft_strcmp(f_name, "..") == 0)
+	if (ft_strcmp(f_name, "..") == 0 || ft_strcmp(f_name, "../") == 0)
 		return (0);
-	if (raw_pattern[0] != '.' && f_name[0] == '.')
+	if (globignore)
+		return (1);
+	if (f_name[0] == '.' && tok->content[0] != '.')
 		return (0);
 	return (1);
 }
 
-static int	compare_pattern(t_lexer *pattern, char *f_name)
+static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 {
 	t_lexer_tok	*tok;
 	size_t		len;
 
 	tok = at_vector(pattern, 0);
-	if (pattern->size == 1)
+	if (pattern->size == 0)
 		return (0);
-	if (pattern->size == 2)
-		return (tok->type == 0);
 	if (tok->type == WORD)
 	{
 		len = ft_strlen(tok->content);
@@ -58,10 +59,12 @@ static int	compare_pattern(t_lexer *pattern, char *f_name)
 			return (0);
 		f_name += len;
 	}
+	if (pattern->size == 1)
+		return (1);
 	f_name = midlle_pattern(pattern, f_name);
 	if (f_name == NULL)
 		return (0);
-	tok = at_vector(pattern, pattern->size - 2);
+	tok = at_vector(pattern, pattern->size - 1);
 	if (tok->type == 0)
 		return (1);
 	if (check_end_pattern(tok->content, f_name) == 1)
@@ -76,7 +79,7 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 	char		*ret;
 
 	i = 1;
-	while (i < pattern->size - 2)
+	while (i < pattern->size - 1)
 	{
 		tok = at_vector(pattern, i);
 		if (tok->type == WORD)

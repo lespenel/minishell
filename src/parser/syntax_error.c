@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_newline_tok.c                                  :+:      :+:    :+:   */
+/*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:11:05 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 02:01:17 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/03 02:56:53 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/03 04:01:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_io.h"
 #include "lexer.h"
-#include "vector.h"
 
-int	add_newline_tok(t_lexer *lexer)
+int	syntax_error(int type)
 {
-	t_lexer_tok	token;
+	static const char	*operand_type[] = {
+	[LOGICAL_OR] = "||",
+	[LOGICAL_AND] = "&&",
+	[APPEND] = ">>",
+	[HERE_DOC] = "<<",
+	[PIPE] = "|",
+	[OPEN_BRACE] = "(",
+	[CLOSE_BRACE] = ")",
+	[REDIRECT_IN] = "<",
+	[REDIRECT_OUT] = ">",
+	[NEWLINE] = "newline",
+	};
 
-	token.content = NULL;
-	token.type = NEWLINE;
-	if (add_vector(lexer, &token, 1) == -1)
+	if (ft_dprintf(2, SYNTAX_ERR, operand_type[type]) == -1)
 		return (-1);
-	return (0);
+	return (1);
 }

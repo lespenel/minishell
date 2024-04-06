@@ -6,6 +6,7 @@ SRC = \
 	  builtins/get_args.c \
 	  builtins/is_builtin.c \
 	  builtins/ms_cd/ms_cd.c \
+	  builtins/ms_cd/get_canonical_path.c \
 	  builtins/ms_cd/get_dir_operand.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
@@ -45,6 +46,7 @@ SRC = \
  	  \
 	  util/get_ifs.c \
 	  util/next_char.c \
+	  util/ft_split_vector.c \
 	  \
 	  wildcard/expand_wildcards.c \
 	  wildcard/fill_pattern.c \

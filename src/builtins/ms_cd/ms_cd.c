@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/04 08:07:10 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/06 07:23:05 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env.h"
 #include "ft_io.h"
 #include "ft_string.h"
+#include "vector.h"
 #include <errno.h>
 #include <stddef.h>
 #include <unistd.h>
@@ -22,27 +23,13 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-static	char *get_curpath(t_env *env, char *dir_operand);
-static	int	set_pwd(t_env *env, char *curpath);
+static	char	*get_curpath(t_env *env, char *dir_operand);
+static	int		set_pwd(t_env *env, char *curpath);
 
 static	int	set_pwd(t_env *env, char *curpath)
 {
-	char	*wd;
-	size_t	len;
-
-	(void)curpath;
-	wd = getcwd(NULL, 0);
-	if (wd == NULL)
+	if (ms_setenv(env, "PWD", curpath) == -1)
 		return (-1);
-	len = ft_strlen(wd);
-	if (len > 1 && wd[len - 1] == '/')
-		wd[len - 1] = '\0';
-	if (ms_setenv(env, "PWD", wd) == -1)
-	{
-		free(wd);
-		return (-1);
-	}
-	free(wd);
 	return (0);
 }
 
@@ -83,6 +70,11 @@ int	ms_cd(t_env	*env, char **args)
 		free(dir_operand);
 		return (1);
 	}
+	if (get_canonical_path(&curpath) == -1)
+	{
+		printf("erreur canonical\n");
+		return (-1);
+	}
 	if (chdir(curpath) == -1
 		|| set_pwd(env, curpath) == -1)
 	{
@@ -95,6 +87,8 @@ int	ms_cd(t_env	*env, char **args)
 	ft_dprintf(2, "dir operand = %s\n", dir_operand);
 	ft_dprintf(2, "curpath     = %s\n", curpath);
 	ft_dprintf(2, "wd          = %s\n", wd);
+	get_canonical_path(&curpath);
+	ft_dprintf(2, "canonical   = %s\n", curpath);
 	free(dir_operand);
 	free(curpath);
 	return (0);

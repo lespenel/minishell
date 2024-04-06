@@ -6,15 +6,17 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:36:40 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 04:20:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/06 07:22:44 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "ft_string.h"
+#include <stddef.h>
 
 int	is_builtin(char *word)
 {
+	const	size_t len = ft_strlen(word);
 	int					i;
 	static const char	*builtins[] = {
 	[ECHO] = "echo",
@@ -26,10 +28,12 @@ int	is_builtin(char *word)
 	[EXIT] = "exit",
 	};
 
+	if (len == 0)
+		return (0);
 	i = 0;
 	while (i <= EXIT)
 	{
-		if (ft_strncmp(word, builtins[i], ft_strlen(word)) == 0)
+		if (ft_strncmp(word, builtins[i], len) == 0)
 			return (1);
 		++i;
 	}

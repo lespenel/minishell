@@ -1,33 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_split_vector.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 23:50:20 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 02:00:10 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/06 04:57:11 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/06 05:04:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
 #include "ft_string.h"
-#include <unistd.h>
+#include "vector.h"
+#include <stdlib.h>
 
-int	ms_pwd(t_env *env, char **args)
+int	ft_split_vector(t_vector *dest, char *s, char delim)
 {
-	int		argc;
-	char	*wd;
+	size_t	i;
+	size_t	j;
+	char	*tmp;
 
-	argc = 0;
-	while (args[argc])
-		argc++;
-	wd = ms_getenv(env, "PWD");
-	if (wd == NULL)
-		return (1);
-	if (write(1, wd, ft_strlen(wd)) == -1)
-		return (1);
-	if (write(1, "\n", 1) == -1)
-		return (1);
+	i = 0;
+	while (s[i])
+	{
+		j = 0;
+		while (s[i + j] && s[i + j] != delim)
+			++j;
+		if (j != 0)
+		{
+			tmp = ft_strndup(s + i, j);
+			if (tmp == NULL)
+				return (-1);
+			if (add_vector(dest, &tmp, 1) == -1)
+			{
+				free(tmp);
+				return (-1);
+			}
+			i += j - 1;
+		}
+		++i;
+	}
 	return (0);
 }

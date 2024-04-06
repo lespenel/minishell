@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 08:07:34 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 23:09:51 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ ssize_t	expand_nq(t_ms *ms, t_vector *tab, t_vector *new, char *value);
 char	*ft_strtok_ifs(char *s, const char *delim);
 int		add_word_tab(t_vector *tab, t_vector *word);
 int		fill_nq_var(t_vector *tab, t_vector *new, char *value, const char *ifs);
+char	*get_parameter_str(t_ms *ms, char *s, size_t n);
 
 #endif

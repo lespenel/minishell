@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 02:39:50 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 23:10:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i)
 	j = i;
 	while (ft_strchr("\"'\\$", s[i]) == NULL)
 		++i;
-	value = ms_getnenv(&ms->env, s + j, i - j);
+	value = get_parameter_str(ms, s + j, i - j);
 	if (value != NULL)
 	{
 		if (add_escaping_dq(new, value) == -1)

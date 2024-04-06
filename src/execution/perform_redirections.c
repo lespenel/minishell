@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:46:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 07:15:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 07:32:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	perform_redirection(t_redirection *redirection)
 		fd = open(redirection->file, O_RDONLY);
 		if (fd == -1)
 			return (1);
-		if (dup2(fd, 0) == -1)
+		if (dup2(fd, STDIN_FILENO) == -1)
 			return (-1);
 		return (0);
 	}
@@ -54,7 +54,7 @@ static int	perform_redirection(t_redirection *redirection)
 		fd = open(redirection->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		return (1);
-	if (dup2(fd, 1) == -1)
+	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	return (0);
 }

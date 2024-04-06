@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 23:12:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 00:55:45 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@
 #include <unistd.h>
 
 static int	init_minishell(t_ms *ms, char *envp[]);
-
-void	signal_sigquit(int sig)
-{
-	(void)sig;
-}
 
 int	main(int argc, char **argv, char *envp[])
 {

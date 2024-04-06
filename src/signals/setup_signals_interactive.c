@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 13:09:52 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 07:04:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void	setup_signals_interactive(void)
 
 static void	interactive_sigint(int sig)
 {
+	int	ret;
 	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
+	ret = write(STDOUT_FILENO, "\n", 1);
+	(void)ret;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

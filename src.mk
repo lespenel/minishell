@@ -18,6 +18,7 @@ SRC = \
 	  env/ms_getenv.c \
 	  env/ms_getnenv.c \
 	  env/ms_setenv.c \
+	  env/ms_unsetenv.c \
 	  env/print_env.c \
 	  \
 	  execution/stds/save_stds.c \

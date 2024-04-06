@@ -17,6 +17,7 @@ SRC = \
 	  hashmap/hash_key.c \
 	  hashmap/hash_key_n.c \
 	  hashmap/init_hashmap.c \
+	  hashmap/remove_hashmap.c \
 	  hashmap/setvalue_hashmap.c \
 	  \
 	  io/ft_dprintf.c \

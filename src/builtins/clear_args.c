@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_lexer.c                                      :+:      :+:    :+:   */
+/*   clear_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:27:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/17 02:17:03 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/17 02:18:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include <stddef.h>
 #include <stdlib.h>
 
-int	clear_lexer(t_lexer *token_tab)
+void	clear_args(char **args)
 {
-	size_t		i;
+	int	i;
 
 	i = 0;
-	if (token_tab == NULL)
-		return (-1);
-	while (i < token_tab->size)
+	while (args[i])
 	{
-		clear_token(at_vector(token_tab, i));
-		i++;
+		free(args[i]);
+		++i;
 	}
-	free(token_tab->array);
-	token_tab->array = NULL;
-	token_tab->size = 0;
-	token_tab->elemsize = 0;
-	token_tab->allocated = 0;
-	return (0);
+	free(args);
 }

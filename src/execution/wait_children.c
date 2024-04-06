@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   wait_children.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 13:53:03 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 12:56:22 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 12:56:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <sys/wait.h>
+#include <errno.h>
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+int	wait_children(pid_t last)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
+	int		wstatus;
+	pid_t	pid;
+	int		ret;
 
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	pid = 0;
+	ret = -1;
+	while (pid != -1)
+	{
+		pid = wait(&wstatus);
+		if (pid == last)
+		{
+			if (WIFEXITED(wstatus))
+				ret = WEXITSTATUS(wstatus);
+			if (WIFSIGNALED(wstatus))
+				ret = 128 + WTERMSIG(wstatus);
+		}
+	}
+	if (errno != ECHILD)
+		return (-1);
+	return (ret);
+}

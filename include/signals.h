@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 13:53:03 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:05:21 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/02 09:05:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
-{
-	t_env	env;
-	int		lastexit;
-}	t_ms;
-
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
+void	setup_signals_interactive(void);
+void	setup_signals_child(void);
 
 #endif

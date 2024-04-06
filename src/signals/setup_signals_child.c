@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   setup_signals_child.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 13:53:03 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:06:16 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/04 15:40:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <signal.h>
+#include <stdlib.h>
 
-# define PROMPT "minishell $> "
+static void	child_sigint(int sig);
+static void	child_sigquit(int sig);
 
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+void	setup_signals_child(void)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
+	signal(SIGINT, child_sigint);
+	signal(SIGQUIT, child_sigquit);
+}
 
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
+static void	child_sigint(int sig)
+{
+	exit(128 + sig);
+}
 
-#endif
+static void	child_sigquit(int sig)
+{
+	exit(128 + sig);
+}

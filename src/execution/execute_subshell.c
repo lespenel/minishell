@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reallocate_vector.c                                :+:      :+:    :+:   */
+/*   execute_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 07:30:36 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/24 22:58:59 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
+/*   Updated: 2024/03/28 01:55:15 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include "ft_mem.h"
+#include "lexer.h"
+#include "minishell.h"
+#include "execution.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-int	reallocate_vector(t_vector *this)
+int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
 {
-	size_t	elem;
-	void	*ptr;
+	t_lexer_tok	*token;
+	pid_t		pid;
 
-	elem = this->size * this->elemsize;
-	ptr = malloc(this->allocated * this->elemsize);
-	if (ptr == NULL)
+	token = at_vector(lexer, i);
+	pid = fork();
+	if (pid == -1)
 		return (-1);
-	ft_memcpy(ptr, this->array, elem);
-	ft_memset(ptr + elem, 0, (this->allocated * this->elemsize) - elem);
-	if (this->array)
-		free(this->array);
-	this->array = ptr;
-	return (0);
+	if (pid == 0)
+	{
+		if (perform_redirections(token) == -1)
+			return (-1);
+		exit(execute_commands(ms, &token->subshell));
+	}
+	return (pid);
 }

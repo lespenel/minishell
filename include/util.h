@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 06:31:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/02 05:01:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "minishell.h"
 # include <stddef.h>
 
-char	*get_ifs(t_ms *ms);
 char	*ms_strchr(char *str, char c);
 size_t	next_char(char *s, size_t i);
+char	*get_ifs(t_env *env);
 
 #endif

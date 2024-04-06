@@ -12,10 +12,8 @@
 
 #include "lexer.h"
 #include "parser.h"
-#include "wildcard.h"
 #include "minishell.h"
-#include "expander.h"
-#include "quote_removal.h"
+#include "execution.h"
 
 int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 {
@@ -32,5 +30,9 @@ int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 		return (-1);
 	else if (ret)
 		return (clear_lexer(lexer));
+	if (execution_structure(lexer) == -1)
+		return (clear_lexer(lexer));
+	if (execute_commands(ms, lexer) == -1)
+		return (-1);
 	return (0);
 }

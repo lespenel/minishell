@@ -1,19 +1,63 @@
 SRC = \
+	  builtins/clear_args.c \
+	  builtins/exec_builtins.c \
+	  builtins/get_argc.c \
+	  builtins/get_args.c \
+	  builtins/is_builtin.c \
+	  builtins/ms_cd.c \
+	  builtins/ms_echo.c \
+	  builtins/ms_env.c \
+	  builtins/ms_exit.c \
+	  builtins/ms_export.c \
+	  builtins/ms_pwd.c \
+	  builtins/ms_unset.c \
+	  \
 	  env/destroy_env.c \
+	  env/get_envp.c \
 	  env/init_env.c \
 	  env/ms_getenv.c \
 	  env/ms_getnenv.c \
 	  env/ms_setenv.c \
 	  env/print_env.c \
 	  \
-	  expander/expand_substring.c \
-	  expander/expand_tokens.c \
-	  expander/treat_noquote.c \
+	  execution/stds/save_stds.c \
+	  execution/stds/restore_stds.c \
+	  \
+	  execution/pipeline/execute_pipeline.c \
+	  execution/pipeline/execute_pipe_cmd.c \
+	  \
+	  execution/execute_commands.c \
+	  execution/execute_simple_command.c \
+	  execution/execute_subshell.c \
+	  execution/execution_structure.c \
+	  execution/get_path.c \
+	  execution/next_token.c \
+	  execution/perform_redirections.c \
+	  execution/run_builtin.c \
+	  execution/run_command.c \
+	  execution/simplify_tokens.c \
+	  execution/wait_children.c \
+	  \
+	  expansions/parameters/add_word_tab.c \
+	  expansions/parameters/expand_parameters.c \
+	  expansions/parameters/expand_nq.c \
+	  expansions/parameters/expand_substring.c \
+	  expansions/parameters/fill_nq_var.c \
+	  expansions/parameters/ft_strtok_ifs.c \
+	  expansions/parameters/treat_noquote.c \
+	  \
+	  expansions/quote_removal/quote_removal.c \
+	  \
+	  expansions/tilde/tilde_expansion.c \
+	  \
+	  expansions/perform_expansions.c \
 	  \
 	  lexer/init_lexer.c \
 	  lexer/fill_lexer.c \
 	  lexer/print_lexer.c \
 	  lexer/clear_lexer.c \
+	  lexer/clear_lexer_except.c \
+	  lexer/clear_token.c \
 	  lexer/add_newline_tok.c \
 	  lexer/char_filter/is_blank.c \
 	  lexer/char_filter/is_operand.c \
@@ -26,7 +70,8 @@ SRC = \
 	  parser/syntax_error.c \
 	  parser/fill_here_doc.c \
 	  \
-	  quote_removal/quote_removal.c \
+	  signals/setup_signals_child.c \
+	  signals/setup_signals_interactive.c \
  	  \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \
@@ -52,5 +97,6 @@ SRC = \
 	  wildcard/sort_filenames.c \
 	  wildcard/wildcard_handling.c \
 	  \
+	  destroy_minishell.c \
 	  main.c \
 	  parse_input.c \

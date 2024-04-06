@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_lexer.c                                      :+:      :+:    :+:   */
+/*   ms_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:27:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/17 04:02:02 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/18 05:56:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include <stddef.h>
-#include <stdlib.h>
+#include "env.h"
+#include <unistd.h>
 
-int	clear_lexer(t_lexer *token_tab)
+int	ms_env(t_env *env, char **args)
 {
-	size_t		i;
+	int	argc;
 
-	i = 0;
-	if (token_tab == NULL)
-		return (-1);
-	while (i < token_tab->size)
+	argc = 0;
+	while (args[argc])
+		argc++;
+	if (argc != 1)
 	{
-		clear_token(at_vector(token_tab, i));
-		i++;
+		if (write(2, "minishell: env: to many arguments\n", 35) == -1)
+			return (-1);
+		return (0);
 	}
-	free(token_tab->array);
-	token_tab->array = NULL;
-	token_tab->size = 0;
-	token_tab->elemsize = 0;
-	token_tab->allocated = 0;
+	print_env(env);
 	return (0);
 }

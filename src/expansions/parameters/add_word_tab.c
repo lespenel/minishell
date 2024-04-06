@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   add_word_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 13:53:03 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/06 06:41:47 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/06 06:41:55 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "vector.h"
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+int	add_word_tab(t_vector *tab, t_vector *word)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
-
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	if (add_vector(tab, &word->array, 1) == -1)
+		return (-1);
+	init_vector(word, sizeof(char));
+	return (0);
+}

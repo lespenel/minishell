@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   clear_lexer_except.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 13:53:03 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/03 13:16:58 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/03 13:30:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "lexer.h"
+#include <stdlib.h>
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+void	clear_lexer_except(t_lexer *lexer, size_t i, t_lexer_tok *token)
 {
-	t_env	env;
-	int		lastexit;
-}	t_ms;
+	size_t		j;
 
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	j = 0;
+	while (j < lexer->size)
+	{
+		if (i != j)
+			clear_token(at_vector(lexer, j));
+		else
+			*token = *(t_lexer_tok *)at_vector(lexer, j);
+		j++;
+	}
+	free(lexer->array);
+	lexer->array = NULL;
+	lexer->size = 0;
+	lexer->elemsize = 0;
+	lexer->allocated = 0;
+}

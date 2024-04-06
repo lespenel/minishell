@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_lexer.c                                      :+:      :+:    :+:   */
+/*   ms_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:27:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/17 04:10:46 by lespenel          #+#    #+#             */
+/*   Updated: 2024/03/18 03:30:04 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include <stddef.h>
-#include <stdlib.h>
+#include "env.h"
 
-int	clear_lexer(t_lexer *token_tab)
+int	ms_unset(t_env *env, char **args)
 {
-	size_t		i;
+	int	argc;
 
-	i = 0;
-	if (token_tab == NULL)
-		return (-1);
-	while (i < token_tab->size)
-	{
-		clear_token(at_vector(token_tab, i));
-		i++;
-	}
-	free(token_tab->array);
-	token_tab->array = NULL;
-	token_tab->size = 0;
-	token_tab->elemsize = 0;
-	token_tab->allocated = 0;
+	argc = 0;
+	(void)env;
+	while (args[argc])
+		argc++;
+	if (argc == 1)
+		return (0);
 	return (0);
 }

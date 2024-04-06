@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_lexer.c                                      :+:      :+:    :+:   */
+/*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 23:39:25 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 23:27:02 by ccouble          ###   ########.fr       */
+/*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/06 05:36:30 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "vector.h"
-#include <stddef.h>
-#include <stdlib.h>
+#include "builtins.h"
+#include "env.h"
+#include <unistd.h>
+#include <unistd.h>
 
-int	clear_lexer(t_lexer *token_tab)
+int	ms_cd(t_env	*env, char **args)
 {
-	size_t		i;
-
-	i = 0;
-	if (token_tab == NULL)
-		return (-1);
-	while (i < token_tab->size)
-	{
-		clear_token(at_vector(token_tab, i));
-		i++;
-	}
-	free(token_tab->array);
-	token_tab->array = NULL;
-	token_tab->size = 0;
-	token_tab->elemsize = 0;
-	token_tab->allocated = 0;
+	(void) env;
+	(void) args;
 	return (0);
 }

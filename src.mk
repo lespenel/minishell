@@ -38,15 +38,17 @@ SRC = \
 	  execution/simplify_tokens.c \
 	  execution/wait_children.c \
 	  \
-	  expansions/parameters/expand_substring.c \
+	  expansions/parameters/add_word_tab.c \
 	  expansions/parameters/expand_parameters.c \
+	  expansions/parameters/expand_nq.c \
+	  expansions/parameters/expand_substring.c \
+	  expansions/parameters/fill_nq_var.c \
+	  expansions/parameters/ft_strtok_ifs.c \
 	  expansions/parameters/treat_noquote.c \
 	  \
 	  expansions/quote_removal/quote_removal.c \
 	  \
 	  expansions/tilde/tilde_expansion.c \
-	  \
-	  expansions/word_split/word_split.c \
 	  \
 	  expansions/perform_expansions.c \
 	  \

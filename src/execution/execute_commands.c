@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 14:47:03 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 06:52:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "lexer.h"
 #include "vector.h"
 #include "execution.h"
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -38,13 +39,15 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			break ;
 		++i;
 	}
-	return (0);
+	return (ms->lastexit);
 }
 
 static int	end_shell(t_lexer *lexer, size_t i, int exitcode)
 {
 	t_lexer_tok	*token;
 
+	if (exitcode == -1)
+		return (1);
 	if (i >= lexer->size)
 		return (0);
 	token = at_vector(lexer, i);
@@ -65,7 +68,7 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 	else if (token->type == COMMAND)
 	{
 		s = at_vector(&token->args, 0);
-		if (is_builtin(*s))
+		if (s != NULL && is_builtin(*s))
 			return (run_builtin(ms, token));
 		pid = execute_single_command(ms, lexer, i);
 	}

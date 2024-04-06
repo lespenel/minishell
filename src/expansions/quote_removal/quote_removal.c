@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:57:23 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/02 07:12:49 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 06:50:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 
 static int		remove_quotes(char **s);
+static int		fill_vector_without_quote(t_vector *new, char *s);
 static ssize_t	remove_inquote(char *s, t_vector *new, size_t i);
 static ssize_t	remove_dquote(char *s, t_vector *new, size_t i);
 
@@ -52,28 +53,44 @@ int	quote_removal(t_lexer_tok *token)
 static int	remove_quotes(char **s)
 {
 	t_vector	new;
-	ssize_t		i;
 
 	init_vector(&new, sizeof(char));
-	i = 0;
-	while ((*s)[i])
+	if (add_vector(&new, "", 0) == -1)
 	{
-		if ((*s)[i] == '\\')
+		clear_vector(&new);
+		return (-1);
+	}
+	if (fill_vector_without_quote(&new, *s) == -1)
+	{
+		clear_vector(&new);
+		return (-1);
+	}
+	free(*s);
+	*s = new.array;
+	return (0);
+}
+
+static int	fill_vector_without_quote(t_vector *new, char *s)
+{
+	ssize_t		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\\')
 		{
 			++i;
-			if (add_vector(&new, *s + i, 1) == -1)
+			if (add_vector(new, s + i, 1) == -1)
 				return (-1);
 		}
-		else if (is_quote((*s)[i]))
-			i = remove_inquote(*s, &new, i);
-		else if (add_vector(&new, *s + i, 1) == -1)
+		else if (is_quote(s[i]))
+			i = remove_inquote(s, new, i);
+		else if (add_vector(new, s + i, 1) == -1)
 			return (-1);
 		if (i == -1)
 			return (-1);
 		++i;
 	}
-	free(*s);
-	*s = new.array;
 	return (0);
 }
 
@@ -99,8 +116,6 @@ static ssize_t	remove_dquote(char *s, t_vector *new, size_t i)
 {
 	int	err;
 
-	if (add_vector(new, "", 0) == -1)
-		return (-1);
 	while (s[i] != '"')
 	{
 		if (s[i] == '\\')

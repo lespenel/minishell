@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/05 17:32:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 06:49:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 
 	clear_lexer_except(lexer, i, &token);
 	ret = get_result(ms, &token);
-	dprintf(2, "got ret=%d\n", ret);
 	clear_token(&token);
 	destroy_minishell(ms);
 	return (ret);

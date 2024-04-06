@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_vector.c                                    :+:      :+:    :+:   */
+/*   add_word_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 10:17:00 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 05:20:05 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/06 06:41:47 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/06 06:41:55 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
-#include "ft_mem.h"
 
-void	remove_vector(t_vector *this, size_t i)
+int	add_word_tab(t_vector *tab, t_vector *word)
 {
-	const size_t	rmi = i * this->elemsize;
-	const size_t	sizei = (this->size) * this->elemsize;
-	void			*rmptr;
-
-	rmptr = this->array + rmi;
-	ft_memmove(rmptr, rmptr + this->elemsize, sizei - rmi);
-	this->size--;
+	if (add_vector(tab, &word->array, 1) == -1)
+		return (-1);
+	init_vector(word, sizeof(char));
+	return (0);
 }

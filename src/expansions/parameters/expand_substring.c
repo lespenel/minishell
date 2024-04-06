@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/28 04:26:18 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 02:39:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s);
 static int		add_escaping_dq(t_vector *vector, char *s);
 
-ssize_t	expand_substr(t_ms *ms, t_vector *new, char *s)
+ssize_t	expand_substr(t_ms *ms, t_vector *news, char *s, t_vector *tab)
 {
 	size_t	i;
 
@@ -32,13 +32,13 @@ ssize_t	expand_substr(t_ms *ms, t_vector *new, char *s)
 		while (s[i] != '\'')
 			i = next_char(s, i);
 		++i;
-		if (add_vector(new, s, i) == -1)
+		if (add_vector(news, s, i) == -1)
 			return (-1);
 		return (i);
 	}
 	if (*s == '"')
-		return (treat_dquote(ms, new, s));
-	return (treat_noquote(ms, new, s));
+		return (treat_dquote(ms, news, s));
+	return (treat_noquote(ms, news, s, tab));
 }
 
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s)

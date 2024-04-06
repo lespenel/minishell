@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:48:06 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/06 08:07:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_wildcard
 	t_vector	*f_lst_ptr;
 }	t_wild;
 
-int		expand_wildcards(t_env *env, t_lexer_tok *token);
 int		wildcard_handling(t_env *env, t_vector *filenames, char *raw_pattern);
 int		create_pattern(t_wild *wildcard, char *raw_pattern);
 int		create_dir_pattern(t_wild *wildcard, t_lexer *first_pattern, int i);

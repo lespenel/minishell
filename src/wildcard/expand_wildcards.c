@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 07:56:03 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 08:53:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	expand_redirect(t_env *env, t_lexer_tok *token)
 			{
 				if (wildcard_handling(env, &redir->newtab, redir->file) == -1)
 				{
-          clear_string_vector(&redirect->newtab);
+					clear_string_vector(&redir->newtab);
 					return (-1);
 				}
 			}

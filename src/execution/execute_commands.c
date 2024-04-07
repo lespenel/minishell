@@ -6,21 +6,23 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:05:36 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 08:27:23 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "minishell.h"
 #include "lexer.h"
+#include "signals.h"
 #include "vector.h"
 #include "execution.h"
 #include "util.h"
+#include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
-static int		end_shell(t_lexer *lexer, size_t i, int exitcode);
+static int		end_shell(t_ms *ms, t_lexer *lexer, size_t i);
 static int		run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
 
@@ -42,24 +44,26 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 				return (-1);
 		}
 		i = next_command(lexer, i);
-		if (end_shell(lexer, i, ms->lastexit))
+		if (end_shell(ms, lexer, i))
 			break ;
 		++i;
 	}
 	return (ms->lastexit);
 }
 
-static int	end_shell(t_lexer *lexer, size_t i, int exitcode)
+static int	end_shell(t_ms *ms, t_lexer *lexer, size_t i)
 {
 	t_lexer_tok	*token;
 
-	if (exitcode == -1)
+	if (ms->lastexit == -1)
+		return (1);
+	if (ms->signaled && ms->lastexit == 128 + SIGINT)
 		return (1);
 	if (i >= lexer->size)
 		return (0);
 	token = at_vector(lexer, i);
-	return ((token->type == LOGICAL_AND && exitcode != 0)
-		|| (token->type == LOGICAL_OR && exitcode == 0));
+	return ((token->type == LOGICAL_AND && ms->lastexit != 0)
+		|| (token->type == LOGICAL_OR && ms->lastexit == 0));
 }
 
 static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
@@ -83,7 +87,7 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 		pid = execute_subshell(ms, lexer, i);
 	if (pid == -1)
 		return (-1);
-	return (wait_children(pid));
+	return (wait_children(ms, pid));
 }
 
 static size_t	next_command(t_lexer *lexer, size_t i)

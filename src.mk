@@ -73,6 +73,7 @@ SRC = \
 	  parser/fill_here_doc.c \
 	  \
 	  signals/setup_signals_child.c \
+	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \
  	  \
 	  util/dup_and_close.c \

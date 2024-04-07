@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_signals_child.c                              :+:      :+:    :+:   */
+/*   setup_signals_execution.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/02 09:06:16 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:39:46 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/07 08:24:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "signals.h"
 #include <signal.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-static void	child_sigint(int sig);
-static void	child_sigquit(int sig);
+static void	execution_sigint(int sig);
+static void	execution_sigquit(int sig);
 
-void	setup_signals_child(void)
+void	setup_signals_execution(void)
 {
-	signal(SIGINT, child_sigint);
-	signal(SIGQUIT, child_sigquit);
+	signal(SIGINT, execution_sigint);
+	signal(SIGQUIT, execution_sigquit);
 }
 
-static void	child_sigint(int sig)
+static void	execution_sigint(int sig)
 {
-	exit(128 + sig);
+	(void)sig;
 }
 
-static void	child_sigquit(int sig)
+static void	execution_sigquit(int sig)
 {
-	exit(128 + sig);
+	(void)sig;
 }

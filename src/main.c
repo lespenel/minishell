@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 01:18:06 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 08:47:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "signals.h"
 #include "util.h"
 #include "ft_mem.h"
+#include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -55,6 +56,7 @@ static int	init_minishell(t_ms *ms, char *envp[])
 	if (init_env(&ms->env, envp) == -1)
 		return (-1);
 	setup_signals_interactive();
+	ms->signaled = 0;
 	if (set_exitcode_str(ms, 0) == -1)
 	{
 		destroy_env(&ms->env);

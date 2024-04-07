@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:01:24 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 08:37:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 typedef struct s_ms
 {
 	t_env	env;
+	int		signaled;
 	int		lastexit;
 	char	*lastexitstr;
 }	t_ms;

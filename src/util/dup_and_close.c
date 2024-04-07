@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.h                                             :+:      :+:    :+:   */
+/*   dup_and_close.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 05:01:31 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/07 05:00:57 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/07 05:01:19 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTIL_H
-# define UTIL_H
+#include <unistd.h>
 
-# include <stddef.h>
-# include "env.h"
-
-char	*ms_strchr(char *str, char c);
-size_t	next_char(char *s, size_t i);
-char	*get_ifs(t_env *env);
-int		dup_and_close(int fd1, int fd2);
-
-#endif
+int	dup_and_close(int fd1, int fd2)
+{
+	if (dup2(fd1, fd2) == -1)
+	{
+		close(fd1);
+		return (-1);
+	}
+	if (close(fd1) == -1)
+		return (-1);
+	return (0);
+}

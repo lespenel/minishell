@@ -74,6 +74,7 @@ SRC = \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  util/dup_and_close.c \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \

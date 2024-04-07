@@ -6,10 +6,11 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 00:29:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:47:32 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:53:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "util.h"
 #include "vector.h"
 #include "ft_string.h"
 #include <stdlib.h>
@@ -27,12 +28,12 @@ int	add_backslash(t_vector *filenames)
 	{
 		if (add_match_tok(&new_flst, at_vector(filenames, i)) == -1)
 		{
-			clear_vector(&new_flst);
+			clear_string_vector(&new_flst);
 			return (-1);
 		}
 		++i;
 	}
-	clear_vector(filenames);
+	clear_string_vector(filenames);
 	*filenames = new_flst;
 	return (0);
 }

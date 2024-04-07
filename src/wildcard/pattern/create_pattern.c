@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:57:29 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:42:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:16:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int	get_dir_nb(t_lexer *first_pattern)
 	size_t		i;
 	size_t		nb_dir;
 	t_lexer_tok	*tok;
+	char		*tmp;
 
 	i = 0;
 	nb_dir = 0;
@@ -73,8 +74,13 @@ static int	get_dir_nb(t_lexer *first_pattern)
 		tok = at_vector(first_pattern, i);
 		if (tok->type == WORD)
 		{
-			if (ms_strchr(tok->content, '/'))
+			tmp = ms_strchr(tok->content, '/');
+			while (tmp && *tmp)
+			{
 				++nb_dir;
+				++tmp;
+				tmp = ms_strchr(tmp, '/');
+			}
 		}
 		++i;
 	}

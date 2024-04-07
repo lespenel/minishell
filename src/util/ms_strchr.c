@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:25:37 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/24 10:26:31 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:01:35 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ms_strchr(char *str, char c)
 	size_t	i;
 
 	i = 0;
+	if (str == NULL || *str == '\0')
+		return (NULL);
 	i = next_char(str, -1);
 	while (str[i])
 	{

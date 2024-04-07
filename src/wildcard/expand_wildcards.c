@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 05:10:30 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 08:53:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	expand_comand(t_env *env, t_lexer_tok *token)
 		{
 			if (wildcard_handling(env, &file_names, *s) == -1)
 			{
-				clear_vector(&file_names);
+				clear_string_vector(&file_names);
 				return (-1);
 			}
 			ret = add_filename_lexer(&token->args, &file_names, i);
@@ -72,7 +72,7 @@ static int	expand_redirect(t_env *env, t_lexer_tok *token)
 			{
 				if (wildcard_handling(env, &redir->newtab, redir->file) == -1)
 				{
-					clear_vector(&redir->newtab);
+					clear_string_vector(&redir->newtab);
 					return (-1);
 				}
 			}
@@ -93,7 +93,7 @@ static ssize_t	add_filename_lexer(t_vector *lst, t_vector *fnames, ssize_t i)
 		remove_vector(lst, i);
 		if (merge_vector(lst, fnames, i) == -1)
 		{
-			clear_vector(fnames);
+			clear_string_vector(fnames);
 			return (-1);
 		}
 		i += fnames->size - 1;

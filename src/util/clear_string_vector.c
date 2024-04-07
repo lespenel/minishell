@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.h                                             :+:      :+:    :+:   */
+/*   clear_string_vector.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 02:46:36 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 06:46:12 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/07 06:44:18 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/07 08:18:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTIL_H
-# define UTIL_H
+#include "vector.h"
+#include <stdlib.h>
 
-# include "minishell.h"
-# include <stddef.h>
+void	clear_string_vector(t_vector *this)
+{
+	char	**curr;
+	size_t	i;
 
-char	*ms_strchr(char *str, char c);
-size_t	next_char(char *s, size_t i);
-char	*get_ifs(t_env *env);
-void	clear_string_vector(t_vector *this);
-
-#endif
+	i = 0;
+	while (i < this->size)
+	{
+		curr = at_vector(this, i);
+		free(*curr);
+		++i;
+	}
+	clear_vector(this);
+}

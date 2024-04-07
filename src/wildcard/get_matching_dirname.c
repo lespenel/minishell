@@ -6,11 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:23:45 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:44:17 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:47:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "util.h"
 #include "vector.h"
 #include "wildcard.h"
 
@@ -46,12 +47,12 @@ static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_vector *filenames)
 		tok = at_vector(filenames, i);
 		if (get_dir_ls(wild, &pattern->pattern, &new_lst, *tok) == -1)
 		{
-			clear_vector(&new_lst);
+			clear_string_vector(&new_lst);
 			return (-1);
 		}
 		++i;
 	}
-	clear_vector(filenames);
+	clear_string_vector(filenames);
 	*filenames = new_lst;
 	return (0);
 }

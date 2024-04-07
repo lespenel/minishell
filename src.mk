@@ -77,6 +77,7 @@ SRC = \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
+	  util/clear_string_vector.c \
 	  \
 	  wildcard/pattern/fill_pattern.c \
 	  wildcard/pattern/create_pattern.c \

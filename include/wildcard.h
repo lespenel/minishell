@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 01:19:59 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:17:50 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int		get_matching_filenames(t_wild *wildcard, t_vector *filenames);
 int		remove_backslash(t_lexer *pattern);
 int		add_backslash(t_vector *filenames);
 void	sort_filenames(t_vector *filenames, ssize_t start, ssize_t end);
+int		ms_strcmp(char *s1, char *s2);
 
 #endif

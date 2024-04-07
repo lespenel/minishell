@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:57:29 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 23:03:01 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:16:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "util.h"
 #include "vector.h"
 #include "wildcard.h"
-#include <stdio.h>
 
 static int	get_dir_nb(t_lexer *first_pattern);
 static int	split_pattern(t_wild *wildcard, t_lexer *first_pattern);
@@ -81,10 +80,7 @@ static int	get_dir_nb(t_lexer *first_pattern)
 				++nb_dir;
 				++tmp;
 				tmp = ms_strchr(tmp, '/');
-				if (nb_dir == 100)
-					break ;
 			}
-			printf("nb_dir == %ld\n", nb_dir);
 		}
 		++i;
 	}

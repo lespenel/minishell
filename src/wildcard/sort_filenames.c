@@ -6,17 +6,16 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:33:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:18:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "wildcard.h"
+#include "ft_string.h"
 
 static size_t	array_partition(t_vector *fnames, ssize_t start, ssize_t end);
 static void		swap_str(char **s1, char **s2);
-static int		ms_strcmp(char *s1, char *s2);
-static int		ft_tolower(int c);
 
 void	sort_filenames(t_vector *filenames, ssize_t start, ssize_t end)
 {
@@ -55,24 +54,6 @@ static size_t	array_partition(t_vector *filenames, ssize_t start, ssize_t end)
 	return (j);
 }
 
-static	int	ms_strcmp(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (s1[i] && ft_tolower(s1[i]) == ft_tolower(s2[i]))
-		++i;
-	if (ft_tolower(s1[i]) == ft_tolower(s2[i]))
-	{
-		j = 0;
-		while (s1[j] && s1[j] == s2[j])
-			++j;
-		return (s2[j] - s1[j]);
-	}
-	return (ft_tolower(s1[i]) - ft_tolower(s2[i]));
-}
-
 static	void	swap_str(char **s1, char **s2)
 {
 	char	*tmp;
@@ -80,11 +61,4 @@ static	void	swap_str(char **s1, char **s2)
 	tmp = *s1;
 	*s1 = *s2;
 	*s2 = tmp;
-}
-
-static int	ft_tolower(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		c = c + 32;
-	return (c);
 }

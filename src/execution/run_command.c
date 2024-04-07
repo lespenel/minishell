@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 06:49:42 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 05:19:21 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 static int	get_result(t_ms *ms, t_lexer_tok *token)
 {
 	char	*path;
+	int		ret;
 
 	if (perform_expansions(ms, token) == -1)
 		return (-1);
-	if (perform_redirections(token) == -1)
+	ret = perform_redirections(token);
+	if (ret == -1)
 		return (-1);
+	if (ret == 1)
+		return (1);
 	if (token->type == SUBSHELL)
 		return (execute_commands(ms, &token->subshell));
 	if (token->args.size == 0)

@@ -6,31 +6,38 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:46:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:07:18 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 05:20:54 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "fcntl.h"
 #include "util.h"
+#include <errno.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 static int	perform_redirection(t_redirection *redirection);
 
 int	perform_redirections(t_lexer_tok *token)
 {
-	size_t	i;
-	int		ret;
+	size_t			i;
+	int				ret;
+	t_redirection	*redir;
 
 	i = 0;
 	while (i < token->redirections.size)
 	{
-		ret = perform_redirection(at_vector(&token->redirections, i));
+		redir = at_vector(&token->redirections, i);
+		ret = perform_redirection(redir);
 		if (ret == -1)
 			return (-1);
 		if (ret == 1)
-			dprintf(2, "open error, to handle\n");
+		{
+			dprintf(2, "minishell: %s: %s\n", redir->file, strerror(errno));
+			return (1);
+		}
 		++i;
 	}
 	return (0);

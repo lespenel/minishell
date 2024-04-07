@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:27:34 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 23:06:11 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 01:21:31 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static int	split_dir_tok(t_lexer *pattern, t_lexer_tok *tok)
 	slash = 0;
 	while (tok->content[slash] && tok->content[slash] != '/')
 		++slash;
-//	if (tok->content[slash + 1] == '\0')
-//	{
-//		if (add_vector(pattern, tok, 1) == -1)
-//			return (-1);
-//		return (1);
-//	}
+	if (tok->content[slash + 1] == '\0')
+	{
+		if (add_vector(pattern, tok, 1) == -1)
+			return (-1);
+		return (1);
+	}
 	if (add_dirname_tok(pattern, tok, slash) == -1)
 		return (-1);
 	new_str = ft_strdup(tok->content + slash + 1);

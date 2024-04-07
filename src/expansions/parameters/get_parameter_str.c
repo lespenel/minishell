@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_parameter_str.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:01:24 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/06 23:06:42 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/06 23:09:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "env.h"
+#include "ft_string.h"
+#include "minishell.h"
 
-# define PROMPT "minishell $> "
-
-# include "env.h"
-# include "lexer.h"
-
-typedef struct s_ms
+char	*get_parameter_str(t_ms *ms, char *s, size_t n)
 {
-	t_env	env;
-	int		lastexit;
-	char	*lastexitstr;
-}	t_ms;
-
-void	destroy_minishell(t_ms *ms);
-int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
-
-#endif
+	if (ft_strncmp(s, "?", n) == 0)
+		return (ms->lastexitstr);
+	return (ms_getnenv(&ms->env, s, n));
+}

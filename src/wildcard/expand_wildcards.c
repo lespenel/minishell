@@ -58,20 +58,23 @@ static int	expand_comand(t_env *env, t_lexer_tok *token)
 
 static int	expand_redirect(t_env *env, t_lexer_tok *token)
 {
-	t_redirection	*redirect;
+	t_redirection	*redir;
 	size_t			i;
 
 	i = 0;
 	while (i < token->redirections.size)
 	{
-		redirect = at_vector(&token->redirections, i);
-		init_vector(&redirect->newtab, sizeof(char *));
-		if (ms_strchr(redirect->file, '*'))
+		redir = at_vector(&token->redirections, i);
+		if (redir->type != HERE_DOC)
 		{
-			if (wildcard_handling(env, &redirect->newtab, redirect->file) == -1)
+			init_vector(&redir->newtab, sizeof(char *));
+			if (ms_strchr(redir->file, '*'))
 			{
-				clear_string_vector(&redirect->newtab);
-				return (-1);
+				if (wildcard_handling(env, &redir->newtab, redir->file) == -1)
+				{
+          clear_string_vector(&redirect->newtab);
+					return (-1);
+				}
 			}
 		}
 		++i;

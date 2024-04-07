@@ -6,7 +6,7 @@
 /*   By: ccouble <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 05:27:22 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 23:10:04 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static ssize_t	nq_variable(t_ms *ms, t_vector *tab, t_vector *new, char *s)
 	i = 0;
 	while (ft_strchr("\"'\\$\0", s[i]) == NULL)
 		++i;
-	value = ms_getnenv(&ms->env, s, i);
+	value = get_parameter_str(ms, s, i);
 	if (value != NULL)
 	{
 		if (expand_nq(ms, tab, new, value) == -1)

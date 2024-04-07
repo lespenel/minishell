@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 10:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 14:11:03 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 04:17:32 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int	tilde_expansion(t_ms *ms, t_lexer_tok *token)
 	while (i < token->redirections.size)
 	{
 		redirection = at_vector(&token->redirections, i);
-		if (tilde_on_word(ms, &redirection->file) == -1)
-			return (-1);
+		if (redirection->type != HERE_DOC)
+		{
+			if (tilde_on_word(ms, &redirection->file) == -1)
+				return (-1);
+		}
 		++i;
 	}
 	return (0);

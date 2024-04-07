@@ -45,6 +45,7 @@ SRC = \
 	  expansions/parameters/expand_substring.c \
 	  expansions/parameters/fill_nq_var.c \
 	  expansions/parameters/ft_strtok_ifs.c \
+	  expansions/parameters/get_parameter_str.c \
 	  expansions/parameters/treat_noquote.c \
 	  \
 	  expansions/quote_removal/quote_removal.c \
@@ -74,10 +75,12 @@ SRC = \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  util/clear_string_vector.c \
+	  util/dup_and_close.c \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
-	  util/clear_string_vector.c \
+	  util/set_exitcode_str.c \
 	  \
 	  wildcard/pattern/fill_pattern.c \
 	  wildcard/pattern/create_pattern.c \

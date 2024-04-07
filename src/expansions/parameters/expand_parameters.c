@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 05:42:02 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 05:10:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ static int	expand_redirections(t_ms *ms, t_lexer_tok *token)
 	while (i < token->redirections.size)
 	{
 		redirection = at_vector(&token->redirections, i);
-		if (expand_word(ms, redirection->file, &redirection->newtab) == -1)
-			return (-1);
+		if (redirection->type != HERE_DOC)
+		{
+			if (expand_word(ms, redirection->file, &redirection->newtab) == -1)
+				return (-1);
+		}
 		++i;
 	}
 	return (0);

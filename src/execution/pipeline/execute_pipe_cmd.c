@@ -6,18 +6,18 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:29:00 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 15:33:05 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/07 05:02:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 #include "execution.h"
+#include "util.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 static int	prepare_pipe(int pfd[2], int fdin);
-static int	dup_and_close(int fd1, int fd2);
 static int	close_unused(int pfd[2], int fdin);
 
 int	execute_pipe_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin)
@@ -62,18 +62,6 @@ static int	prepare_pipe(int pfd[2], int fdin)
 		}
 	}
 	if (dup_and_close(pfd[1], STDOUT_FILENO) == -1)
-		return (-1);
-	return (0);
-}
-
-static int	dup_and_close(int fd1, int fd2)
-{
-	if (dup2(fd1, fd2) == -1)
-	{
-		close(fd1);
-		return (-1);
-	}
-	if (close(fd1) == -1)
 		return (-1);
 	return (0);
 }

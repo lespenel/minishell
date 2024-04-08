@@ -6,10 +6,11 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 07:06:11 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/08 00:01:06 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "signals.h"
 #include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -28,7 +29,7 @@ static void	interactive_sigint(int sig)
 {
 	int	ret;
 
-	(void)sig;
+	g_sig = sig;
 	ret = write(STDOUT_FILENO, "\n", 1);
 	(void)ret;
 	rl_replace_line("", 0);

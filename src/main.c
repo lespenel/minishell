@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 08:47:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/08 00:02:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int	g_sig = 0;
+
 static int	init_minishell(t_ms *ms, char *envp[]);
 
 int	main(int argc, char **argv, char *envp[])
@@ -38,6 +40,12 @@ int	main(int argc, char **argv, char *envp[])
 	input = readline(PROMPT);
 	while (input)
 	{
+		if (g_sig == SIGINT)
+		{
+			if (set_exitcode_str(&ms, 128 + SIGINT) == -1)
+				return (-1);
+			g_sig = 0;
+		}
 		if (parse_input(&ms, &lexer, input) == -1)
 			return (-1);
 		clear_lexer(&lexer);

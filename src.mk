@@ -76,6 +76,9 @@ SRC = \
 	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  termios/restore_termios.c \
+	  termios/setup_termios.c \
+	  \
 	  util/dup_and_close.c \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \

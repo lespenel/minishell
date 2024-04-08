@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/08 00:02:38 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/08 05:15:17 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <termios.h>
 
 int	g_sig = 0;
 
@@ -36,7 +37,10 @@ int	main(int argc, char **argv, char *envp[])
 	(void)argc;
 	(void)argv;
 	if (init_minishell(&ms, envp) == -1)
+	{
+		destroy_minishell(&ms);
 		return (-1);
+	}
 	input = readline(PROMPT);
 	while (input)
 	{
@@ -61,14 +65,13 @@ int	main(int argc, char **argv, char *envp[])
 static int	init_minishell(t_ms *ms, char *envp[])
 {
 	ft_memset(ms, 0, sizeof(t_ms));
+	if (setup_termios(ms) == -1)
+		return (-1);
 	if (init_env(&ms->env, envp) == -1)
 		return (-1);
 	setup_signals_interactive();
 	ms->signaled = 0;
 	if (set_exitcode_str(ms, 0) == -1)
-	{
-		destroy_env(&ms->env);
 		return (-1);
-	}
 	return (0);
 }

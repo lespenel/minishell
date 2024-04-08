@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 03:00:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/08 01:51:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int		exec_test(t_ms *minishell, t_lexer *lexer);
 int		exec_builtins(t_ms *minishell, t_lexer *lexer, char **args);
 
 int		ms_cd(t_env	*env, char **args);
-int		get_canonical_path(char **curpath);
 char	*get_dir_operand(t_env *env, char **args);
+int		get_canonical_path(char **curpath);
+int		remove_dot_dot(t_vector *new_path, t_vector *split_path);
 int		ms_echo(t_env *env, char **args);
 int		ms_env(t_env *env, char **args);
 int		ms_exit(t_ms *minishell, t_lexer *lexer, char **args);

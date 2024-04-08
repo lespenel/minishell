@@ -6,25 +6,20 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/08 02:06:42 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/08 05:48:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "env.h"
 #include "ft_io.h"
 #include "ft_string.h"
-#include "vector.h"
-#include <errno.h>
+#include <linux/limits.h>
 #include <stddef.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
-static	char	*get_curpath(t_env *env, char *dir_operand);
-static	int		set_pwd(t_env *env, char *curpath);
+static	int	set_pwd(t_env *env, char *curpath);
+static	int	check_path_size(t_env *env, char **curpath);
 
 int	ms_cd(t_env	*env, char **args)
 {
@@ -35,8 +30,10 @@ int	ms_cd(t_env	*env, char **args)
 	if (dir_operand == NULL)
 		return (1);
 	curpath = get_curpath(env, dir_operand);
+	ft_dprintf(2, "currpath   = %s\n", curpath);
 	if (curpath == NULL
 		|| get_canonical_path(&curpath) == -1
+		|| check_path_size(env, &curpath) == -1
 		|| chdir(curpath) == -1
 		|| set_pwd(env, curpath) == -1)
 	{
@@ -50,6 +47,38 @@ int	ms_cd(t_env	*env, char **args)
 	free(curpath);
 	return (0);
 }
+#include <stdio.h>
+static	int	check_path_size(t_env *env, char **curpath)
+{
+	const size_t len = ft_strlen(*curpath) + 1;
+	char		*wd;
+	char		*tmp;
+
+	if (len <= 5)
+		return (0);
+	wd = get_wd(env);
+	if (wd == NULL)
+		return (-1);
+	if (PATH_MAX < (len - ft_strlen(wd)))
+	{
+		ft_dprintf(1, "bite\n");
+		dprintf(1, "len = %lu\n", len - ft_strlen(wd));
+		free(wd);
+		return (-1);
+	}
+	if (ft_strncmp(*curpath, wd, ft_strlen(wd)) == 0)
+	{
+		tmp = ft_strdup(*curpath + ft_strlen(wd));
+		free(wd);
+		if (tmp == NULL)
+			return (-1);
+		free(*curpath);
+		*curpath = tmp;
+		return (0);
+	}
+	free(wd);
+	return (-1);
+}
 
 static	int	set_pwd(t_env *env, char *curpath)
 {
@@ -58,36 +87,4 @@ static	int	set_pwd(t_env *env, char *curpath)
 	if (ms_setenv(env, "OLDPWD", curpath) == -1)
 		return (-1);
 	return (0);
-}
-
-static	char *get_wd(t_env *env)
-{
-	char	*wd;
-
-	wd = ms_getenv(env, "PWD");
-}
-
-static	char *get_curpath(t_env *env, char *dir_operand)
-{
-	char	*curpath;
-	char	*wd;
-
-	(void)env;
-	if (ft_strncmp(dir_operand, "/", 1) == 0)
-		return (ft_strdup(dir_operand));
-	else
-	{
-		wd = ms_getenv(env, "PWD");
-		if (wd == NULL)
-			wd = getcwd(NULL, 0);
-		if (wd == NULL)
-			return (NULL);
-
-
-		if (wd[ft_strlen(wd) - 1] == '/')
-			curpath = ft_strjoin(wd, dir_operand);
-		else
-			curpath = ft_strjoin_three(wd, "/", dir_operand);
-	}
-	return (curpath);
 }

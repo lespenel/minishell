@@ -6,14 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 05:47:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:38:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "env.h"
 #include "ft_string.h"
-#include <stddef.h>
 #include <unistd.h>
 
 int	ms_echo(t_env *env, char **args)

@@ -6,13 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 06:42:35 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 06:43:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 05:46:08 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "vector.h"
 #include "expander.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static char	*remove_whitespaces(char *s, const char *ifs);

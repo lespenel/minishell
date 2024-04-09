@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:10:42 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 06:33:45 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,12 @@ static int	expand_word(t_ms *ms, char *s, t_vector *new)
 		}
 		i += wlen;
 	}
-	if (newstring.size != 0)
+	if (newstring.size == 0)
+		clear_vector(&newstring);
+	else if (add_vector(new, &newstring.array, 1) == -1)
 	{
-		if (add_vector(new, &newstring.array, 1) == -1)
-		{
-			clear_vector(&newstring);
-			return (-1);
-		}
+		clear_vector(&newstring);
+		return (-1);
 	}
 	return (0);
 }

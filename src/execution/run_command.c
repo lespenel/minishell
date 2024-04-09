@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:19:21 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 06:38:14 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 #include <unistd.h>
 
 static int	get_result(t_ms *ms, t_lexer_tok *token);
-static int	end_cmd(t_ms *ms, t_lexer_tok *token, char *path);
 
 int	run_command(t_ms *ms, t_lexer *lexer, size_t i)
 {
@@ -55,24 +54,5 @@ static int	get_result(t_ms *ms, t_lexer_tok *token)
 	path = *((char **)at_vector(&token->args, 0));
 	if (is_builtin(path))
 		return (exec_builtins(ms, NULL, token->args.array));
-	return (end_cmd(ms, token, path));
-}
-
-static int	end_cmd(t_ms *ms, t_lexer_tok *token, char *path)
-{
-	char	**envp;
-
-	if (ft_strchr(path, '/') == NULL)
-		path = get_path(ms, *((char **)at_vector(&token->args, 0)));
-	if (path == NULL)
-	{
-		dprintf(2, "%s: command not found\n",
-			*((char **)at_vector(&token->args, 0)));
-		return (127);
-	}
-	envp = get_envp(&ms->env);
-	if (envp == NULL)
-		return (-1);
-	execve(path, token->args.array, envp);
-	return (126);
+	return (exec_cmd(ms, token, path));
 }

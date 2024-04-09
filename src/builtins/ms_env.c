@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 04:02:02 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:56:17 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 05:42:47 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	ms_env(t_env *env, char **args)
 		argc++;
 	if (argc != 1)
 	{
-		if (write(2, "minishell: env: to many arguments\n", 35) == -1)
-			return (-1);
-		return (0);
+		if (write(2, "minishell: env: to many arguments\n", 35) != 35)
+			return (1);
+		return (1);
 	}
-	print_env(env);
+	if (print_env(env) == -1)
+		return (1);
 	return (0);
 }

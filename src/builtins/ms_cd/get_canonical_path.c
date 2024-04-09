@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:25:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/08 01:53:19 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 06:52:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static	int		remove_dots(t_vector *split_path);
 static	void	remove_last_slash(t_vector *n_path);
 
-int		get_canonical_path(char **curpath)
+int		get_canonical_path(t_env *env, char **curpath, char *dir_operand)
 {
 	t_vector	new;
 	t_vector	split;
@@ -29,7 +29,7 @@ int		get_canonical_path(char **curpath)
 	if (add_vector(&new, "/", 1) == -1
 		|| ft_split_vector(&split, *curpath, '/') == -1
 		|| remove_dots(&split) == -1
-		|| remove_dot_dot(&new, &split) == -1)
+		|| remove_dot_dot(env, &new, &split, dir_operand) == -1)
 	{
 		clear_vector(&split);
 		clear_vector(&new);

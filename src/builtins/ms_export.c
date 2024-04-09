@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 03:40:03 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:45:44 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 05:45:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	ms_export(t_env *env, char **args)
 			return (0);
 		var_name = get_var_name(args[1]);
 		if (var_name == NULL)
-			return (-1);
+			return (1);
 		if (ms_setenv(env, var_name, ft_strchr(args[1], '=') + 1) == -1)
 		{
 			free(var_name);
-			return (-1);
+			return (1);
 		}
 		free(var_name);
 	}

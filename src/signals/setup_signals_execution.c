@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_removal.h                                    :+:      :+:    :+:   */
+/*   setup_signals_execution.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 03:57:38 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/20 03:58:04 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 07:14:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUOTE_REMOVAL_H
-# define QUOTE_REMOVAL_H
+#include "signals.h"
+#include <signal.h>
+#include <unistd.h>
 
-# include "lexer.h"
+static void	execution_sigint(int sig);
+static void	execution_sigquit(int sig);
 
-int	quote_removal(t_lexer *lexer);
+void	setup_signals_execution(void)
+{
+	signal(SIGINT, execution_sigint);
+	signal(SIGQUIT, execution_sigquit);
+}
 
-#endif
+static void	execution_sigint(int sig)
+{
+	(void)sig;
+}
+
+static void	execution_sigquit(int sig)
+{
+	(void)sig;
+}

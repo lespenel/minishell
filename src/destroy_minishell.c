@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_args.c                                       :+:      :+:    :+:   */
+/*   destroy_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 02:17:03 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 02:18:09 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/08 05:15:33 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include <stdlib.h>
 
-void	clear_args(char **args)
+void	destroy_minishell(t_ms *ms)
 {
-	int	i;
-
-	i = 0;
-	while (args[i])
+	restore_termios(ms);
+	destroy_env(&ms->env);
+	if (ms->lastexitstr)
 	{
-		free(args[i]);
-		++i;
+		free(ms->lastexitstr);
+		ms->lastexitstr = NULL;
 	}
-	free(args);
 }

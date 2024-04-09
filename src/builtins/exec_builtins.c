@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 22:11:40 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 12:47:13 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:47:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_builtins(t_ms *minishell, t_lexer *lexer, char **args)
 	int						i;
 
 	i = 0;
-	while (i < EXIT)
+	while (i < MS_EXIT)
 	{
 		if (ft_strcmp(builtins_map[i].name, args[0]) == 0)
 			return (builtins_map[i].func(&minishell->env, args));

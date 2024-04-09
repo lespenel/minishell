@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 04:27:10 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/12 14:52:32 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/06 08:04:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ size_t	hash_key_n(const char *key, size_t n);
 int		setvalue_hashmap(t_hashmap *hashmap, char *key, char *value);
 char	*getvalue_hashmap(t_hashmap *hashmap, const char *key);
 char	*getvaluen_hashmap(t_hashmap *hashmap, const char *key, size_t n);
+void	remove_hashmap(t_hashmap *hashmap, const char *key);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 05:53:10 by ccouble           #+#    #+#             */
-/*   Updated: 2024/03/21 07:40:01 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:33:33 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int		ft_atoi(const char *nptr);
 int		ft_atoi_base(char *str, char *base);
-size_t	ft_count_words(char *s, char *delim);
-char	**ft_split(const char *s, char c);
+size_t	ft_count_words(const char *s, char *delim);
+char	*ft_itoa(int n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(const char *s1, const char *s2);
@@ -36,6 +36,5 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strtok(char *s, const char *delim);
 char	*ft_strtrim(const char *s1, const char *set);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*ft_itoa(int n);
 
 #endif

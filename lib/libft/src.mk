@@ -17,6 +17,7 @@ SRC = \
 	  hashmap/hash_key.c \
 	  hashmap/hash_key_n.c \
 	  hashmap/init_hashmap.c \
+	  hashmap/remove_hashmap.c \
 	  hashmap/setvalue_hashmap.c \
 	  \
 	  io/ft_dprintf.c \
@@ -40,7 +41,6 @@ SRC = \
 	  string/ft_atoi_base.c \
 	  string/ft_count_words.c \
 	  string/ft_itoa.c \
-	  string/ft_split.c \
 	  string/ft_strchr.c \
 	  string/ft_strdup.c \
 	  string/ft_strjoin.c \

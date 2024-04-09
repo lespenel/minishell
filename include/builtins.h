@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:36:44 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:55:26 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ typedef struct s_builtins_map
 	t_builtin	func;
 }	t_buitlins_map;
 
-void	clear_args(char **args);
 int		get_argc(char **args);
-char	**get_args(t_lexer *lexer, size_t index);
 int		is_builtin(char *word);
-int		exec_test(t_ms *minishell, t_lexer *lexer);
 int		exec_builtins(t_ms *minishell, t_lexer *lexer, char **args);
 
 int		ms_cd(t_env	*env, char **args);

@@ -6,12 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:50:36 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 05:12:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "vector.h"
 #include "wildcard.h"
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 

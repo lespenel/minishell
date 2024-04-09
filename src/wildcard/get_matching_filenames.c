@@ -6,10 +6,11 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:41:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/07 06:48:08 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "util.h"
 #include "wildcard.h"
 
 static int	for_each_file(t_wild *wild, t_pattern *pattern, t_vector *fnames);
@@ -44,12 +45,12 @@ static int	for_each_file(t_wild *wild, t_pattern *pattern, t_vector *filenames)
 		s = at_vector(filenames, i);
 		if (get_files_ls(wild, &pattern->pattern, &new_lst, *s) == -1)
 		{
-			clear_vector(&new_lst);
+			clear_string_vector(&new_lst);
 			return (-1);
 		}
 		++i;
 	}
-	clear_vector(filenames);
+	clear_string_vector(filenames);
 	*filenames = new_lst;
 	return (0);
 }

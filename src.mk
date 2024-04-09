@@ -81,6 +81,7 @@ SRC = \
 	  termios/restore_termios.c \
 	  termios/setup_termios.c \
 	  \
+	  util/clear_string_vector.c \
 	  util/dup_and_close.c \
 	  util/get_ifs.c \
 	  util/ms_fork.c \
@@ -105,6 +106,7 @@ SRC = \
 	  wildcard/get_matching_dirname.c \
 	  wildcard/get_matching_filenames.c \
 	  wildcard/is_wildcard_match.c \
+	  wildcard/ms_strcmp.c \
 	  wildcard/sort_filenames.c \
 	  wildcard/wildcard_handling.c \
 	  \

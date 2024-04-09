@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 01:55:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:57:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "env.h"
 # include "minishell.h"
 # include "lexer.h"
-
-# define CMD_NOT_FOUND "minishell: %s: command not found\n"
 
 typedef enum e_builtins_type
 {

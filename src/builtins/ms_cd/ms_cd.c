@@ -6,11 +6,11 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:20:39 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:24:42 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "builtins/ms_cd.h"
 #include <stdlib.h>
 
 int	ms_cd(t_env	*env, char **args)

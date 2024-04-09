@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:36:40 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 07:22:44 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:29:55 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	is_builtin(char *word)
 {
-	const	size_t len = ft_strlen(word);
+	const size_t		len = ft_strlen(word);
 	int					i;
 	static const char	*builtins[] = {
 	[ECHO] = "echo",

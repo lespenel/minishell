@@ -6,14 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:25:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:37:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:24:53 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "util.h"
 #include "vector.h"
-#include "builtins.h"
+#include "builtins/ms_cd.h"
 #include <stdlib.h>
 
 static int		remove_dots(t_vector *split_path);

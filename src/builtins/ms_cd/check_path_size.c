@@ -6,16 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 03:45:57 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:04:45 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:28:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_io.h"
-#include "builtins.h"
+#include "builtins/ms_cd.h"
 #include "ft_string.h"
-#include <limits.h>
+#include <linux/limits.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static	int	compare_path_max(size_t	path_len, size_t wd_len);
 static	int	check_short_path(size_t path_len, char *wd, char **curpath);

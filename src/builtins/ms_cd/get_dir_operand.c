@@ -6,15 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:40:51 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:39:09 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:32:33 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
 #include "ft_string.h"
 #include "ft_io.h"
 #include "builtins.h"
-#include <stdlib.h>
+#include "builtins/ms_cd.h"
 
 static	char	*get_home(t_env *env);
 static	char	*get_oldpwd(t_env *env);

@@ -6,17 +6,16 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 01:48:30 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:43:48 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:28:21 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "builtins/ms_cd.h"
 #include "ft_string.h"
 #include "ft_io.h"
 #include "vector.h"
 #include <errno.h>
 #include <linux/limits.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -89,10 +88,7 @@ static	int	is_directory(t_env *env, char *path, char *dir_operand)
 		ret = check_short_path(env, path);
 	}
 	if (ret == 0 && errno == 36)
-	{
-		ft_dprintf(2, "GROSCHIBRE\n");
 		ft_dprintf(2, FILENAME_TO_LONG, dir_operand);
-	}
 	else if (ret == 0)
 		ft_dprintf(2, NO_SUCH_FILE, dir_operand);
 	return (ret);
@@ -108,15 +104,12 @@ static	int	check_short_path(t_env *env, char *path)
 	if (wd == NULL)
 		return (0);
 	wd_len = ft_strlen(wd);
-	printf("path_len = %ld", ft_strlen(path + wd_len + 1));
 	if (ft_strncmp(path, wd, wd_len) == 0)
 	{
 		if (stat(path + wd_len + 1, &buff) < 0)
 		{
-			printf("%d\n", PATH_MAX);
 			if (ft_strlen(path + wd_len + 1) == PATH_MAX)
-				return (printf("lol\n"), 1);
-			printf("AlainSoral le bo$$\n");
+				return (1);
 			free(wd);
 			return (0);
 		}

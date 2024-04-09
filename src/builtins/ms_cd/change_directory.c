@@ -6,14 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 04:13:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:35:05 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:33:40 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "builtins.h"
+#include "builtins/ms_cd.h"
 #include "ft_string.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -41,7 +39,6 @@ int	change_directory(t_env *env, char **curpath, char *dir_operand)
 			return (-1);
 		free(*curpath);
 		*curpath = tmp;
-		printf("lol\n");
 	}
 	if (set_pwd(env, *curpath) == -1)
 		return (1);

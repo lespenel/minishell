@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:01:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:10:42 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:37:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	expand_word(t_ms *ms, char *s, t_vector *new)
 	i = 0;
 	while (s[i])
 	{
-		wlen = expand_substr(ms, &newstring, s + i, new);
+		wlen = expand_substring(ms, &newstring, s + i, new);
 		if (wlen == -1)
 		{
 			clear_vector(&newstring);

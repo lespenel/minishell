@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:09:51 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:37:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int		expand_parameters(t_ms *ms, t_lexer_tok *token);
 int		expand_wildcards(t_env *env, t_lexer_tok *token);
-ssize_t	expand_substr(t_ms *ms, t_vector *news, char *s, t_vector *tab);
+ssize_t	expand_substring(t_ms *ms, t_vector *news, char *s, t_vector *tab);
 int		add_escaping(t_vector *vector, char *s);
 ssize_t	treat_noquote(t_ms *ms, t_vector *new, char *s, t_vector *tab);
 int		perform_expansions(t_ms *ms, t_lexer_tok *token);

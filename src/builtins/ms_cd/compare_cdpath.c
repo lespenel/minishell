@@ -6,12 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:55:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:42:39 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:59:25 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "ft_string.h"
+#include "vector.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,13 +47,10 @@ static char	*is_dir_in_cdpath(char *cdpath, char *dir_operand)
 	char	*curpath;
 
 	curpath = NULL;
-	tok = cd_strtok(cdpath, ":");
+	tok = ft_strtok(cdpath, ":");
 	while (tok)
 	{
-		printf("tok = %s\n", tok);
-		if (*tok == '\0')
-			curpath = ft_strjoin("./", dir_operand);
-		else if (tok[ft_strlen(tok) - 1] == '/')
+		if (tok[ft_strlen(tok) - 1] == '/')
 			curpath = ft_strjoin(tok, dir_operand);
 		else
 			curpath = ft_strjoin_three(tok, "/", dir_operand);
@@ -61,20 +59,39 @@ static char	*is_dir_in_cdpath(char *cdpath, char *dir_operand)
 		if (is_directory(curpath))
 			break ;
 		free(curpath);
-		tok = cd_strtok(NULL, ":");
+		curpath = NULL;
+		tok = ft_strtok(NULL, ":");
 	}
 	return (curpath);
 }
 
 static char	*get_cdpath(t_env *env)
 {
-	char	*cdpath;
+	char		*cdpath;
+	t_vector	new;
 
 	cdpath = ms_getenv(env, "CDPATH");
 	if (cdpath == NULL)
 		return (NULL);
-	cdpath = ft_strdup(cdpath);
-	return (cdpath);
+	init_vector(&new, sizeof(char));
+	while (*cdpath)
+	{
+		if (add_vector(&new, cdpath, 1) == -1)
+		{
+			clear_vector(&new);
+			return (NULL);
+		}
+		++cdpath;
+		if (*cdpath == ':' && *(cdpath - 1) == ':')
+		{
+			if (add_vector(&new, ".", 1) == -1)
+			{
+				clear_vector(&new);
+				return (NULL);
+			}
+		}
+	}
+	return (new.array);
 }
 
 static int	is_directory(char *path)

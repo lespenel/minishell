@@ -14,7 +14,6 @@ SRC = \
 	  builtins/ms_cd/get_dir_operand.c \
 	  builtins/ms_cd/check_path_size.c \
 	  builtins/ms_cd/change_directory.c \
-	  builtins/ms_cd/cd_strtok.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
 	  builtins/ms_exit.c \

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 11:09:07 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:44:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int		check_path_size(t_env *env, char **curpath, char *dir_operand);
 int		get_canonical_path(t_env *env, char **curpath, char *dir_operand);
 int		remove_dot_dot(t_env *, t_vector *n_path, t_vector *s_path, char *op);
 int		change_directory(t_env *env, char **curpath, char *dir_operand);
-char	*cd_strtok(char *s, const char *delim);
 int		ms_echo(t_env *env, char **args);
 int		ms_env(t_env *env, char **args);
 int		ms_exit(t_ms *minishell, t_lexer *lexer, char **args);

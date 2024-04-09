@@ -76,6 +76,7 @@ SRC = \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  util/clear_string_vector.c \
 	  util/dup_and_close.c \
 	  util/get_ifs.c \
 	  util/ms_strchr.c \
@@ -99,6 +100,7 @@ SRC = \
 	  wildcard/get_matching_dirname.c \
 	  wildcard/get_matching_filenames.c \
 	  wildcard/is_wildcard_match.c \
+	  wildcard/ms_strcmp.c \
 	  wildcard/sort_filenames.c \
 	  wildcard/wildcard_handling.c \
 	  \

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 03:45:49 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 04:18:32 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 	size_t		i;
 	t_lexer_tok	*token;
 
-	restore_termios(ms);
 	i = 0;
 	while (i < lexer->size)
 	{
@@ -52,7 +51,6 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			break ;
 		++i;
 	}
-	setup_termios(ms);
 	return (ms->lastexit);
 }
 

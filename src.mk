@@ -28,6 +28,7 @@ SRC = \
 	  execution/pipeline/execute_pipe_cmd.c \
 	  \
 	  execution/execute_commands.c \
+	  execution/execute_commands_interactive.c \
 	  execution/execute_simple_command.c \
 	  execution/execute_subshell.c \
 	  execution/execution_structure.c \
@@ -76,6 +77,7 @@ SRC = \
 	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  termios/get_tty_fd.c \
 	  termios/restore_termios.c \
 	  termios/setup_termios.c \
 	  \

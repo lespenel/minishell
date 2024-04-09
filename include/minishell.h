@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 02:33:24 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 04:19:21 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_ms
 
 int		setup_termios(t_ms *ms);
 int		restore_termios(t_ms *ms);
+int		get_tty_fd(void);
 void	destroy_minishell(t_ms *ms);
 int		parse_input(t_ms *ms, t_lexer *lexer, char *input);
 

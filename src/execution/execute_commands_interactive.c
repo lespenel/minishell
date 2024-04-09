@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_termios.c                                    :+:      :+:    :+:   */
+/*   execute_commands_interactive.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 05:08:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 04:13:08 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/09 03:57:07 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:15:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "minishell.h"
-#include <termios.h>
-#include <unistd.h>
+#include "signals.h"
 
-int	setup_termios(t_ms *ms)
+int	execute_commands_interactive(t_ms *ms, t_lexer *lexer)
 {
-	const int	fd = get_tty_fd();
+	int	ret;
 
-	if (fd == -1)
-		return (0);
-	if (tcgetattr(fd, &ms->oldtermios) == -1)
+	setup_signals_execution();
+	if (restore_termios(ms) == -1)
 		return (-1);
-	ms->termios = ms->oldtermios;
-	ms->termios.c_cc[VQUIT] = 0;
-	if (tcsetattr(fd, TCSANOW, &ms->termios) == -1)
+	ret = execute_commands(ms, lexer);
+	if (setup_termios(ms) == -1)
 		return (-1);
-	return (0);
+	setup_signals_interactive();
+	return (ret);
 }

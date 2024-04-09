@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 08:31:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 04:18:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 		return (clear_lexer(lexer));
 	if (execution_structure(lexer) == -1)
 		return (clear_lexer(lexer));
-	setup_signals_execution();
-	if (execute_commands(ms, lexer) == -1)
+	if (execute_commands_interactive(ms, lexer) == -1)
 		return (-1);
-	setup_signals_interactive();
 	return (0);
 }

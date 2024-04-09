@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:40:39 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:19:54 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 04:15:16 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int			wait_children(t_ms *ms, pid_t last);
 int			save_stds(int fd[2]);
 int			restore_stds(int fd[2]);
 int			execute_pipe_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin);
+int			execute_commands_interactive(t_ms *ms, t_lexer *lexer);
 
 #endif

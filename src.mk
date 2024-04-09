@@ -83,6 +83,7 @@ SRC = \
 	  \
 	  util/dup_and_close.c \
 	  util/get_ifs.c \
+	  util/ms_fork.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
 	  util/set_exitcode_str.c \

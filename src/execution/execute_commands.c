@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:05:36 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 06:39:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "expander.h"
 #include "minishell.h"
 #include "lexer.h"
 #include "vector.h"
@@ -74,10 +75,15 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 		pid = execute_pipeline(ms, lexer, i);
 	else if (token->type == COMMAND)
 	{
-		s = at_vector(&token->args, 0);
-		if (s != NULL && is_builtin(*s))
-			return (run_builtin(ms, token));
-		pid = execute_single_command(ms, lexer, i);
+		if (perform_expansions(ms, token) == -1)
+			return (-1);
+		if (token->args.size != 0)
+		{
+			s = at_vector(&token->args, 0);
+			if (s != NULL && is_builtin(*s))
+				return (run_builtin(ms, token));
+		}
+		pid = execute_simple_command(ms, lexer, i);
 	}
 	else if (token->type == SUBSHELL)
 		pid = execute_subshell(ms, lexer, i);

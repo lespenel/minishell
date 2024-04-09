@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 01:11:09 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 06:42:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem.h"
 #include "wildcard.h"
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	init_wildcard(t_wild *wildcard, t_env *env, t_vector *filenames);

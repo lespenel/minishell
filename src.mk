@@ -27,6 +27,7 @@ SRC = \
 	  execution/pipeline/execute_pipeline.c \
 	  execution/pipeline/execute_pipe_cmd.c \
 	  \
+	  execution/exec_cmd.c \
 	  execution/execute_commands.c \
 	  execution/execute_simple_command.c \
 	  execution/execute_subshell.c \

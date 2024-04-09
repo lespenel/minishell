@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:36:40 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 06:50:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 06:17:54 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_builtin(char *word)
 	i = 0;
 	while (i <= EXIT)
 	{
-		if (ft_strncmp(word, builtins[i], ft_strlen(word)) == 0)
+		if (ft_strcmp(word, builtins[i]) == 0)
 			return (1);
 		++i;
 	}

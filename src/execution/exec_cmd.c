@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_subshell.c                                 :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 07:17:12 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/09 06:06:57 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 06:29:11 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "ft_string.h"
 #include "minishell.h"
+#include "ft_io.h"
 #include "execution.h"
-#include "util.h"
-#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
-int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
+int	exec_cmd(t_ms *ms, t_lexer_tok *token, char *path)
 {
-	t_lexer_tok	token;
-	pid_t		pid;
-	int			ret;
+	char	**envp;
 
-	pid = ms_fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
+	if (ft_strchr(path, '/') == NULL)
+		path = get_path(ms, *((char **)at_vector(&token->args, 0)));
+	if (path == NULL)
 	{
-		clear_lexer_except(lexer, i, &token);
-		if (perform_redirections(&token) == -1)
-			return (-1);
-		ret = execute_commands(ms, &token.subshell);
-		clear_token(&token);
-		destroy_minishell(ms);
-		exit(ret);
+		ft_dprintf(2, "%s: command not found\n",
+			*((char **)at_vector(&token->args, 0)));
+		return (127);
 	}
-	return (pid);
+	envp = get_envp(&ms->env);
+	if (envp == NULL)
+		return (-1);
+	execve(path, token->args.array, envp);
+	return (126);
 }

@@ -87,13 +87,12 @@ static int	expand_word(t_ms *ms, char *s, t_vector *new)
 		}
 		i += wlen;
 	}
-	if (newstring.size != 0)
+	if (newstring.size == 0)
+		clear_vector(&newstring);
+	else if (add_vector(new, &newstring.array, 1) == -1)
 	{
-		if (add_vector(new, &newstring.array, 1) == -1)
-		{
-			clear_vector(&newstring);
-			return (-1);
-		}
+		clear_vector(&newstring);
+		return (-1);
 	}
 	return (0);
 }

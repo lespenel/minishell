@@ -13,6 +13,7 @@
 #include "ft_mem.h"
 #include "wildcard.h"
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	init_wildcard(t_wild *wildcard, t_env *env, t_vector *filenames);

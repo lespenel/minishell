@@ -15,6 +15,7 @@
 #include "expander.h"
 #include "ft_string.h"
 #include "util.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static ssize_t	nq_variable(t_ms *ms, t_vector *tab, t_vector *new, char *s);

@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_minishell.c                                :+:      :+:    :+:   */
+/*   setup_termios.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/08 05:15:33 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/08 05:08:42 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:13:08 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
+#include <termios.h>
+#include <unistd.h>
 
-void	destroy_minishell(t_ms *ms)
+int	setup_termios(t_ms *ms)
 {
-	restore_termios(ms);
-	destroy_env(&ms->env);
-	if (ms->lastexitstr)
-	{
-		free(ms->lastexitstr);
-		ms->lastexitstr = NULL;
-	}
+	const int	fd = get_tty_fd();
+
+	if (fd == -1)
+		return (0);
+	if (tcgetattr(fd, &ms->oldtermios) == -1)
+		return (-1);
+	ms->termios = ms->oldtermios;
+	ms->termios.c_cc[VQUIT] = 0;
+	if (tcsetattr(fd, TCSANOW, &ms->termios) == -1)
+		return (-1);
+	return (0);
 }

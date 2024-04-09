@@ -6,14 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 05:04:03 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:38:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:17:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 #include "execution.h"
-#include <asm-generic/errno-base.h>
+#include "util.h"
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -42,7 +42,7 @@ static int	execute_last_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin)
 {
 	pid_t	pid;
 
-	pid = fork();
+	pid = ms_fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)

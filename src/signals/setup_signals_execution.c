@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_minishell.c                                :+:      :+:    :+:   */
+/*   setup_signals_execution.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/08 05:15:33 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 07:14:26 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdlib.h>
+#include "signals.h"
+#include <signal.h>
+#include <unistd.h>
 
-void	destroy_minishell(t_ms *ms)
+static void	execution_sigint(int sig);
+static void	execution_sigquit(int sig);
+
+void	setup_signals_execution(void)
 {
-	restore_termios(ms);
-	destroy_env(&ms->env);
-	if (ms->lastexitstr)
-	{
-		free(ms->lastexitstr);
-		ms->lastexitstr = NULL;
-	}
+	signal(SIGINT, execution_sigint);
+	signal(SIGQUIT, execution_sigquit);
+}
+
+static void	execution_sigint(int sig)
+{
+	(void)sig;
+}
+
+static void	execution_sigquit(int sig)
+{
+	(void)sig;
 }

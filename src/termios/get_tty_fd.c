@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_minishell.c                                :+:      :+:    :+:   */
+/*   get_tty_fd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/08 05:15:33 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/09 04:09:50 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:19:11 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdlib.h>
+#include <unistd.h>
 
-void	destroy_minishell(t_ms *ms)
+int	get_tty_fd(void)
 {
-	restore_termios(ms);
-	destroy_env(&ms->env);
-	if (ms->lastexitstr)
-	{
-		free(ms->lastexitstr);
-		ms->lastexitstr = NULL;
-	}
+	if (isatty(STDERR_FILENO))
+		return (STDERR_FILENO);
+	if (isatty(STDOUT_FILENO))
+		return (STDOUT_FILENO);
+	if (isatty(STDIN_FILENO))
+		return (STDIN_FILENO);
+	return (-1);
 }

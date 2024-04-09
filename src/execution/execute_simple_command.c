@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:46:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:38:41 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:18:51 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "execution.h"
 #include "ft_string.h"
 #include <stdio.h>
+#include "signals.h"
+#include "util.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -28,7 +30,7 @@ int	execute_simple_command(t_ms *ms, t_lexer *lexer, size_t i)
 	pid_t		pid;
 	int			ret;
 
-	pid = fork();
+	pid = ms_fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)

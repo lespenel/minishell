@@ -28,10 +28,11 @@ int			execution_structure(t_lexer *lexer);
 int			simplify_tokens(t_lexer *lexer);
 char		*get_path(t_ms *ms, char *name);
 t_lex_type	next_token(t_lexer *lexer, size_t i);
-int			wait_children(pid_t last);
+int			wait_children(t_ms *ms, pid_t last);
 int			save_stds(int fd[2]);
 int			restore_stds(int fd[2]);
 int			execute_pipe_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin);
 int			exec_cmd(t_ms *ms, t_lexer_tok *token, char *path);
+int			execute_commands_interactive(t_ms *ms, t_lexer *lexer);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 02:04:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 04:18:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "minishell.h"
 #include "execution.h"
+#include "signals.h"
 
 int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 {
@@ -32,7 +33,7 @@ int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 		return (clear_lexer(lexer));
 	if (execution_structure(lexer) == -1)
 		return (clear_lexer(lexer));
-	if (execute_commands(ms, lexer) == -1)
+	if (execute_commands_interactive(ms, lexer) == -1)
 		return (-1);
 	return (0);
 }

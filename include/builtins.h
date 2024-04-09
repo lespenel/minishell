@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/28 12:46:47 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/08 05:45:06 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef enum e_builtins_type
 {
-	ECHO,
+	MS_ECHO,
 	CD,
 	PWD,
 	EXPORT,

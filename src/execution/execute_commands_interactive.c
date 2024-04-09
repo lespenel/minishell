@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_minishell.c                                :+:      :+:    :+:   */
+/*   execute_commands_interactive.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/08 05:15:33 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/09 03:57:07 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:15:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "minishell.h"
-#include <stdlib.h>
+#include "signals.h"
 
-void	destroy_minishell(t_ms *ms)
+int	execute_commands_interactive(t_ms *ms, t_lexer *lexer)
 {
-	restore_termios(ms);
-	destroy_env(&ms->env);
-	if (ms->lastexitstr)
-	{
-		free(ms->lastexitstr);
-		ms->lastexitstr = NULL;
-	}
+	int	ret;
+
+	setup_signals_execution();
+	if (restore_termios(ms) == -1)
+		return (-1);
+	ret = execute_commands(ms, lexer);
+	if (setup_termios(ms) == -1)
+		return (-1);
+	setup_signals_interactive();
+	return (ret);
 }

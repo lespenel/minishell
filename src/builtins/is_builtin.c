@@ -17,7 +17,7 @@ int	is_builtin(char *word)
 {
 	int					i;
 	static const char	*builtins[] = {
-	[ECHO] = "echo",
+	[MS_ECHO] = "echo",
 	[CD] = "cd",
 	[PWD] = "pwd",
 	[EXPORT] = "export",

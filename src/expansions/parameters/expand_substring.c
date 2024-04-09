@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:44:58 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:37:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static ssize_t	dq_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 static ssize_t	treat_dquote(t_ms *ms, t_vector *new, char *s);
 static int		add_escaping_dq(t_vector *vector, char *s);
 
-ssize_t	expand_substr(t_ms *ms, t_vector *news, char *s, t_vector *tab)
+ssize_t	expand_substring(t_ms *ms, t_vector *news, char *s, t_vector *tab)
 {
 	size_t	i;
 

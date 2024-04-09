@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:27:23 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 03:45:49 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <sys/wait.h>
 
 static int		end_shell(t_ms *ms, t_lexer *lexer, size_t i);
+static int		write_signal(t_ms *ms);
 static int		run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
 
@@ -31,6 +32,7 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 	size_t		i;
 	t_lexer_tok	*token;
 
+	restore_termios(ms);
 	i = 0;
 	while (i < lexer->size)
 	{
@@ -44,10 +46,13 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 				return (-1);
 		}
 		i = next_command(lexer, i);
+		if (write_signal(ms) == -1)
+			return (-1);
 		if (end_shell(ms, lexer, i))
 			break ;
 		++i;
 	}
+	setup_termios(ms);
 	return (ms->lastexit);
 }
 
@@ -64,6 +69,21 @@ static int	end_shell(t_ms *ms, t_lexer *lexer, size_t i)
 	token = at_vector(lexer, i);
 	return ((token->type == LOGICAL_AND && ms->lastexit != 0)
 		|| (token->type == LOGICAL_OR && ms->lastexit == 0));
+}
+
+static int	write_signal(t_ms *ms)
+{
+	int	ret;
+
+	if (ms->signaled && ms->lastexit == 128 + SIGINT)
+		ret = write(STDERR_FILENO, "\n", 1);
+	else if (ms->signaled && ms->lastexit == 128 + SIGQUIT)
+		ret = write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+	else
+		return (0);
+	if (ret == -1)
+		return (-1);
+	return (0);
 }
 
 static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)

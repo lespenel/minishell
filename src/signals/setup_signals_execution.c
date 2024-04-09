@@ -6,12 +6,13 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:24:41 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 03:41:02 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 #include <signal.h>
+#include <stdio.h>
 #include <unistd.h>
 
 static void	execution_sigint(int sig);

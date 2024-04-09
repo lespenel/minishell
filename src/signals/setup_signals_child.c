@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:06:16 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:39:46 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 03:08:16 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	child_sigint(int sig);

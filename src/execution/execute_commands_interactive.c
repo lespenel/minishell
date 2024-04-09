@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_subshell.c                                 :+:      :+:    :+:   */
+/*   execute_commands_interactive.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 07:17:12 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/09 03:57:07 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:15:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "minishell.h"
 #include "execution.h"
-#include "util.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
+#include "signals.h"
 
-int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
+int	execute_commands_interactive(t_ms *ms, t_lexer *lexer)
 {
-	t_lexer_tok	*token;
-	pid_t		pid;
+	int	ret;
 
-	token = at_vector(lexer, i);
-	pid = ms_fork();
-	if (pid == -1)
+	setup_signals_execution();
+	if (restore_termios(ms) == -1)
 		return (-1);
-	if (pid == 0)
-	{
-		if (perform_redirections(token) == -1)
-			return (-1);
-		exit(execute_commands(ms, &token->subshell));
-	}
-	return (pid);
+	ret = execute_commands(ms, lexer);
+	if (setup_termios(ms) == -1)
+		return (-1);
+	setup_signals_interactive();
+	return (ret);
 }

@@ -28,6 +28,7 @@ SRC = \
 	  execution/pipeline/execute_pipe_cmd.c \
 	  \
 	  execution/execute_commands.c \
+	  execution/execute_commands_interactive.c \
 	  execution/execute_simple_command.c \
 	  execution/execute_subshell.c \
 	  execution/execution_structure.c \
@@ -73,11 +74,17 @@ SRC = \
 	  parser/fill_here_doc.c \
 	  \
 	  signals/setup_signals_child.c \
+	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \
  	  \
+	  termios/get_tty_fd.c \
+	  termios/restore_termios.c \
+	  termios/setup_termios.c \
+	  \
 	  util/clear_string_vector.c \
 	  util/dup_and_close.c \
 	  util/get_ifs.c \
+	  util/ms_fork.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
 	  util/set_exitcode_str.c \

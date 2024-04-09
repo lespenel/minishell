@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_subshell.c                                 :+:      :+:    :+:   */
+/*   setup_termios.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 07:17:12 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/08 05:08:42 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/09 04:13:08 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "minishell.h"
-#include "execution.h"
-#include "util.h"
-#include <stdlib.h>
+#include <termios.h>
 #include <unistd.h>
 
-int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
+int	setup_termios(t_ms *ms)
 {
-	t_lexer_tok	*token;
-	pid_t		pid;
+	const int	fd = get_tty_fd();
 
-	token = at_vector(lexer, i);
-	pid = ms_fork();
-	if (pid == -1)
+	if (fd == -1)
+		return (0);
+	if (tcgetattr(fd, &ms->oldtermios) == -1)
 		return (-1);
-	if (pid == 0)
-	{
-		if (perform_redirections(token) == -1)
-			return (-1);
-		exit(execute_commands(ms, &token->subshell));
-	}
-	return (pid);
+	ms->termios = ms->oldtermios;
+	ms->termios.c_cc[VQUIT] = 0;
+	if (tcsetattr(fd, TCSANOW, &ms->termios) == -1)
+		return (-1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:29:00 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:02:05 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/09 07:18:05 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute_pipe_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin)
 
 	if (pipe(pfd) == -1)
 		return (-1);
-	pid = fork();
+	pid = ms_fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)

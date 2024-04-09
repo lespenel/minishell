@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:24:21 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:36:44 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 
 typedef enum e_builtins_type
 {
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT,
+	MS_ECHO,
+	MS_CD,
+	MS_PWD,
+	MS_EXPORT,
+	MS_UNSET,
+	MS_ENV,
+	MS_EXIT,
 }	t_builtins_type;
 
 typedef int	(*t_builtin)(t_env *env, char **args);

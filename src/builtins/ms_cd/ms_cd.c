@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 06:53:08 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:42:49 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ int	ms_cd(t_env	*env, char **args)
 	ft_dprintf(2, "canonical   = %s\n", curpath);
 	return (0);
 }
-

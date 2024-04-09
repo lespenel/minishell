@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 03:45:57 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 08:32:20 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:35:44 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static	int	compare_path_max(size_t	path_len, size_t wd_len);
 
 int	check_path_size(t_env *env, char **curpath, char *dir_operand)
 {
-	const size_t path_len = ft_strlen(*curpath) + 1;
-	char		*wd;
-	char		*tmp;
+	const size_t	path_len = ft_strlen(*curpath) + 1;
+	char			*wd;
+	char			*tmp;
 
 	if (path_len <= PATH_MAX)
 		return (0);
@@ -44,17 +44,14 @@ int	check_path_size(t_env *env, char **curpath, char *dir_operand)
 			return (-1);
 		free(*curpath);
 		*curpath = tmp;
-		printf("sexe\n");
 		return (1);
 	}
 	free(wd);
-	printf("sexe2\n");
 	return (-1);
 }
 
 static	int	compare_path_max(size_t	path_len, size_t wd_len)
 {
-	printf("salut\n");
 	if (PATH_MAX < wd_len)
 		return (0);
 	if (wd_len >= path_len)

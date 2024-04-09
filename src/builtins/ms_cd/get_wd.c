@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 05:26:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/08 05:27:20 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:35:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "env.h"
 #include <unistd.h>
 
-char *get_wd(t_env *env)
+char	*get_wd(t_env *env)
 {
 	char	*wd;
 

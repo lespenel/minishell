@@ -8,11 +8,13 @@ SRC = \
 	  builtins/ms_cd/ms_cd.c \
 	  builtins/ms_cd/get_wd.c \
 	  builtins/ms_cd/get_curpath.c \
+	  builtins/ms_cd/compare_cdpath.c \
 	  builtins/ms_cd/get_canonical_path.c \
 	  builtins/ms_cd/remove_dot_dot.c \
 	  builtins/ms_cd/get_dir_operand.c \
 	  builtins/ms_cd/check_path_size.c \
 	  builtins/ms_cd/change_directory.c \
+	  builtins/ms_cd/cd_strtok.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
 	  builtins/ms_exit.c \

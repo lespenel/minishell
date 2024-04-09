@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:25:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 06:52:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:37:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include "builtins.h"
 #include <stdlib.h>
 
-static	int		remove_dots(t_vector *split_path);
-static	void	remove_last_slash(t_vector *n_path);
+static int		remove_dots(t_vector *split_path);
+static void		remove_last_slash(t_vector *n_path);
 
-int		get_canonical_path(t_env *env, char **curpath, char *dir_operand)
+int	get_canonical_path(t_env *env, char **curpath, char *dir_operand)
 {
 	t_vector	new;
 	t_vector	split;
@@ -45,7 +45,7 @@ int		get_canonical_path(t_env *env, char **curpath, char *dir_operand)
 	return (0);
 }
 
-static	void	remove_last_slash(t_vector *n_path)
+static void	remove_last_slash(t_vector *n_path)
 {
 	char	*curr;
 
@@ -54,7 +54,7 @@ static	void	remove_last_slash(t_vector *n_path)
 		remove_vector(n_path, n_path->size - 1);
 }
 
-static	int	remove_dots(t_vector *split_path)
+static int	remove_dots(t_vector *split_path)
 {
 	char	**curr;
 	size_t	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_dir_operand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel </var/spool/mail/lespenel>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:40:51 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 04:05:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:39:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include "builtins.h"
 #include <stdlib.h>
 
-static	char *get_home(t_env *env);
+static	char	*get_home(t_env *env);
+static	char	*get_oldpwd(t_env *env);
 
-char *get_dir_operand(t_env *env, char **args)
+char	*get_dir_operand(t_env *env, char **args)
 {
 	const int	argc = get_argc(args);
 	char		*dir_operand;
@@ -30,24 +31,17 @@ char *get_dir_operand(t_env *env, char **args)
 	}
 	if (argc == 1)
 		dir_operand = get_home(env);
-	else 
+	else
 	{
 		if (ft_strcmp(args[1], "-") == 0)
-		{
-			dir_operand = ms_getenv(env, "OLDPWD");
-			if (dir_operand == NULL)
-				return (NULL);
-			dir_operand = ft_strdup(dir_operand);
-		}
+			dir_operand = get_oldpwd(env);
 		else
 			dir_operand = ft_strdup(args[1]);
 	}
-	if (dir_operand == NULL)
-			return (NULL);
 	return (dir_operand);
 }
 
-static	char *get_home(t_env *env)
+static char	*get_home(t_env *env)
 {
 	char	*home;
 
@@ -55,10 +49,26 @@ static	char *get_home(t_env *env)
 	if (home == NULL)
 	{
 		ft_dprintf(2, HOME_NOT_SET);
-			return (NULL);
+		return (NULL);
 	}
 	home = ft_strdup(home);
 	if (home == NULL)
 		return (NULL);
 	return (home);
+}
+
+static	char	*get_oldpwd(t_env *env)
+{
+	char	*oldpwd;
+
+	oldpwd = ms_getenv(env, "OLDPWD");
+	if (oldpwd == NULL)
+	{
+		ft_dprintf(2, OLDPWD_NOT_SET);
+		return (NULL);
+	}
+	if (ft_dprintf(1, "%s\n", oldpwd) == -1)
+		return (NULL);
+	oldpwd = ft_strdup(oldpwd);
+	return (oldpwd);
 }

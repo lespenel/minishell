@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 06:52:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:09:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define NO_SUCH_FILE "minishell: cd: %s: No such file or directory\n"
 # define FILENAME_TO_LONG "minishell: cd: %s: File name too long\n"
 # define HOME_NOT_SET "minishell: cd: HOME not set\n"
+# define OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
 # define TOO_MANY_ARGS "minishell: cd: too many arguments\n"
 # define CD_MALLOC_ERR "minishell: cd: Memory alocation failure\n"
 
@@ -53,11 +54,13 @@ int		exec_builtins(t_ms *minishell, t_lexer *lexer, char **args);
 int		ms_cd(t_env	*env, char **args);
 char 	*get_wd(t_env *env);
 char	*get_curpath(t_env *env, char *dir_operand);
+char 	*compare_cdpath(t_env *env, char *dir_operand);
 char	*get_dir_operand(t_env *env, char **args);
 int		check_path_size(t_env *env, char **curpath, char *dir_operand);
 int		get_canonical_path(t_env *env, char **curpath, char *dir_operand);
 int		remove_dot_dot(t_env *, t_vector *n_path, t_vector *s_path, char *op);
 int		change_directory(t_env *env, char **curpath, char *dir_operand);
+char	*cd_strtok(char *s, const char *delim);
 int		ms_echo(t_env *env, char **args);
 int		ms_env(t_env *env, char **args);
 int		ms_exit(t_ms *minishell, t_lexer *lexer, char **args);

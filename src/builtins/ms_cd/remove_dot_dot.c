@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 01:48:30 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 08:05:19 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:43:48 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-static	int		check_short_path(t_env *env, char *path);
-static	int		is_directory(t_env *env, char *path, char *dir_operand);
-static	void	remove_before_dir(t_vector *n_path);
+static int		check_short_path(t_env *env, char *path);
+static int		is_directory(t_env *env, char *path, char *dir_operand);
+static void		remove_before_dir(t_vector *n_path);
 
 int	remove_dot_dot(t_env *env, t_vector *n_path, t_vector *s_path, char *dir_op)
 {
@@ -41,7 +41,7 @@ int	remove_dot_dot(t_env *env, t_vector *n_path, t_vector *s_path, char *dir_op)
 				return (-1);
 			++i;
 		}
-		else 
+		else
 		{
 			free(*curr);
 			remove_vector(s_path, i);
@@ -76,8 +76,8 @@ static	void	remove_before_dir(t_vector *n_path)
 
 static	int	is_directory(t_env *env, char *path, char *dir_operand)
 {
-	struct stat buff;
-	int	ret;
+	struct stat	buff;
+	int			ret;
 
 	if (stat(path, &buff) < 0)
 		ret = 0;
@@ -100,9 +100,9 @@ static	int	is_directory(t_env *env, char *path, char *dir_operand)
 
 static	int	check_short_path(t_env *env, char *path)
 {
-	struct stat buff;
-	char	*wd;
-	size_t	wd_len;
+	struct stat	buff;
+	char		*wd;
+	size_t		wd_len;
 
 	wd = get_wd(env);
 	if (wd == NULL)

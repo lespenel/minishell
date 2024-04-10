@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 03:40:03 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:45:44 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 04:04:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,26 @@ static char	*get_var_name(char *str);
 
 int	ms_export(t_env *env, char **args)
 {
-	const int		argc = get_argc(args);
 	char			*var_name;
 	char			*equal_ptr;
+	int				i;
 
-	if (argc > 1)
+	i = 1;
+	while (args[i])
 	{
-		equal_ptr = ft_strchr(args[1], '=');
+		equal_ptr = ft_strchr(args[i], '=');
 		if (equal_ptr == NULL)
 			return (0);
-		var_name = get_var_name(args[1]);
+		var_name = get_var_name(args[i]);
 		if (var_name == NULL)
-			return (-1);
-		if (ms_setenv(env, var_name, ft_strchr(args[1], '=') + 1) == -1)
+			return (1);
+		if (ms_setenv(env, var_name, ft_strchr(args[i], '=') + 1) == -1)
 		{
 			free(var_name);
-			return (-1);
+			return (1);
 		}
 		free(var_name);
+		++i;
 	}
 	return (0);
 }

@@ -6,18 +6,33 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:59:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 05:36:30 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 02:34:17 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "env.h"
-#include <unistd.h>
-#include <unistd.h>
+#include "builtins/ms_cd.h"
+#include <errno.h>
+#include <stdlib.h>
 
 int	ms_cd(t_env	*env, char **args)
 {
-	(void) env;
-	(void) args;
+	char		*curpath;
+	char		*dir_operand;
+
+	errno = 0;
+	dir_operand = get_dir_operand(env, args);
+	if (dir_operand == NULL)
+		return (1);
+	curpath = get_curpath(env, dir_operand);
+	if (curpath == NULL
+		|| get_canonical_path(env, &curpath, dir_operand) == -1
+		|| change_directory(env, &curpath, dir_operand) == -1)
+	{
+		free(dir_operand);
+		free(curpath);
+		return (1);
+	}
+	free(dir_operand);
+	free(curpath);
 	return (0);
 }

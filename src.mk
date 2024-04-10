@@ -1,10 +1,16 @@
 SRC = \
-	  builtins/clear_args.c \
 	  builtins/exec_builtins.c \
 	  builtins/get_argc.c \
-	  builtins/get_args.c \
 	  builtins/is_builtin.c \
-	  builtins/ms_cd.c \
+	  builtins/ms_cd/ms_cd.c \
+	  builtins/ms_cd/get_wd.c \
+	  builtins/ms_cd/get_curpath.c \
+	  builtins/ms_cd/compare_cdpath.c \
+	  builtins/ms_cd/get_canonical_path.c \
+	  builtins/ms_cd/remove_dot_dot.c \
+	  builtins/ms_cd/get_dir_operand.c \
+	  builtins/ms_cd/check_path_size.c \
+	  builtins/ms_cd/change_directory.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
 	  builtins/ms_exit.c \
@@ -88,6 +94,7 @@ SRC = \
 	  util/ms_fork.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
+	  util/ft_split_vector.c \
 	  util/set_exitcode_str.c \
 	  \
 	  wildcard/pattern/fill_pattern.c \

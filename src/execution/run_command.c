@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:38:14 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 04:40:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ static int	get_result(t_ms *ms, t_lexer_tok *token)
 		return (0);
 	path = *((char **)at_vector(&token->args, 0));
 	if (is_builtin(path))
-		return (exec_builtins(ms, NULL, token->args.array));
+		return (exec_builtins(ms, token));
 	return (exec_cmd(ms, token, path));
 }

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/18 05:38:19 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:38:12 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ms_echo(t_env *env, char **args)
 	const int	argc = get_argc(args);
 	int			no_nl;
 	int			i;
+	ssize_t		len;
 
 	(void)env;
 	no_nl = 0;
@@ -30,13 +31,14 @@ int	ms_echo(t_env *env, char **args)
 	i = 1 + no_nl;
 	while (i < argc)
 	{
-		if (write(1, args[i], ft_strlen(args[i])) == -1)
-			return (-1);
-		if (i < argc - 1 && write(1, " ", 1) == -1)
-			return (-1);
+		len = ft_strlen(args[i]);
+		if (write(1, args[i], len) != len)
+			return (1);
+		if (i < argc - 1 && write(1, " ", 1) != 1)
+			return (1);
 		++i;
 	}
-	if (no_nl == 0 && write(1, "\n", 1) == -1)
-		return (-1);
+	if (no_nl == 0 && write(1, "\n", 1) != 1)
+		return (1);
 	return (0);
 }

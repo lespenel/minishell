@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_args.c                                       :+:      :+:    :+:   */
+/*   get_wd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 02:17:03 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/17 02:18:09 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/08 05:26:46 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/09 11:35:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_string.h"
+#include "env.h"
+#include <unistd.h>
 
-void	clear_args(char **args)
+char	*get_wd(t_env *env)
 {
-	int	i;
+	char	*wd;
 
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		++i;
-	}
-	free(args);
+	wd = ms_getenv(env, "PWD");
+	if (wd != NULL)
+		return (ft_strdup(wd));
+	wd = getcwd(NULL, 0);
+	return (wd);
 }

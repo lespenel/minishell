@@ -69,6 +69,8 @@ SRC = \
 	  lexer/clear_lexer_except.c \
 	  lexer/clear_token.c \
 	  lexer/add_newline_tok.c \
+	  lexer/add_word_tok.c \
+	  lexer/add_operand_tok.c \
 	  lexer/char_filter/is_blank.c \
 	  lexer/char_filter/is_operand.c \
 	  lexer/char_filter/is_word.c \

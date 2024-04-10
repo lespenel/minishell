@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:09:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 07:13:35 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:23:08 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static ssize_t	get_word_size(char *s)
 	ssize_t		ret;
 
 	i = next_char(s, -1);
-	while (s[i] && is_word(s[i]))
+	while (s[i] && is_word(s + i))
 	{
 		if (is_quote(s[i]))
 		{

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:25:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:24:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 02:28:05 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_canonical_path(t_env *env, char **curpath, char *dir_operand)
 		return (-1);
 	}
 	remove_last_slash(&new);
-	clear_vector(&split);
+	clear_string_vector(&split);
 	free(*curpath);
 	*curpath = ft_strdup(new.array);
 	clear_vector(&new);

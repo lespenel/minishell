@@ -6,16 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:38:14 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 04:27:46 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
 #include "builtins.h"
 #include "expander.h"
 #include "lexer.h"
 #include "execution.h"
-#include "ft_string.h"
 #include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>

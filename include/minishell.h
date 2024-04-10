@@ -6,14 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:19:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 08:21:14 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 05:44:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define PROMPT "minishell $> "
 
 # include "env.h"
 # include "lexer.h"

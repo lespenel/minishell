@@ -74,6 +74,10 @@ SRC = \
 	  parser/syntax_error.c \
 	  parser/fill_here_doc.c \
 	  \
+	  prompt/add_color_to_prompt.c \
+	  prompt/get_command_result.c \
+	  prompt/get_prompt.c \
+	  \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \

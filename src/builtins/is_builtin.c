@@ -16,7 +16,6 @@
 
 int	is_builtin(char *word)
 {
-	const size_t		len = ft_strlen(word);
 	int					i;
 	static const char	*builtins[] = {
 	[MS_ECHO] = "echo",
@@ -28,8 +27,6 @@ int	is_builtin(char *word)
 	[MS_EXIT] = "exit",
 	};
 
-	if (len == 0)
-		return (0);
 	i = 0;
 	while (i <= MS_EXIT)
 	{

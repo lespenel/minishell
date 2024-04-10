@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 02:05:13 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 05:35:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 02:04:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ms_exit(t_ms *minishell, t_lexer *lexer, char **args)
 	int			ret;
 
 	if (argc == 1)
-		free_exit(minishell, lexer, args, 0);
+		free_exit(minishell, lexer, args, minishell->lastexit);
 	else
 	{
 		ret = get_exit_code(args[1]);
@@ -51,10 +51,10 @@ static int	free_exit(t_ms *ms, t_lexer *lexer, char **args, int ret)
 {
 	int	w;
 
+	(void)args;
 	clear_lexer(lexer);
 	destroy_env(&ms->env);
 	rl_clear_history();
-	clear_args(args);
 	w = write(1, "exit\n", 5);
 	(void)w;
 	exit(ret);
@@ -62,6 +62,30 @@ static int	free_exit(t_ms *ms, t_lexer *lexer, char **args, int ret)
 
 static int	get_exit_code(char *nptr)
 {
-	(void) nptr;
-	return (0);
+	const size_t	len = ft_strlen(nptr);
+	long int		nb;
+	size_t			i;
+
+	while (ft_isspace(*nptr))
+		++nptr;
+	if (len == 20 && ft_strcmp(nptr, "-9223372036854775808") == 0)
+		return (0);
+	i = 0;
+	if (nptr[i] == '-' || nptr[i] == '+')
+		++i;
+	if (nptr[i] < '0' || nptr[i] > '9')
+		return (-1);
+	nb = 0;
+	while (nptr[i] <= '9' && nptr[i] >= '0')
+	{
+		if (LONG_MAX / 10 < nb || LONG_MAX - (nptr[i] - '0') < nb * 10)
+			return (-1);
+		nb = nb * 10 + (nptr[i] - '0');
+		++i;
+	}
+	if (len != i)
+		return (-1);
+	if (nptr[0] == '-')
+		return ((LONG_MAX - nb + 1) % 256);
+	return (nb % 256);
 }

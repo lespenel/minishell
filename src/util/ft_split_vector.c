@@ -1,32 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env.c                                           :+:      :+:    :+:   */
+/*   ft_split_vector.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 04:02:02 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 05:42:47 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/06 04:57:11 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/06 05:04:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include <unistd.h>
+#include "ft_string.h"
+#include "vector.h"
+#include <stdlib.h>
 
-int	ms_env(t_env *env, char **args)
+int	ft_split_vector(t_vector *dest, char *s, char delim)
 {
-	int	argc;
+	size_t	i;
+	size_t	j;
+	char	*tmp;
 
-	argc = 0;
-	while (args[argc])
-		argc++;
-	if (argc != 1)
+	i = 0;
+	while (s[i])
 	{
-		if (write(2, "minishell: env: to many arguments\n", 35) != 35)
-			return (1);
-		return (1);
+		j = 0;
+		while (s[i + j] && s[i + j] != delim)
+			++j;
+		if (j != 0)
+		{
+			tmp = ft_strndup(s + i, j);
+			if (tmp == NULL)
+				return (-1);
+			if (add_vector(dest, &tmp, 1) == -1)
+			{
+				free(tmp);
+				return (-1);
+			}
+			i += j - 1;
+		}
+		++i;
 	}
-	if (print_env(env) == -1)
-		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:17:56 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 04:18:46 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/10 07:25:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	parse_input(t_ms *ms, t_lexer *lexer, char *input)
 	int	ret;
 
 	(void)ms;
+	init_lexer(lexer);
 	ret = fill_lexer(lexer, input);
 	if (ret == -1)
 		return (-1);

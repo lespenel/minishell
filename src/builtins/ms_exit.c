@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 02:05:13 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 04:35:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 05:19:44 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ms_exit(t_ms *minishell, t_lexer_tok *token, char **args)
 		if (argc == 2)
 			free_exit(minishell, token, args, ret);
 	}
-	if (write(1, "exit\n", 5) == -1
+	if (write(STDERR_FILENO, "exit\n", 5) == -1
 		|| write(2, "minishell: exit: too many arguments\n", 36) == -1)
 		return (-1);
 	return (127);
@@ -56,7 +56,7 @@ static int	free_exit(t_ms *ms, t_lexer_tok *token, char **args, int ret)
 	clear_token(token);
 	destroy_env(&ms->env);
 	rl_clear_history();
-	w = write(1, "exit\n", 5);
+	w = write(STDERR_FILENO, "exit\n", 5);
 	(void)w;
 	exit(ret);
 }
@@ -69,8 +69,6 @@ static int	get_exit_code(char *nptr)
 
 	while (ft_isspace(*nptr))
 		++nptr;
-	if (len == 20 && ft_strcmp(nptr, "-9223372036854775808") == 0)
-		return (0);
 	i = 0;
 	if (nptr[i] == '-' || nptr[i] == '+')
 		++i;

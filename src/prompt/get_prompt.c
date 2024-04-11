@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:23:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/10 09:00:35 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 00:29:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,13 @@ static int	add_pwd(t_ms *ms, t_vector *prompt)
 	const char	*home = ms_getenv(&ms->env, "HOME");
 
 	if (pwd == NULL)
+	{
+		pwd = getcwd(NULL, 0);
+	}
+	else
+		pwd = ft_strdup(pwd);
+	// todo : handle
+	if (pwd == NULL)
 		return (0);
 	if (home)
 	{
@@ -130,7 +137,6 @@ static int	add_pwd(t_ms *ms, t_vector *prompt)
 		}
 		else
 		{
-			printf("o\n");
 			if (add_vector(prompt, pwd, ft_strlen(pwd)) == -1)
 				return (-1);
 		}

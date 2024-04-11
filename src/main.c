@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/09 02:40:50 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/11 22:27:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static int	run_shell(t_ms *ms)
 		if (parse_input(ms, &lexer, input) == -1)
 			return (-1);
 		clear_lexer(&lexer);
-		add_history(input);
 		free(input);
 		input = readline(PROMPT);
 	}

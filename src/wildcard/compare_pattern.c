@@ -6,14 +6,13 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 01:06:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 01:45:50 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "vector.h"
 #include "wildcard.h"
-#include <asm-generic/errno-base.h>
 #include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>

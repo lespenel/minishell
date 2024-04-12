@@ -6,12 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 03:40:03 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 04:04:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 08:33:02 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "env.h"
+#include "ft_io.h"
 #include "ft_string.h"
 #include <stdlib.h>
 
@@ -19,15 +19,18 @@ static char	*get_var_name(char *str);
 
 int	ms_export(t_env *env, char **args)
 {
-	char			*var_name;
-	char			*equal_ptr;
-	int				i;
+	char	*var_name;
+	int		i;
 
 	i = 1;
 	while (args[i])
 	{
-		equal_ptr = ft_strchr(args[i], '=');
-		if (equal_ptr == NULL)
+		if (is_valid_identifier(args[i]) == 0 || args[i][0] == '=')
+		{
+			ft_dprintf(2, EXPORT_ID, args[i]);
+			return (1);
+		}
+		if (ft_strchr(args[i], '=') == NULL)
 			return (0);
 		var_name = get_var_name(args[i]);
 		if (var_name == NULL)

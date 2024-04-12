@@ -6,11 +6,11 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 11:32:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/27 01:03:46 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 06:28:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-inline int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }

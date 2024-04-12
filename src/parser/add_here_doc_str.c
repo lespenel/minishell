@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 02:33:31 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 10:56:37 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 10:59:18 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	add_here_doc_str(t_ms *ms, t_vector *vect, char *s)
 		++i;
 	}
 	if (here_doc_expansion(ms, vect, tmp.array) == -1)
+	{
+		clear_vector(&tmp);
 		return (-1);
+	}
 	return (0);
 }
 

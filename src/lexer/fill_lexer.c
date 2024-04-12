@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/11 23:10:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:27:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,27 @@ int	fill_lexer(t_lexer *lexer, char *s)
 		if (ret == 0)
 		{
 			ret = refill_lexer(lexer, s);
-			if (ret == -1)
-				return (-1);
-			return (0);
+			return (ret);
 		}
 		else if (ret == -1)
 			return (-1);
 	}
 	add_history(s);
 	return (add_newline_tok(lexer));
+}
+
+static int	add_tokens(t_lexer *lexer, char *s, size_t i)
+{
+	int	ret;
+
+	ret = 0;
+	if (is_word(s + i))
+		ret = add_word_tok(lexer, s + i);
+	else if (is_operand(s[i]))
+		ret = add_operand_tok(lexer, s + i);
+	else
+		ret = 1;
+	return (ret);
 }
 
 static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
@@ -62,7 +74,7 @@ static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
 	input = readline("> ");
 	if (input == NULL)
 		return ((errno == 0) - 1);
-	if (s[len - 1] == '\\' && quote_error(s) == 1)
+	if (s[len - 1] == '\\' && quote_error(s) == 0)
 	{
 		s[len - 1] = '\0';
 		new_s = ft_strjoin(s, input);
@@ -79,20 +91,6 @@ static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
 	}
 	free(new_s);
 	return (len - 1);
-}
-
-static int	add_tokens(t_lexer *lexer, char *s, size_t i)
-{
-	int	ret;
-
-	ret = 0;
-	if (is_word(s + i))
-		ret = add_word_tok(lexer, s + i);
-	else if (is_operand(s[i]))
-		ret = add_operand_tok(lexer, s + i);
-	else
-		ret = 1;
-	return (ret);
 }
 
 static	int	quote_error(char *s)

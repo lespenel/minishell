@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 05:16:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 01:18:50 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 02:07:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_curpath(t_env *env, char *dir_operand)
 	else
 	{
 		wd = get_wd(env);
-		if (wd == NULL && errno == ENOMEM)
+		if (wd == NULL)
 			return (NULL);
 		if (wd[ft_strlen(wd) - 1] == '/')
 			curpath = ft_strjoin(wd, dir_operand);

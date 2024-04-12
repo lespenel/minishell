@@ -6,11 +6,11 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 11:21:44 by ccouble           #+#    #+#             */
-/*   Updated: 2024/02/27 01:03:16 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 06:28:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-inline int	ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }

@@ -6,12 +6,15 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:52:19 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/10 01:50:34 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 08:09:07 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
+
+# define EXPORT_ID "minishell: export: `%s': not a valid identifier\n"
+# define UNSET_ID "minishell: unset: `%s': not a valid identifier\n"
 
 # include "hashmap.h"
 
@@ -26,5 +29,6 @@ char	*ms_getnenv(t_env *env, char *key, size_t n);
 void	ms_unsetenv(t_env *env, const char *key);
 char	*ms_get_path(t_env *env, char *file);
 char	**get_envp(t_env *env);
+int		is_valid_identifier(char *str);
 
 #endif

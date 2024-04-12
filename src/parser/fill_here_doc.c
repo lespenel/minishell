@@ -6,52 +6,60 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/03 10:36:14 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 10:56:44 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include "ft_math.h"
 #include "ft_string.h"
 #include "parser.h"
+#include "vector.h"
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <readline/history.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <readline/readline.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static int	open_urandom(char *path);
-static int	fill_random_alpha(int fd, char *path);
-static int	get_tempfile(char *path);
-static int	write_data_to_vect(t_vector *vect, char *limiter);
+static int	write_to_vect(t_vector *vect, char *limit);
 
-int	fill_here_doc(t_vector *vector, char *path, char *limiter)
+int	fill_here_doc(t_ms *ms, t_vector *vector, char *path, t_lexer_tok *limit)
 {
+	t_vector	new;
 	int			fd;
 
-	if (write_data_to_vect(vector, limiter) == -1)
+	if (write_to_vect(vector, limit->content) == -1)
 		return (-1);
+	init_vector(&new, sizeof(char));
+	if (add_here_doc_str(ms, &new, vector->array) == -1)
+	{
+		clear_vector(&new);
+		return (-1);
+	}
 	fd = get_tempfile(path);
 	if (fd == -1)
 		return (-1);
-	if (write(fd, vector->array, vector->size) == -1)
+	if (write(fd, new.array, new.size) == -1)
 	{
+		clear_vector(&new);
 		close(fd);
 		return (-1);
 	}
+	clear_vector(&new);
 	close(fd);
 	return (0);
 }
 
-static int	write_data_to_vect(t_vector *vect, char *limiter)
+static int	write_to_vect(t_vector *vect, char *limit)
 {
-	char		*str;
-	char		*str_with_nl;
+	char	*str;
+	char	*str_with_nl;
 
 	str = readline("> ");
-	while (str && ft_strcmp(str, limiter))
+	while (str && ft_strcmp(str, limit))
 	{
 		str_with_nl = ft_strjoin(str, "\n");
 		free(str);
@@ -68,64 +76,4 @@ static int	write_data_to_vect(t_vector *vect, char *limiter)
 	if (str)
 		free(str);
 	return ((errno == 0) - 1);
-}
-
-static int	get_tempfile(char *path)
-{
-	int	fd;
-
-	ft_strlcpy(path, "/tmp/minishell-thd.000000", 26);
-	if (open_urandom(path) == -1)
-		return (-1);
-	errno = 0;
-	fd = open(path, O_CREAT | O_RDWR | O_EXCL, 0600);
-	if (fd == -1)
-		return (-1);
-	return (fd);
-}
-
-static int	open_urandom(char *path)
-{
-	int		fd;
-	int		i;
-
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	if (fill_random_alpha(fd, path) == -1)
-	{
-		close(fd);
-		return (-1);
-	}
-	i = 0;
-	while (access(path, F_OK) == 0 && i < 1000)
-	{
-		if (fill_random_alpha(fd, path) == -1)
-		{
-			close(fd);
-			return (-1);
-		}
-		++i;
-	}
-	close(fd);
-	if (i == 1000)
-		return (-1);
-	return (0);
-}
-
-static int	fill_random_alpha(int fd, char *path)
-{
-	int8_t		i;
-	char		buff[2];
-
-	buff[1] = '\0';
-	i = 0;
-	while (i < 6 && fd)
-	{
-		if (read(fd, buff, 1) == -1)
-			return (-1);
-		path[19 + i] = ALNUM[ft_abs(buff[0] % 62)];
-		++i;
-	}
-	return (0);
 }

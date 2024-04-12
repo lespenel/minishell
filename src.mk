@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    src.mk                                             :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/12 03:16:13 by ccouble           #+#    #+#              #
+#    Updated: 2024/04/12 10:22:41 by ccouble          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC = \
 	  builtins/exec_builtins.c \
 	  builtins/get_argc.c \
@@ -57,6 +69,7 @@ SRC = \
 	  expansions/parameters/treat_noquote.c \
 	  \
 	  expansions/quote_removal/quote_removal.c \
+	  expansions/quote_removal/remove_quotes.c \
 	  \
 	  expansions/tilde/tilde_expansion.c \
 	  \
@@ -75,10 +88,12 @@ SRC = \
 	  lexer/char_filter/is_quote.c \
 	  lexer/char_filter/to_next_quote.c \
 	  \
-	  parser/validate_input.c \
-	  parser/get_here_doc.c \
-	  parser/syntax_error.c \
+	  parser/add_here_doc_str.c \
 	  parser/fill_here_doc.c \
+	  parser/get_here_doc.c \
+	  parser/get_tempfile.c \
+	  parser/syntax_error.c \
+	  parser/validate_input.c \
 	  \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_execution.c \

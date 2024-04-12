@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:19:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 05:12:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/12 01:45:50 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "vector.h"
 #include "wildcard.h"
+#include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,7 +26,11 @@ static int	set_relative_path(t_wild *wildcard);
 int	compare_pattern(t_wild *wildcard, t_vector *filenames)
 {
 	if (get_starting_path(wildcard) == -1)
-		return (-1);
+	{
+		if (errno == ENOMEM)
+			return (-1);
+		return (0);
+	}
 	if (get_matching_dirname(wildcard, filenames, 0) == -1)
 		return (-1);
 	if (wildcard->nb_dir < wildcard->patterns.size)

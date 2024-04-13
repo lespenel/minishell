@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:23:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/13 16:04:19 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:25:20 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "minishell.h"
 #include "vector.h"
 #include "prompt.h"
-#include <asm-generic/errno-base.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

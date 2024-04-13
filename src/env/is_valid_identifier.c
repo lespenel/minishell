@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   is_valid_identifier.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 11:42:21 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 06:28:09 by lespenel         ###   ########.fr       */
+/*   Created: 2024/04/12 07:50:13 by lespenel          #+#    #+#             */
+/*   Updated: 2024/04/12 07:52:30 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_char.h"
 
-int	ft_isalnum(int c)
+int	is_valid_identifier(char *str)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+	if (*str == '\0')
+		return (0);
+	if (*str >= '0' && *str <= '9')
+		return (0);
+	while (*str)
+	{
+		if (ft_isalnum(*str) == 0 && *str != '=')
+			return (0);
+		++str;
+	}
+	return (1);
 }

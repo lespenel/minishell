@@ -81,6 +81,12 @@ SRC = \
 	  parser/syntax_error.c \
 	  parser/fill_here_doc.c \
 	  \
+	  prompt/add_color_to_prompt.c \
+	  prompt/add_pwd.c \
+	  prompt/get_command_result.c \
+	  prompt/get_git_branch.c \
+	  prompt/get_prompt.c \
+	  \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_execution.c \
 	  signals/setup_signals_interactive.c \

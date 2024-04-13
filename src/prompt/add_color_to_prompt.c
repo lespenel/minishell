@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_builtin.c                                      :+:      :+:    :+:   */
+/*   add_color_to_prompt.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/10 10:04:30 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/10 07:14:26 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/10 07:15:54 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "builtins.h"
-#include "expander.h"
-#include "lexer.h"
-#include "execution.h"
 #include "ft_string.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "vector.h"
 
-int	run_builtin(t_ms *ms, t_lexer_tok *token)
+int	add_color_to_prompt(t_vector *prompt, char *color)
 {
-	int	ret;
-	int	stds[2];
-
-	if (save_stds(stds) == -1)
+	if (add_vector(prompt, "\001", 1) == -1)
 		return (-1);
-	ret = perform_redirections(token);
-	if (ret == -1)
+	if (add_vector(prompt, color, ft_strlen(color)) == -1)
 		return (-1);
-	if (ret == 1)
-		return (1);
-	ret = exec_builtins(ms, token);
-	if (restore_stds(stds) == -1)
+	if (add_vector(prompt, "\002", 1) == -1)
 		return (-1);
-	return (ret);
+	return (0);
 }

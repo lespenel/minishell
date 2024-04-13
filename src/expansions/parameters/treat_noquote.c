@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 00:49:48 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 03:51:03 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:25:23 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ static ssize_t	nq_variable(t_ms *ms, t_vector *tab, t_vector *new, char *s)
 	char	*value;
 
 	i = 0;
+<<<<<<< HEAD
 	while (ft_strchr("\"'\\$", s[i]) == NULL)
+=======
+	while (ft_strchr("\"'\\$/", s[i]) == NULL)
+>>>>>>> master
 		++i;
 	value = get_parameter_str(ms, s, i);
 	if (value != NULL)

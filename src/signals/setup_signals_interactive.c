@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 03:05:08 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:22:20 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,27 @@
 
 static void	interactive_sigint(int sig);
 static void	interactive_sigquit(int sig);
+static int	event(void);
 
 void	setup_signals_interactive(void)
 {
+	rl_event_hook = event;
 	signal(SIGINT, interactive_sigint);
 	signal(SIGQUIT, interactive_sigquit);
 }
 
 static void	interactive_sigint(int sig)
 {
-	int	ret;
-
 	g_sig = sig;
-	ret = write(STDOUT_FILENO, "\n", 1);
-	(void)ret;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	rl_done = 1;
 }
 
 static void	interactive_sigquit(int sig)
 {
 	(void)sig;
+}
+
+static int	event(void)
+{
+	return (0);
 }

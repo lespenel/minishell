@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:23:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 00:29:25 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 06:35:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ char	*get_prompt(t_ms *ms)
 		clear_vector(&prompt);
 		return (NULL);
 	}
-	if (add_vector(&prompt, "> ", 2) == -1)
+	if (add_color_to_prompt(&prompt, BHWHT) == -1)
+		return (NULL);
+	if (add_vector(&prompt, " 8==================> ", 22) == -1)
 	{
 		clear_vector(&prompt);
 		return (NULL);
 	}
+	if (add_color_to_prompt(&prompt, RESET_COLOR) == -1)
+		return (NULL);
 	return (prompt.array);
 }
 
@@ -73,7 +77,11 @@ static int	add_exitcode(t_ms *ms, t_vector *prompt)
 		return (-1);
 	if (add_vector(prompt, " [", 2) == -1)
 		return (-1);
+	if (add_color_to_prompt(prompt, BHRED) == -1)
+		return (-1);
 	if (add_vector(prompt, ms->lastexitstr, ft_strlen(ms->lastexitstr)) == -1)
+		return (-1);
+	if (add_color_to_prompt(prompt, RED) == -1)
 		return (-1);
 	if (add_vector(prompt, "]", 1) == -1)
 		return (-1);
@@ -103,11 +111,19 @@ static int	add_git_branch(t_vector *prompt, char *branch)
 {
 	if (ft_strlen(branch) == 0)
 		return (0);
+	if (add_color_to_prompt(prompt, WHT) == -1)
+		return (-1);
 	if (add_vector(prompt, " (", 2) == -1)
+		return (-1);
+	if (add_color_to_prompt(prompt, WHT) == -1)
 		return (-1);
 	if (add_vector(prompt, branch, ft_strlen(branch) - 1) == -1)
 		return (-1);
+	if (add_color_to_prompt(prompt, WHT) == -1)
+		return (-1);
 	if (add_vector(prompt, ")", 1) == -1)
+		return (-1);
+	if (add_color_to_prompt(prompt, RESET_COLOR) == -1)
 		return (-1);
 	return (0);
 }
@@ -126,6 +142,8 @@ static int	add_pwd(t_ms *ms, t_vector *prompt)
 	// todo : handle
 	if (pwd == NULL)
 		return (0);
+	if (add_color_to_prompt(prompt, BHGRN) == -1)
+		return (-1);
 	if (home)
 	{
 		if (ft_strncmp(pwd, home, ft_strlen(home)) == 0)
@@ -146,5 +164,7 @@ static int	add_pwd(t_ms *ms, t_vector *prompt)
 		if (add_vector(prompt, pwd, ft_strlen(pwd)) == -1)
 			return (-1);
 	}
+	if (add_color_to_prompt(prompt, RESET_COLOR) == -1)
+		return (-1);
 	return (0);
 }

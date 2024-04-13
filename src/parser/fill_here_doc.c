@@ -6,16 +6,18 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 10:56:44 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 18:00:35 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "ft_string.h"
 #include "parser.h"
+#include "signals.h"
 #include "vector.h"
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <readline/history.h>
 #include <stdio.h>
@@ -25,6 +27,7 @@
 #include <unistd.h>
 
 static int	write_to_vect(t_vector *vect, char *limit);
+static char	*here_doc_rl(void);
 
 int	fill_here_doc(t_ms *ms, t_vector *vector, char *path, t_lexer_tok *limit)
 {
@@ -33,6 +36,8 @@ int	fill_here_doc(t_ms *ms, t_vector *vector, char *path, t_lexer_tok *limit)
 
 	if (write_to_vect(vector, limit->content) == -1)
 		return (-1);
+	if (g_sig == SIGINT)
+		return (0);
 	init_vector(&new, sizeof(char));
 	if (add_here_doc_str(ms, &new, vector->array) == -1)
 	{
@@ -55,14 +60,16 @@ int	fill_here_doc(t_ms *ms, t_vector *vector, char *path, t_lexer_tok *limit)
 
 static int	write_to_vect(t_vector *vect, char *limit)
 {
-	char	*str;
+	char	*input;
 	char	*str_with_nl;
 
-	str = readline("> ");
-	while (str && ft_strcmp(str, limit))
+	input = here_doc_rl();
+	while (input && ft_strcmp(input, limit))
 	{
-		str_with_nl = ft_strjoin(str, "\n");
-		free(str);
+		if (g_sig == SIGINT)
+			return (0);
+		str_with_nl = ft_strjoin(input, "\n");
+		free(input);
 		if (str_with_nl == NULL)
 			return (-1);
 		if (add_vector(vect, str_with_nl, ft_strlen(str_with_nl)) == -1)
@@ -71,9 +78,27 @@ static int	write_to_vect(t_vector *vect, char *limit)
 			return (-1);
 		}
 		free(str_with_nl);
-		str = readline("> ");
+		input = here_doc_rl();
 	}
-	if (str)
-		free(str);
+	if (input)
+		free(input);
 	return ((errno == 0) - 1);
+}
+
+static char	*here_doc_rl(void)
+{
+	char	*input;
+
+	input = NULL;
+	while (input == NULL)
+	{
+		input = readline("> ");
+		if (g_sig == SIGINT)
+		{
+			if (input)
+				free(input);
+			return (NULL);
+		}
+	}
+	return (input);
 }

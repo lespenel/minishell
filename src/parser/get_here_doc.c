@@ -6,15 +6,17 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 09:51:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 10:18:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:56:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "lexer.h"
 #include "parser.h"
+#include "signals.h"
 #include "vector.h"
 #include "expander.h"
+#include <signal.h>
 #include <stdlib.h>
 
 static int	handle_here_doc(t_ms *ms, t_lexer_tok *t1, t_lexer_tok *t2);
@@ -32,6 +34,8 @@ int	get_here_doc(t_ms *ms, t_lexer *lexer)
 		{
 			if (handle_here_doc(ms, tok, at_vector(lexer, i + 1)) == -1)
 				return (-1);
+			if (g_sig == SIGINT)
+				return (0);
 			remove_vector(lexer, i + 1);
 		}
 		++i;
@@ -54,6 +58,8 @@ static int	handle_here_doc(t_ms *ms, t_lexer_tok *t1, t_lexer_tok *t2)
 		return (-1);
 	}
 	clear_vector(&vector);
+	if (g_sig == SIGINT)
+		return (0);
 	t1->content = ft_strdup(path);
 	if (t1->content == NULL)
 		return (-1);

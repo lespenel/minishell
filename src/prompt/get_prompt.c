@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:23:20 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/13 16:25:20 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:11:47 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colors.h"
+#include "env.h"
 #include "ft_string.h"
 #include "minishell.h"
 #include "vector.h"
@@ -20,14 +21,14 @@
 #include <unistd.h>
 
 static int	fill_prompt(t_ms *ms, t_vector *prompt);
-static int	do_simple_prompt(void);
+static int	do_simple_prompt(t_ms *ms);
 static int	add_exitcode(t_ms *ms, t_vector *prompt);
 
 char	*get_prompt(t_ms *ms)
 {
 	t_vector	prompt;
 
-	if (do_simple_prompt())
+	if (do_simple_prompt(ms))
 		return (ft_strdup(PROMPT));
 	init_vector(&prompt, sizeof(char));
 	if (fill_prompt(ms, &prompt) == -1)
@@ -58,13 +59,13 @@ static int	fill_prompt(t_ms *ms, t_vector *prompt)
 	return (0);
 }
 
-static int	do_simple_prompt(void)
+static int	do_simple_prompt(t_ms *ms)
 {
 	if (isatty(STDIN_FILENO) == 0
 		|| isatty(STDOUT_FILENO) == 0
 		|| isatty(STDERR_FILENO) == 0)
 		return (1);
-	return (0);
+	return (ms_getenv(&ms->env, "TERM") == NULL);
 }
 
 static int	add_exitcode(t_ms *ms, t_vector *prompt)

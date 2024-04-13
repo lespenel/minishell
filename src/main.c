@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/11 22:27:54 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:45:33 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "signals.h"
 #include "util.h"
 #include "ft_mem.h"
+#include "prompt.h"
+#include "ft_io.h"
 #include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -28,6 +30,7 @@ int	g_sig = 0;
 
 static int	init_minishell(t_ms *ms, char *envp[]);
 static int	run_shell(t_ms *ms);
+static char	*get_line(t_ms *ms);
 
 int	main(int argc, char **argv, char *envp[])
 {
@@ -44,6 +47,7 @@ int	main(int argc, char **argv, char *envp[])
 		return (-1);
 	rl_clear_history();
 	destroy_minishell(&ms);
+	ft_dprintf(2, "exit\n");
 	return (ms.lastexit);
 }
 
@@ -65,10 +69,10 @@ static int	init_minishell(t_ms *ms, char *envp[])
 
 static int	run_shell(t_ms *ms)
 {
-	char		*input;
-	t_lexer		lexer;
+	char	*input;
+	t_lexer	lexer;
 
-	input = readline(PROMPT);
+	input = get_line(ms);
 	while (input)
 	{
 		if (g_sig == SIGINT)
@@ -81,7 +85,29 @@ static int	run_shell(t_ms *ms)
 			return (-1);
 		clear_lexer(&lexer);
 		free(input);
-		input = readline(PROMPT);
+		input = get_line(ms);
 	}
 	return (0);
+}
+
+static char	*get_line(t_ms *ms)
+{
+	char	*prompt;
+	char	*input;
+
+	prompt = get_prompt(ms);
+	if (prompt == NULL)
+		return (NULL);
+	input = readline(prompt);
+	free(prompt);
+	if (g_sig == SIGINT)
+	{
+		if (set_exitcode_str(ms, 128 + SIGINT) == -1)
+		{
+			free(input);
+			return (NULL);
+		}
+		g_sig = 0;
+	}
+	return (input);
 }

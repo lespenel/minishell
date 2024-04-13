@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 09:27:37 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/13 05:19:23 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "vector.h"
 #include "util.h"
 #include "ft_io.h"
+#include "parser.h"
 #include <errno.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -24,7 +25,6 @@
 
 static int		add_tokens(t_lexer *lexer, char *s, size_t i);
 static ssize_t	refill_lexer(t_lexer *lexer, char *s);
-static int		quote_error(char *s);
 
 int	fill_lexer(t_lexer *lexer, char *s)
 {
@@ -73,42 +73,29 @@ static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
 	init_lexer(lexer);
 	input = readline("> ");
 	if (input == NULL)
-		return ((errno == 0) - 1);
+	{
+		ft_dprintf(2, "");
+	}
 	if (s[len - 1] == '\\' && quote_error(s) == 0)
 	{
+		printf("lolz\n");
 		s[len - 1] = '\0';
 		new_s = ft_strjoin(s, input);
 	}
 	else
+	{
+		printf("charlie\n");
 		new_s = ft_strjoin_three(s, "\n", input);
+	}
 	free(input);
 	if (new_s == NULL)
 		return (-1);
+	printf("new s = \t %s\n", new_s);
 	if (fill_lexer(lexer, new_s) == -1)
 	{
 		free(new_s);
 		return (-1);
 	}
 	free(new_s);
-	return (len - 1);
-}
-
-static	int	quote_error(char *s)
-{
-	size_t	ret;
-
-	ret = 0;
-	while (*s)
-	{
-		if (is_quote(*s))
-		{
-			ret = to_next_quote(s);
-			if (ret == 0)
-				return (1);
-			s += ret;
-		}
-		else
-			++s;
-	}
 	return (0);
 }

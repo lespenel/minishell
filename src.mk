@@ -81,6 +81,7 @@ SRC = \
 	  parser/get_here_doc.c \
 	  parser/syntax_error.c \
 	  parser/fill_here_doc.c \
+	  parser/quote_error.c \
 	  \
 	  signals/setup_signals_child.c \
 	  signals/setup_signals_execution.c \

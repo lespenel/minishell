@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:50:12 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/10 03:46:57 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:15:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ ssize_t	expand_substring(t_ms *ms, t_vector *news, char *s, t_vector *tab)
 
 	if (*s == '\'')
 	{
-		i = next_char(s, 0);
+		i = 1;
 		while (s[i] != '\'')
-			i = next_char(s, i);
+			++i;
 		++i;
 		if (add_vector(news, s, i) == -1)
 			return (-1);

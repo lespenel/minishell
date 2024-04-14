@@ -6,21 +6,20 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 02:12:59 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/03 03:17:09 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:57:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
 #include "vector.h"
-#include "ft_io.h"
 
 static int	syntax_checker(t_lexer *lexer, int index, int brace);
 static int	is_problem(t_lexer_tok *tok1, t_lexer_tok *tok2);
 static int	is_redirect_problem(t_lexer_tok *tok1, t_lexer_tok *tok2);
 static int	is_logical(t_lexer_tok *tok1);
 
-int	validate_input(t_lexer *lexer)
+int	validate_input(t_ms *ms, t_lexer *lexer)
 {
 	t_lexer_tok	*token;
 	int			ret;
@@ -33,7 +32,7 @@ int	validate_input(t_lexer *lexer)
 	ret = syntax_checker(lexer, 0, 0);
 	if (ret == -1)
 		return (-1);
-	if (ret == 0 && get_here_doc(lexer) == -1)
+	if (ret == 0 && get_here_doc(ms, lexer) == -1)
 		return (-1);
 	return (ret);
 }

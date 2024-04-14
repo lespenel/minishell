@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:20:56 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/14 19:38:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 22:36:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_command_result(t_ms *ms, char **argv)
 		return (NULL);
 	}
 	return (result);
-	
 }
 
 static char	*run_and_get_result(t_ms *ms, char **argv)

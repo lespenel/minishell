@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/13 16:45:33 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 00:21:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ static int	run_shell(t_ms *ms)
 	input = get_line(ms);
 	while (input)
 	{
+		if (parse_input(ms, &lexer, input) == -1)
+			return (-1);
 		if (g_sig == SIGINT)
 		{
 			if (set_exitcode_str(ms, 128 + SIGINT) == -1)
 				return (-1);
 			g_sig = 0;
 		}
-		if (parse_input(ms, &lexer, input) == -1)
-			return (-1);
 		clear_lexer(&lexer);
 		free(input);
 		input = get_line(ms);
@@ -95,19 +95,24 @@ static char	*get_line(t_ms *ms)
 	char	*prompt;
 	char	*input;
 
-	prompt = get_prompt(ms);
-	if (prompt == NULL)
-		return (NULL);
-	input = readline(prompt);
-	free(prompt);
-	if (g_sig == SIGINT)
+	input = NULL;
+	while (input == NULL)
 	{
-		if (set_exitcode_str(ms, 128 + SIGINT) == -1)
-		{
-			free(input);
+		prompt = get_prompt(ms);
+		if (prompt == NULL)
 			return (NULL);
+		input = readline(prompt);
+		free(prompt);
+		if (g_sig == SIGINT)
+		{
+			if (set_exitcode_str(ms, 128 + SIGINT) == -1)
+				return (NULL);
+			g_sig = 0;
+			free(input);
+			input = NULL;
 		}
-		g_sig = 0;
+		else if (input == NULL)
+			return (NULL);
 	}
 	return (input);
 }

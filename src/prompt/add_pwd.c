@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 12:04:00 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/13 16:00:16 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:11:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ int	add_pwd(t_ms *ms, t_vector *prompt)
 static int	add_pwd_content(t_vector *prompt, char *pwd, char *home)
 {
 	const size_t	pwd_len = ft_strlen(pwd);
-	const size_t	home_len = ft_strlen(home);
+	size_t			home_len;
 
 	if (add_color_to_prompt(prompt, BHGRN) == -1)
 		return (-1);
 	if (home)
 	{
+		home_len = ft_strlen(home);
 		if (ft_strncmp(pwd, home, home_len) == 0)
 		{
 			if (add_vector(prompt, "~", 1) == -1)

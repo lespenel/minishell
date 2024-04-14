@@ -58,30 +58,34 @@ SRC = \
 	  expansions/parameters/treat_noquote.c \
 	  \
 	  expansions/quote_removal/quote_removal.c \
+	  expansions/quote_removal/remove_quotes.c \
 	  \
 	  expansions/tilde/tilde_expansion.c \
 	  \
 	  expansions/perform_expansions.c \
 	  \
-	  lexer/init_lexer.c \
-	  lexer/fill_lexer.c \
-	  lexer/print_lexer.c \
+	  lexer/add_newline_tok.c \
+	  lexer/add_operand_tok.c \
+	  lexer/add_word_tok.c \
+	  lexer/char_filter/is_blank.c \
+	  lexer/char_filter/is_operand.c \
+	  lexer/char_filter/to_next_quote.c \
+	  lexer/char_filter/is_quote.c \
+	  lexer/char_filter/is_word.c \
 	  lexer/clear_lexer.c \
 	  lexer/clear_lexer_except.c \
 	  lexer/clear_token.c \
-	  lexer/add_newline_tok.c \
-	  lexer/add_word_tok.c \
-	  lexer/add_operand_tok.c \
-	  lexer/char_filter/is_blank.c \
-	  lexer/char_filter/is_operand.c \
-	  lexer/char_filter/is_word.c \
-	  lexer/char_filter/is_quote.c \
-	  lexer/char_filter/to_next_quote.c \
+	  lexer/fill_lexer.c \
+	  lexer/init_lexer.c \
+	  lexer/print_lexer.c \
+	  lexer/refill_lexer.c \
 	  \
-	  parser/validate_input.c \
-	  parser/get_here_doc.c \
-	  parser/syntax_error.c \
+	  parser/add_here_doc_str.c \
 	  parser/fill_here_doc.c \
+	  parser/get_here_doc.c \
+	  parser/get_tempfile.c \
+	  parser/syntax_error.c \
+	  parser/validate_input.c \
 	  \
 	  prompt/add_color_to_prompt.c \
 	  prompt/add_pwd.c \
@@ -99,11 +103,11 @@ SRC = \
 	  \
 	  util/clear_string_vector.c \
 	  util/dup_and_close.c \
+	  util/ft_split_vector.c \
 	  util/get_ifs.c \
 	  util/ms_fork.c \
 	  util/ms_strchr.c \
 	  util/next_char.c \
-	  util/ft_split_vector.c \
 	  util/set_exitcode_str.c \
 	  \
 	  wildcard/add_backslash.c \

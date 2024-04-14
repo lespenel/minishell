@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:06:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/06 23:09:41 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/12 05:39:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 char	*get_parameter_str(t_ms *ms, char *s, size_t n)
 {
-	if (ft_strncmp(s, "?", n) == 0)
+	if (n == 1 && ft_strncmp(s, "?", n) == 0)
 		return (ms->lastexitstr);
 	return (ms_getnenv(&ms->env, s, n));
 }

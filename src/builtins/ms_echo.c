@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:38:12 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:31:38 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "env.h"
 #include "ft_string.h"
 #include <unistd.h>
+
+static int	echo_cmp(char *str);
 
 int	ms_echo(t_env *env, char **args)
 {
@@ -24,7 +26,7 @@ int	ms_echo(t_env *env, char **args)
 
 	(void)env;
 	no_nl = 0;
-	if (argc >= 2 && ft_strcmp(args[1], "-n") == 0)
+	if (argc >= 2 && echo_cmp(args[1]))
 		no_nl = 1;
 	if (argc == 2 && no_nl)
 		return (0);
@@ -41,4 +43,20 @@ int	ms_echo(t_env *env, char **args)
 	if (no_nl == 0 && write(1, "\n", 1) != 1)
 		return (1);
 	return (0);
+}
+
+static int	echo_cmp(char *str)
+{
+	size_t	i;
+
+	if (str[0] != '-')
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		++i;
+	}
+	return (i >= 2);
 }

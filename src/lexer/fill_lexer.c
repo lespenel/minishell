@@ -6,17 +6,19 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/13 05:19:23 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 18:24:48 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "lexer.h"
+#include "signals.h"
 #include "vector.h"
 #include "util.h"
 #include "ft_io.h"
 #include "parser.h"
 #include <errno.h>
+#include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -25,6 +27,8 @@
 
 static int		add_tokens(t_lexer *lexer, char *s, size_t i);
 static ssize_t	refill_lexer(t_lexer *lexer, char *s);
+static char		*get_new_s(char *input, char *s, ssize_t len);
+static char		*readline_sig(void);
 
 int	fill_lexer(t_lexer *lexer, char *s)
 {
@@ -33,14 +37,16 @@ int	fill_lexer(t_lexer *lexer, char *s)
 
 	i = 0;
 	ret = 0;
+	errno = 0;
 	while (s[i])
 	{
 		ret = add_tokens(lexer, s, i);
 		i += ret;
 		if (ret == 0)
 		{
-			ret = refill_lexer(lexer, s);
-			return (ret);
+			clear_lexer(lexer);
+			init_lexer(lexer);
+			return (refill_lexer(lexer, s));
 		}
 		else if (ret == -1)
 			return (-1);
@@ -65,32 +71,24 @@ static int	add_tokens(t_lexer *lexer, char *s, size_t i)
 
 static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
 {
-	const	ssize_t	len = ft_strlen(s);
-	char	*input;
-	char	*new_s;
+	const ssize_t	len = ft_strlen(s);
+	char			*input;
+	char			*new_s;
 
-	clear_lexer(lexer);
-	init_lexer(lexer);
-	input = readline("> ");
+	input = readline_sig();
+	if (errno)
+		return (-1);
+	if (g_sig == SIGINT)
+		return (0);
 	if (input == NULL)
 	{
-		ft_dprintf(2, "");
+		ft_dprintf(2, UNEXPECTED_EOF);
+		return (1);
 	}
-	if (s[len - 1] == '\\' && quote_error(s) == 0)
-	{
-		printf("lolz\n");
-		s[len - 1] = '\0';
-		new_s = ft_strjoin(s, input);
-	}
-	else
-	{
-		printf("charlie\n");
-		new_s = ft_strjoin_three(s, "\n", input);
-	}
+	new_s = get_new_s(input, s, len);
 	free(input);
 	if (new_s == NULL)
 		return (-1);
-	printf("new s = \t %s\n", new_s);
 	if (fill_lexer(lexer, new_s) == -1)
 	{
 		free(new_s);
@@ -98,4 +96,32 @@ static	ssize_t	refill_lexer(t_lexer *lexer, char *s)
 	}
 	free(new_s);
 	return (0);
+}
+
+static char	*readline_sig(void)
+{
+	char	*input;
+
+	input = readline("> ");
+	if (g_sig == SIGINT)
+	{
+		if (input)
+			free(input);
+		return (NULL);
+	}
+	return (input);
+}
+
+static	char	*get_new_s(char *input, char *s, ssize_t len)
+{
+	char	*new_s;
+
+	if (s[len - 1] == '\\')
+	{
+		s[len - 1] = '\0';
+		new_s = ft_strjoin(s, input);
+	}
+	else
+		new_s = ft_strjoin_three(s, "\n", input);
+	return (new_s);
 }

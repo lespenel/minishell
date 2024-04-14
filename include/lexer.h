@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 08:24:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 16:52:57 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/types.h>
 
 # define SYNTAX_ERR "minishell: syntax error near unexpected token `%s'\n"
+# define UNEXPECTED_EOF "minishell: syntax error: unexpected end of file\n"
 
 typedef enum e_lex_type
 {

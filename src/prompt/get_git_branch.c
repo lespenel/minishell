@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 12:22:41 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/14 17:51:27 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:35:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	get_git_branch(t_ms *ms, t_vector *prompt)
 	static char	*argv[] = {"git", "branch", "--show-current", NULL};
 	char		*result;
 
-	if (restore_termios(ms) == -1)
-		return (-1);
 	result = get_command_result(ms, argv);
 	if (result == NULL)
 		return (-1);
@@ -34,8 +32,6 @@ int	get_git_branch(t_ms *ms, t_vector *prompt)
 		return (-1);
 	}
 	free(result);
-	if (setup_termios(ms) == -1)
-		return (-1);
 	return (0);
 }
 

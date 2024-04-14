@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:20:56 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/14 17:18:45 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:38:07 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static char	*run_and_get_result(t_ms *ms, char **argv);
 static int	get_child_result(t_ms *ms, char **argv, int pfd[2]);
 static char	*read_result(pid_t pid, int pfd[2]);
 static int	fill_result_vector(t_vector *vector, int pfd[2]);
 
 char	*get_command_result(t_ms *ms, char **argv)
+{
+	char	*result;
+
+	if (restore_termios(ms) == -1)
+		return (NULL);
+	result = run_and_get_result(ms, argv);
+	if (result == NULL)
+		return (NULL);
+	if (setup_termios(ms) == -1)
+	{
+		free(result);
+		return (NULL);
+	}
+	return (result);
+	
+}
+
+static char	*run_and_get_result(t_ms *ms, char **argv)
 {
 	int			pfd[2];
 	pid_t		pid;

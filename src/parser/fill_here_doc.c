@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/14 13:49:56 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 19:01:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,31 @@
 
 static int	write_to_vect(t_vector *vect, char *limit);
 static char	*here_doc_rl(void);
+static int	write_vector_to_file(char *path, t_vector *vector);
 
 int	fill_here_doc(t_ms *ms, t_vector *vector, char *path, t_lexer_tok *limit)
 {
 	t_vector	new;
-	int			fd;
+	int			ret;
 
 	if (write_to_vect(vector, limit->content) == -1)
 		return (-1);
 	if (g_sig == SIGINT)
 		return (0);
-	init_vector(&new, sizeof(char));
-	if (add_here_doc_str(ms, &new, vector->array) == -1)
+	if (limit->type == 0)
 	{
+		init_vector(&new, sizeof(char));
+		if (add_here_doc_str(ms, &new, vector->array) == -1)
+		{
+			clear_vector(&new);
+			return (-1);
+		}
+		ret = write_vector_to_file(path, &new);
 		clear_vector(&new);
-		return (-1);
 	}
-	fd = get_tempfile(path);
-	if (fd == -1)
-		return (-1);
-	if (write(fd, new.array, new.size) == -1)
-	{
-		clear_vector(&new);
-		close(fd);
-		return (-1);
-	}
-	clear_vector(&new);
-	close(fd);
-	return (0);
+	else
+		ret = write_vector_to_file(path, vector);
+	return (ret);
 }
 
 static int	write_to_vect(t_vector *vect, char *limit)
@@ -100,4 +97,20 @@ static char	*here_doc_rl(void)
 		return (NULL);
 	}
 	return (input);
+}
+
+static int	write_vector_to_file(char *path, t_vector *vector)
+{
+	int	fd;
+
+	fd = get_tempfile(path);
+	if (fd == -1)
+		return (-1);
+	if (write(fd, vector->array, vector->size) == -1)
+	{
+		close(fd);
+		return (-1);
+	}
+	close(fd);
+	return (0);
 }

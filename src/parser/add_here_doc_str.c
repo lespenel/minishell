@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 02:33:31 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 10:59:18 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:50:20 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "vector.h"
 #include <stdio.h>
 
-static ssize_t	here_doc_expansion(t_ms *ms, t_vector *new, char *s);
+static int		here_doc_expansion(t_ms *ms, t_vector *new, char *s);
 static ssize_t	add_env_variable(t_ms *ms, t_vector *new, char *s, size_t i);
 
 int	add_here_doc_str(t_ms *ms, t_vector *vect, char *s)
@@ -24,14 +24,14 @@ int	add_here_doc_str(t_ms *ms, t_vector *vect, char *s)
 	size_t		i;
 	t_vector	tmp;
 
+	if (s == NULL)
+		return (0);
 	i = 0;
 	init_vector(&tmp, sizeof(char));
 	while (s[i])
 	{
 		if (s[i] == '\\' && s[i + 1] == '\n')
-		{
 			++i;
-		}
 		else if (add_vector(&tmp, s + i, 1) == -1)
 		{
 			clear_vector(&tmp);
@@ -44,10 +44,11 @@ int	add_here_doc_str(t_ms *ms, t_vector *vect, char *s)
 		clear_vector(&tmp);
 		return (-1);
 	}
+	clear_vector(&tmp);
 	return (0);
 }
 
-static ssize_t	here_doc_expansion(t_ms *ms, t_vector *new, char *s)
+static int	here_doc_expansion(t_ms *ms, t_vector *new, char *s)
 {
 	ssize_t	i;
 

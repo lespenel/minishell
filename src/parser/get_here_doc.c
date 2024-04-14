@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 09:51:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/13 17:56:28 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:50:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static int	handle_here_doc(t_ms *ms, t_lexer_tok *t1, t_lexer_tok *t2)
 	char		path[25];
 	t_vector	vector;
 
-	init_vector(&vector, sizeof(char));
 	t2->type = ft_strchr(t2->content, '\'') || ft_strchr(t2->content, '"');
 	if (remove_quotes(&t2->content) == -1)
 		return (-1);
+	init_vector(&vector, sizeof(char));
 	if (fill_here_doc(ms, &vector, path, t2) == -1)
 	{
 		clear_vector(&vector);

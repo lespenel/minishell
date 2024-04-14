@@ -6,11 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:57:58 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/13 18:00:35 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:49:56 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "ft_io.h"
 #include "ft_string.h"
 #include "parser.h"
 #include "signals.h"
@@ -82,6 +83,8 @@ static int	write_to_vect(t_vector *vect, char *limit)
 	}
 	if (input)
 		free(input);
+	if (g_sig == 0 && input == NULL && errno == 0)
+		ft_dprintf(2, HERE_DOC_EOF, limit);
 	return ((errno == 0) - 1);
 }
 
@@ -89,16 +92,12 @@ static char	*here_doc_rl(void)
 {
 	char	*input;
 
-	input = NULL;
-	while (input == NULL)
+	input = readline("> ");
+	if (g_sig == SIGINT)
 	{
-		input = readline("> ");
-		if (g_sig == SIGINT)
-		{
-			if (input)
-				free(input);
-			return (NULL);
-		}
+		if (input)
+			free(input);
+		return (NULL);
 	}
 	return (input);
 }

@@ -6,24 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 01:05:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 01:20:50 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
 #include "lexer.h"
-#include "signals.h"
-#include "vector.h"
-#include "util.h"
-#include "ft_io.h"
-#include "parser.h"
 #include <errno.h>
-#include <signal.h>
 #include <stdio.h>
-#include <readline/readline.h>
 #include <readline/history.h>
-#include <stddef.h>
-#include <stdlib.h>
 
 static int	add_tokens(t_lexer *lexer, char *s, size_t i);
 

@@ -82,7 +82,6 @@ SRC = \
 	  parser/get_here_doc.c \
 	  parser/syntax_error.c \
 	  parser/fill_here_doc.c \
-	  parser/quote_error.c \
 	  \
 	  prompt/add_color_to_prompt.c \
 	  prompt/add_pwd.c \

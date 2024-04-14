@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/* ************************dd************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fill_lexer.c                                       :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/14 18:24:48 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 23:32:19 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,51 @@ static char	*readline_sig(void)
 	return (input);
 }
 
+static int remove_nl(t_vector *new_s)
+{
+	size_t	i;
+	char	*s;
+	char	quote;
+
+	i = 0;
+	s = new_s->array;
+	quote = 0;
+	while (s[i])
+	{
+		if (is_quote(s[i]) && quote == 0)
+			quote = s[i];
+		else if (s[i] == quote)
+			quote = 0;
+		if (s[i] == '\\' && quote == '\'' && s[i + 1])
+			++i;
+		else if (s[i] == '\\' && s[i + 1] && s[i + 1] != '\n')
+			++i;
+		else if (ft_strncmp(s + i, "\\\n", 2) == 0)
+		{
+			printf("sexe\n");
+			remove_vector(new_s, i);
+			remove_vector(new_s, i);
+			--i;
+		}
+		++i;
+	}
+	return (0);
+}
+
 static	char	*get_new_s(char *input, char *s, ssize_t len)
 {
-	char	*new_s;
+	t_vector	new_s;
 
-	if (s[len - 1] == '\\')
+	init_vector(&new_s, sizeof(char));
+	if (add_vector(&new_s, s, len) == -1
+		|| add_vector(&new_s, "\n", 1) == -1
+		|| add_vector(&new_s, input, ft_strlen(input)) == -1)
+	
 	{
-		s[len - 1] = '\0';
-		new_s = ft_strjoin(s, input);
+		clear_vector(&new_s);
+		printf("error add\n");
+		return (NULL);
 	}
-	else
-		new_s = ft_strjoin_three(s, "\n", input);
-	return (new_s);
+	remove_nl(&new_s);
+	return (new_s.array);
 }

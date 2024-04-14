@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 05:12:32 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 04:13:25 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 17:52:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
 

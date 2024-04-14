@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:44:01 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/14 13:34:26 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 17:02:08 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 
 # define ALNUM "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-# define HERE_DOC_EOF "minishell: warning: here-document at line 1\
+# define HERE_DOC_EOF "minishell: warning: here-document \
 delimited by end-of-file (wanted `%s')\n"
 
 # include "vector.h"

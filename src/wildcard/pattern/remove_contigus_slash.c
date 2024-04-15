@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 03:25:09 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 09:16:11 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 09:48:03 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ static int	look_for_split_words(t_lexer *lexer)
 		{
 			tmp = ft_strjoin(curr->content, curr2->content);
 			free(curr->content);
-			free(curr2->content);
+			curr->content = tmp;
 			if (tmp == NULL)
 				return (-1);
-			curr->content = tmp;
+			free(curr2->content);
 			remove_vector(lexer, i + 1);
 			--i;
 		}

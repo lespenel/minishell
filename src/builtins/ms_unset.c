@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 04:10:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 08:34:05 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 23:17:52 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "env.h"
 #include "builtins.h"
 
-int	ms_unset(t_env *env, char **args)
+int	ms_unset(t_ms *ms, char **args)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	ms_unset(t_env *env, char **args)
 			ft_dprintf(2, UNSET_ID, args[i]);
 			return (1);
 		}
-		ms_unsetenv(env, args[i]);
+		ms_unsetenv(&ms->env, args[i]);
 		++i;
 	}
 	return (0);

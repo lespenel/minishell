@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 04:57:11 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 05:04:22 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 23:55:25 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "vector.h"
 #include <stdlib.h>
 
-int	ft_split_vector(t_vector *dest, char *s, char delim)
+int	ft_split_vector(t_vector *dest, char *s, char *delim)
 {
 	size_t	i;
 	size_t	j;
@@ -24,7 +24,7 @@ int	ft_split_vector(t_vector *dest, char *s, char delim)
 	while (s[i])
 	{
 		j = 0;
-		while (s[i + j] && s[i + j] != delim)
+		while (s[i + j] && ft_strchr(delim, s[i + j]) == NULL)
 			++j;
 		if (j != 0)
 		{

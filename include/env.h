@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 03:52:19 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 08:09:07 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 04:48:01 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define EXPORT_ID "minishell: export: `%s': not a valid identifier\n"
 # define UNSET_ID "minishell: unset: `%s': not a valid identifier\n"
+# define SHLVL_TOO_HIGH "minishell: warning: shell level (%s) too high,\
+ resetting to 1\n"
 
 # include "hashmap.h"
 

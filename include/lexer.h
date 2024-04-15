@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 01:07:21 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 03:24:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_redirection
 	t_lex_type	type;
 	char		*file;
 	t_vector	newtab;
-	int			fd;
 }	t_redirection;
 
 typedef struct s_lexer_tok

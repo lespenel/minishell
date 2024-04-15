@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_minishell.c                                :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 13:52:42 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/14 23:10:45 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/15 02:39:38 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/15 02:40:02 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_mem.h"
+#include "env.h"
 #include "minishell.h"
-#include <stdlib.h>
+#include "signals.h"
+#include "util.h"
 
-void	destroy_minishell(t_ms *ms)
+int	init_minishell(t_ms *ms, char *envp[])
 {
-	restore_termios(ms);
-	destroy_env(&ms->env);
-	destroy_env(&ms->aliases);
-	if (ms->lastexitstr)
-	{
-		free(ms->lastexitstr);
-		ms->lastexitstr = NULL;
-	}
+	ft_memset(ms, 0, sizeof(t_ms));
+	if (setup_termios(ms) == -1)
+		return (-1);
+	if (init_env(&ms->env, envp) == -1)
+		return (-1);
+	init_hashmap(&ms->aliases);
+	setup_signals_interactive();
+	ms->signaled = 0;
+	if (set_exitcode_str(ms, 0) == -1)
+		return (-1);
+	(void)ms;
+	(void)envp;
+	return (0);
 }

@@ -6,14 +6,16 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:33:17 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:18:40 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "lexer.h"
 #include "minishell.h"
+#include "signals.h"
 #include "vector.h"
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,6 +34,8 @@ int	perform_expansions(t_ms *ms, t_lexer_tok *token)
 		return (-1);
 	if (expand_wildcards(&ms->env, token) == -1)
 		return (-1);
+	if (g_sig == SIGINT)
+		return (0);
 	if (check_redirections_wildcard(token) == -1)
 		return (-1);
 	if (quote_removal(token) == -1)

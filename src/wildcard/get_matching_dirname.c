@@ -6,14 +6,16 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:23:45 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 06:47:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 01:43:08 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "signals.h"
 #include "util.h"
 #include "vector.h"
 #include "wildcard.h"
+#include <signal.h>
 
 static int	for_each_dir(t_wild *wild, t_pattern *pattern, t_vector *filenames);
 
@@ -28,6 +30,8 @@ int	get_matching_dirname(t_wild *wild, t_vector *filenames, size_t nb_dir)
 	{
 		if (get_dir_ls(wild, &pattern->pattern, filenames, NULL) == -1)
 			return (-1);
+		if (g_sig == SIGINT)
+			return (0);
 	}
 	else if (for_each_dir(wild, pattern, filenames) == -1)
 		return (-1);

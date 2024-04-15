@@ -132,6 +132,8 @@ SRC = \
 	  wildcard/pattern/create_glob_pattern.c \
 	  wildcard/pattern/create_pattern.c \
 	  wildcard/pattern/fill_pattern.c \
+	  wildcard/pattern/check_end_pattern.c \
+	  wildcard/pattern/remove_contigus_slash.c \
 	  wildcard/pattern/remove_backslash.c \
 	  wildcard/sort_filenames.c \
 	  wildcard/wildcard_handling.c \

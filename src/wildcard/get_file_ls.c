@@ -6,13 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:42:43 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/05 16:35:30 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 05:49:47 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "signals.h"
 #include "wildcard.h"
 #include <errno.h>
+#include <signal.h>
 #include <stdlib.h>
 
 static int	cmp_file(t_wild *w, t_lexer *patt, struct dirent *dir, char *path);
@@ -44,6 +46,8 @@ static int	cmp_file(t_wild *w, t_lexer *patt, struct dirent *dir, char *path)
 {
 	char	*tmp;
 
+	if (g_sig == SIGINT)
+		return (0);
 	if (is_wildcard_match(w, patt, dir->d_name)
 		&& compare_globignore(w, dir->d_name))
 	{

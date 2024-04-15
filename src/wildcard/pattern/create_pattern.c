@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:57:29 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 05:16:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 03:37:37 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	create_pattern(t_wild *wildcard, char *raw_pattern)
 	t_lexer	first_pattern;
 
 	if (fill_pattern(&first_pattern, raw_pattern) == -1
+		|| remove_contigus_slash(&first_pattern) == -1
 		|| remove_backslash(&first_pattern) == -1
 		|| create_glob_pattern(wildcard) == -1)
 	{

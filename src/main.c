@@ -6,11 +6,12 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/13 17:59:10 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 23:10:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "hashmap.h"
 #include "minishell.h"
 #include "lexer.h"
 #include "signals.h"
@@ -58,6 +59,7 @@ static int	init_minishell(t_ms *ms, char *envp[])
 		return (-1);
 	if (init_env(&ms->env, envp) == -1)
 		return (-1);
+	init_hashmap(&ms->aliases);
 	setup_signals_interactive();
 	ms->signaled = 0;
 	if (set_exitcode_str(ms, 0) == -1)

@@ -1,7 +1,4 @@
 SRC = \
-	  builtins/exec_builtins.c \
-	  builtins/get_argc.c \
-	  builtins/is_builtin.c \
 	  builtins/ms_cd/ms_cd.c \
 	  builtins/ms_cd/get_wd.c \
 	  builtins/ms_cd/get_curpath.c \
@@ -11,11 +8,17 @@ SRC = \
 	  builtins/ms_cd/get_dir_operand.c \
 	  builtins/ms_cd/check_path_size.c \
 	  builtins/ms_cd/change_directory.c \
+	  \
+	  builtins/exec_builtins.c \
+	  builtins/get_argc.c \
+	  builtins/is_builtin.c \
+	  builtins/ms_alias.c \
 	  builtins/ms_echo.c \
 	  builtins/ms_env.c \
 	  builtins/ms_exit.c \
 	  builtins/ms_export.c \
 	  builtins/ms_pwd.c \
+	  builtins/ms_unalias.c \
 	  builtins/ms_unset.c \
 	  \
 	  env/destroy_env.c \
@@ -47,6 +50,8 @@ SRC = \
 	  execution/run_command.c \
 	  execution/simplify_tokens.c \
 	  execution/wait_children.c \
+	  \
+	  expansions/aliases/expand_aliases.c \
 	  \
 	  expansions/parameters/add_word_tab.c \
 	  expansions/parameters/expand_parameters.c \

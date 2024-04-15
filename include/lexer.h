@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:56:24 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 03:24:10 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 05:53:09 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ typedef struct s_lexer_tok
 
 void	init_lexer(t_lexer *lexer);
 void	clear_token(t_lexer_tok *token);
+void	clear_token_unlink(t_lexer_tok *token);
 int		clear_lexer(t_lexer *lexer);
+int		clear_lexer_unlink(t_lexer *token_tab);
 void	clear_lexer_except(t_lexer *lexer, size_t i, t_lexer_tok *token);
 int		fill_lexer(t_lexer *lexer, char *s);
 ssize_t	refill_lexer(t_lexer *lexer, char *s);

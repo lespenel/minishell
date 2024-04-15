@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:33:17 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:03:49 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	perform_expansions(t_ms *ms, t_lexer_tok *token)
 	if (expand_parameters(ms, token) == -1)
 		return (-1);
 	if (check_redirections_param(token) == -1)
-		return (-1);
+		return (1);
 	if (expand_wildcards(&ms->env, token) == -1)
 		return (-1);
 	if (check_redirections_wildcard(token) == -1)
-		return (-1);
+		return (1);
 	if (quote_removal(token) == -1)
 		return (-1);
 	return (0);

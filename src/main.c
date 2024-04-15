@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:52:26 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/14 23:10:38 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 00:21:58 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static int	run_shell(t_ms *ms)
 			g_sig = 0;
 		}
 		clear_lexer(&lexer);
-		add_history(input);
 		free(input);
 		input = get_line(ms);
 	}

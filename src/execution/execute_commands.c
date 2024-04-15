@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:14:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 06:37:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 static int		end_shell(t_ms *ms, t_lexer *lexer, size_t i);
 static int		write_signal(t_ms *ms);
-static int		run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 static size_t	next_command(t_lexer *lexer, size_t i);
 
 int	execute_commands(t_ms *ms, t_lexer *lexer)
@@ -85,35 +84,6 @@ static int	write_signal(t_ms *ms)
 	if (ret == -1)
 		return (-1);
 	return (0);
-}
-
-static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
-{
-	t_lexer_tok	*token;
-	pid_t		pid;
-	char		**s;
-
-	token = at_vector(lexer, i);
-	pid = -1;
-	if (next_token(lexer, i) == PIPE)
-		pid = execute_pipeline(ms, lexer, i);
-	else if (token->type == COMMAND)
-	{
-		if (perform_expansions(ms, token) == -1)
-			return (-1);
-		if (g_sig == SIGINT)
-			return (130);
-		if (token->args.size != 0)
-		{
-			s = at_vector(&token->args, 0);
-			if (s != NULL && is_builtin(*s))
-				return (run_builtin(ms, token));
-		}
-		pid = execute_simple_command(ms, lexer, i);
-	}
-	else if (token->type == SUBSHELL)
-		pid = execute_subshell(ms, lexer, i);
-	return (wait_children(ms, pid));
 }
 
 static size_t	next_command(t_lexer *lexer, size_t i)

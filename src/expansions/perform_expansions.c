@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:41:37 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:18:40 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 06:42:02 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "minishell.h"
 #include "signals.h"
 #include "vector.h"
+#include "ft_io.h"
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 static int	check_redirections_param(t_lexer_tok *token);
@@ -31,13 +31,13 @@ int	perform_expansions(t_ms *ms, t_lexer_tok *token)
 	if (expand_parameters(ms, token) == -1)
 		return (-1);
 	if (check_redirections_param(token) == -1)
-		return (-1);
+		return (1);
 	if (expand_wildcards(&ms->env, token) == -1)
 		return (-1);
 	if (g_sig == SIGINT)
 		return (0);
 	if (check_redirections_wildcard(token) == -1)
-		return (-1);
+		return (1);
 	if (quote_removal(token) == -1)
 		return (-1);
 	return (0);
@@ -63,7 +63,7 @@ static int	check_redirections_param(t_lexer_tok *token)
 		}
 		else if (redirection->type != HERE_DOC)
 		{
-			dprintf(2, "%s: ambiguous redirect\n", redirection->file);
+			ft_dprintf(2, "%s: ambiguous redirect\n", redirection->file);
 			return (-1);
 		}
 		++i;
@@ -91,7 +91,7 @@ static int	check_redirections_wildcard(t_lexer_tok *token)
 		}
 		else if (redirection->type != HERE_DOC && redirection->newtab.size != 0)
 		{
-			dprintf(2, "%s: ambiguous redirect\n", redirection->file);
+			ft_dprintf(2, "%s: ambiguous redirect\n", redirection->file);
 			return (-1);
 		}
 		++i;

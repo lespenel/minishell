@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 02:42:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:27:12 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 05:56:21 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,22 @@ static int	handle_input(t_ms *ms, char *input)
 	int		ret;
 
 	ret = parse_input(ms, &lexer, input);
-	if (ret)
+	if (ret || g_sig == SIGINT)
 	{
-		clear_lexer(&lexer);
+		clear_lexer_unlink(&lexer);
 		return (ret);
 	}
 	if (lexer.size == 1)
 	{
-		clear_lexer(&lexer);
+		clear_lexer_unlink(&lexer);
 		return (0);
 	}
 	if (execute_sh_cmd(ms, &lexer) == -1)
 	{
-		clear_lexer(&lexer);
+		clear_lexer_unlink(&lexer);
 		return (-1);
 	}
-	clear_lexer(&lexer);
+	clear_lexer_unlink(&lexer);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:43:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 04:15:13 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:29:09 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int	simplify_redirection(t_lexer *lexer, t_lexer_tok *cmd)
 	t_redirection	redirection;
 
 	token = at_vector(lexer, 0);
+	init_vector(&redirection.newtab, sizeof(char *));
 	redirection.type = token->type;
 	if (redirection.type == HERE_DOC)
 		redirection.file = token->content;

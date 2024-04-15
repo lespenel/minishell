@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:14:46 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/10 10:04:40 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:26:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ static int	get_result(t_ms *ms, t_lexer_tok *token)
 	char	*path;
 	int		ret;
 
-	if (perform_expansions(ms, token) == -1)
-		return (-1);
+	ret = perform_expansions(ms, token);
+	if (ret)
+		return (ret);
 	ret = perform_redirections(token);
 	if (ret == -1)
 		return (-1);

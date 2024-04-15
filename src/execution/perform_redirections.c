@@ -6,15 +6,15 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:46:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 05:20:54 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:40:29 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "fcntl.h"
 #include "util.h"
+#include "ft_io.h"
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -35,7 +35,7 @@ int	perform_redirections(t_lexer_tok *token)
 			return (-1);
 		if (ret == 1)
 		{
-			dprintf(2, "minishell: %s: %s\n", redir->file, strerror(errno));
+			ft_dprintf(2, "minishell: %s: %s\n", redir->file, strerror(errno));
 			return (1);
 		}
 		++i;

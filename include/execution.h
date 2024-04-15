@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 01:40:39 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:08:40 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:39:28 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int			restore_stds(int fd[2]);
 int			execute_pipe_cmd(t_ms *ms, t_lexer *lexer, size_t i, int fdin);
 int			exec_cmd(t_ms *ms, t_lexer_tok *token, char *path);
 int			execute_commands_interactive(t_ms *ms, t_lexer *lexer);
+int			run_get_result(t_ms *ms, t_lexer *lexer, size_t i);
 
 #endif

@@ -6,13 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:14:47 by lespenel          #+#    #+#             */
-/*   Updated: 2024/03/09 18:52:25 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:23:25 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-inline int	is_word(char c)
+int	is_word(char *s)
 {
-	return (is_operand(c) == 0 && is_blank(c) == 0);
+	if (*s == '&' && *(s + 1) != '&')
+		return (1);
+	return (is_operand(*s) == 0 && is_blank(*s) == 0);
 }

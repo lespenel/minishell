@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 05:51:27 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 01:21:06 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/10 07:17:13 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 static	ssize_t	add_quote_tok(t_lexer *pattern, char *raw_pattern);
-static	ssize_t	add_word_tok(t_lexer *pattern, char *raw_pattern);
+static	ssize_t	add_word_token(t_lexer *pattern, char *raw_pattern);
 static	ssize_t	add_wildcard_tok(t_lexer *pattern, char *raw_pattern);
 static	int		is_not_wildcard(char c);
 
@@ -39,7 +39,7 @@ int	fill_pattern(t_lexer *pattern, char *raw_pattern)
 		}
 		else if (is_not_wildcard(*raw_pattern))
 		{
-			ret = add_word_tok(pattern, raw_pattern);
+			ret = add_word_token(pattern, raw_pattern);
 			raw_pattern += ret;
 		}
 		if (ret == -1)
@@ -72,7 +72,7 @@ static	ssize_t	add_wildcard_tok(t_lexer *pattern, char *raw_pattern)
 	return (size);
 }
 
-static ssize_t	add_word_tok(t_lexer *pattern, char *raw_pattern)
+static ssize_t	add_word_token(t_lexer *pattern, char *raw_pattern)
 {
 	t_lexer_tok	token;
 	ssize_t		size;

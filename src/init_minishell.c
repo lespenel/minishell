@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_builtin.c                                      :+:      :+:    :+:   */
+/*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:31:16 by ccouble          ###   ########.fr       */
+/*   Created: 2024/04/15 02:39:38 by ccouble           #+#    #+#             */
+/*   Updated: 2024/04/15 02:40:02 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_mem.h"
 #include "env.h"
-#include "builtins.h"
-#include "expander.h"
-#include "lexer.h"
-#include "execution.h"
-#include "ft_string.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
+#include "signals.h"
+#include "util.h"
 
-int	run_builtin(t_ms *ms, t_lexer_tok *token)
+int	init_minishell(t_ms *ms, char *envp[])
 {
-	int	ret;
-	int	stds[2];
-
-	if (save_stds(stds) == -1)
+	ft_memset(ms, 0, sizeof(t_ms));
+	if (setup_termios(ms) == -1)
 		return (-1);
-	ret = perform_redirections(token);
-	if (ret)
-		restore_stds(stds);
-	if (ret == -1)
+	if (init_env(&ms->env, envp) == -1)
 		return (-1);
-	if (ret == 1)
-		return (1);
-	ret = exec_builtins(ms, token);
-	if (restore_stds(stds) == -1)
+	init_hashmap(&ms->aliases);
+	setup_signals_interactive();
+	ms->signaled = 0;
+	if (set_exitcode_str(ms, 0) == -1)
 		return (-1);
-	return (ret);
+	(void)ms;
+	(void)envp;
+	return (0);
 }

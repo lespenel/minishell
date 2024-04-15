@@ -137,5 +137,7 @@ SRC = \
 	  wildcard/wildcard_handling.c \
 	  \
 	  destroy_minishell.c \
+	  init_minishell.c \
 	  main.c \
 	  parse_input.c \
+	  run_shell.c \

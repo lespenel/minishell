@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:01:29 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 06:14:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			if (ms->lastexit == -1)
 				return (-1);
 			if (g_sig == SIGINT)
-			{
 				ms->signaled = 1;
-				ms->lastexit = 128 + SIGINT;
-			}
 			if (set_exitcode_str(ms, ms->lastexit) == -1)
 				return (-1);
 		}
@@ -116,8 +113,6 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 	}
 	else if (token->type == SUBSHELL)
 		pid = execute_subshell(ms, lexer, i);
-	if (pid == -1)
-		return (-1);
 	return (wait_children(ms, pid));
 }
 

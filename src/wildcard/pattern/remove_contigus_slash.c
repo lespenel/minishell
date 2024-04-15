@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 03:25:09 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 05:53:55 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 09:16:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 static int	copy_without_contigus_slash(t_lexer_tok *tok);
 static void	remove_contigus_slash_in_pattern(t_lexer *lexer);
+static int	look_for_split_words(t_lexer *lexer);
 
 int	remove_contigus_slash(t_lexer *lexer)
 {
@@ -36,6 +37,8 @@ int	remove_contigus_slash(t_lexer *lexer)
 		++i;
 	}
 	remove_contigus_slash_in_pattern(lexer);
+	if (look_for_split_words(lexer) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -80,8 +83,7 @@ static void	remove_contigus_slash_in_pattern(t_lexer *lexer)
 		if (curr->type == WORD && curr2->type == WORD)
 		{
 			if (check_end_pattern("/", curr->content)
-				&& check_end_pattern("/", curr2->content)
-				&& ft_strlen(curr2->content) == 1)
+				&& check_end_pattern("/", curr2->content))
 			{
 				free(curr2->content);
 				remove_vector(lexer, i + 1);
@@ -90,4 +92,32 @@ static void	remove_contigus_slash_in_pattern(t_lexer *lexer)
 		}
 		++i;
 	}
+}
+
+static int	look_for_split_words(t_lexer *lexer)
+{
+	size_t		i;
+	t_lexer_tok	*curr;
+	t_lexer_tok	*curr2;
+	char		*tmp;
+
+	i = 0;
+	while (i < lexer->size - 1)
+	{
+		curr = at_vector(lexer, i);
+		curr2 = at_vector(lexer, i + 1);
+		if (curr->type == WORD && curr2->type == WORD)
+		{
+			tmp = ft_strjoin(curr->content, curr2->content);
+			free(curr->content);
+			free(curr2->content);
+			if (tmp == NULL)
+				return (-1);
+			curr->content = tmp;
+			remove_vector(lexer, i + 1);
+			--i;
+		}
+		++i;
+	}
+	return (0);
 }

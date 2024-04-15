@@ -6,13 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 08:53:25 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 02:45:36 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "util.h"
 #include "vector.h"
 #include "wildcard.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static int		expand_redirect(t_env *env, t_lexer_tok *token);
@@ -44,7 +45,7 @@ static int	expand_comand(t_env *env, t_lexer_tok *token)
 			if (wildcard_handling(env, &file_names, *s) == -1)
 			{
 				clear_string_vector(&file_names);
-				return (-1);
+				return (printf("lolz2\n"), -1);
 			}
 			ret = add_filename_lexer(&token->args, &file_names, i);
 			if (ret == -1)

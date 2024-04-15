@@ -6,13 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 06:43:48 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 07:06:17 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 02:54:33 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem.h"
+#include "signals.h"
 #include "wildcard.h"
 #include <errno.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,6 +38,8 @@ int	wildcard_handling(t_env *env, t_vector *filenames, char *raw_pattern)
 		return (-1);
 	}
 	clear_wildcard(&wildcard);
+	if (g_sig == SIGINT)
+		return (0);
 	sort_filenames(filenames, 0, filenames->size - 1);
 	return (add_backslash(filenames));
 }

@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 07:14:26 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 01:59:09 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	setup_signals_execution(void)
 
 static void	execution_sigint(int sig)
 {
-	(void)sig;
+	g_sig = sig;
 }
 
 static void	execution_sigquit(int sig)

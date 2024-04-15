@@ -6,13 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:59:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/06 22:31:32 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 02:02:11 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "signals.h"
 #include "wildcard.h"
 #include <errno.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -29,7 +31,7 @@ int	get_dir_ls(t_wild *w, t_lexer *pattern, t_vector *filenames, char *path)
 		return ((errno == 0) - 1);
 	w->f_lst_ptr = filenames;
 	entry = readdir(dir);
-	while (entry != NULL)
+	while (entry != NULL && g_sig != SIGINT)
 	{
 		if (cmp_dir(w, pattern, entry, path) == -1)
 		{
@@ -49,6 +51,8 @@ static int	cmp_dir(t_wild *w, t_lexer *patt, struct dirent *dir, char *path)
 	tmp = ft_strjoin(dir->d_name, "/");
 	if (tmp == NULL)
 		return (-1);
+	if (g_sig == SIGINT)
+		return (0);
 	if (is_dir(w, tmp, path) && is_wildcard_match(w, patt, tmp)
 		&& compare_globignore(w, tmp))
 	{

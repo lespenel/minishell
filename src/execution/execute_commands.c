@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 06:39:26 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:14:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			ms->lastexit = run_get_result(ms, lexer, i);
 			if (ms->lastexit == -1)
 				return (-1);
+			if (g_sig == SIGINT)
+				ms->signaled = 1;
 			if (set_exitcode_str(ms, ms->lastexit) == -1)
 				return (-1);
 		}
@@ -99,6 +101,8 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 	{
 		if (perform_expansions(ms, token) == -1)
 			return (-1);
+		if (g_sig == SIGINT)
+			return (130);
 		if (token->args.size != 0)
 		{
 			s = at_vector(&token->args, 0);
@@ -109,8 +113,6 @@ static int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 	}
 	else if (token->type == SUBSHELL)
 		pid = execute_subshell(ms, lexer, i);
-	if (pid == -1)
-		return (-1);
 	return (wait_children(ms, pid));
 }
 

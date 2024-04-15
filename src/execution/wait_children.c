@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:56:22 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/07 08:23:07 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:14:22 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	wait_children(t_ms *ms, pid_t last)
 
 	pid = 0;
 	ret = -1;
+	if (last == -1)
+		return (-1);
 	while (pid != -1)
 	{
 		pid = wait(&wstatus);

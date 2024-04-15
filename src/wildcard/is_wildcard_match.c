@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 05:13:19 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 04:16:14 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static int	compare_pattern_filenames(t_lexer *pattern, char *f_name);
 static char	*midlle_pattern(t_lexer *pattern, char *f_name);
-static int	check_end_pattern(char *to_find, char *f_name);
 static int	hidden_file(t_lexer *pattern, char *f_name, char *gignore);
 
 int	is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name)
@@ -88,18 +87,4 @@ static char	*midlle_pattern(t_lexer *pattern, char *f_name)
 		++i;
 	}
 	return (f_name);
-}
-
-static int	check_end_pattern(char *to_find, char *f_name)
-{
-	ssize_t			i;
-	const ssize_t	file_l = ft_strlen(f_name);
-	const ssize_t	find_l = ft_strlen(to_find);
-
-	i = 0;
-	if (file_l < find_l)
-		return (0);
-	while (i != find_l && f_name[file_l - i - 1] == to_find[find_l - i - 1])
-		++i;
-	return (i == find_l);
 }

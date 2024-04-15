@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:08:35 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:24:22 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "lexer.h"
 #include "execution.h"
 #include "ft_string.h"
+#include "signals.h"
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -42,5 +44,7 @@ int	run_builtin(t_ms *ms, t_lexer_tok *token)
 	ret = exec_builtins(ms, token);
 	if (restore_stds(stds) == -1)
 		return (-1);
+	if (g_sig == SIGINT)
+		return (128 + SIGINT);
 	return (ret);
 }

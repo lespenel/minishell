@@ -6,12 +6,14 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 06:05:17 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 06:48:08 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 02:54:06 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "signals.h"
 #include "util.h"
 #include "wildcard.h"
+#include <signal.h>
 
 static int	for_each_file(t_wild *wild, t_pattern *pattern, t_vector *fnames);
 

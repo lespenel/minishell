@@ -6,13 +6,15 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:41:39 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/07 06:18:15 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 05:36:54 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "signals.h"
 #include "vector.h"
 #include "wildcard.h"
 #include "ft_string.h"
+#include <signal.h>
 
 static size_t	array_partition(t_vector *fnames, ssize_t start, ssize_t end);
 static void		swap_str(char **s1, char **s2);
@@ -21,7 +23,7 @@ void	sort_filenames(t_vector *filenames, ssize_t start, ssize_t end)
 {
 	ssize_t	pivot_index;
 
-	if (start < end)
+	if (start < end && g_sig != SIGINT)
 	{
 		pivot_index = array_partition(filenames, start, end);
 		sort_filenames(filenames, start, pivot_index - 1);

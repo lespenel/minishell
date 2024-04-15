@@ -6,25 +6,24 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/14 14:31:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/14 23:18:09 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "env.h"
 #include "ft_string.h"
 #include <unistd.h>
 
 static int	echo_cmp(char *str);
 
-int	ms_echo(t_env *env, char **args)
+int	ms_echo(t_ms *ms, char **args)
 {
 	const int	argc = get_argc(args);
 	int			no_nl;
 	int			i;
 	ssize_t		len;
 
-	(void)env;
+	(void)ms;
 	no_nl = 0;
 	if (argc >= 2 && echo_cmp(args[1]))
 		no_nl = 1;

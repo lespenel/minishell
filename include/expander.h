@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 08:27:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/12 06:16:27 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/14 23:19:38 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "vector.h"
 # include <stdio.h>
 
+int		expand_aliases(t_ms *ms, t_lexer_tok *token);
 int		expand_parameters(t_ms *ms, t_lexer_tok *token);
 int		expand_wildcards(t_env *env, t_lexer_tok *token);
 ssize_t	expand_substring(t_ms *ms, t_vector *news, char *s, t_vector *tab);

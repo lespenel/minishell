@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "env.h"
+#include "hashmap.h"
 #include "minishell.h"
 #include "lexer.h"
 #include "signals.h"
@@ -58,6 +59,7 @@ static int	init_minishell(t_ms *ms, char *envp[])
 		return (-1);
 	if (init_env(&ms->env, envp) == -1)
 		return (-1);
+	init_hashmap(&ms->aliases);
 	setup_signals_interactive();
 	ms->signaled = 0;
 	if (set_exitcode_str(ms, 0) == -1)

@@ -6,12 +6,14 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 23:25:36 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:01:35 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:35:42 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "vector.h"
+#include "util.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -73,5 +75,6 @@ static void	clear_redirection(t_redirection *redirection)
 {
 	if (redirection->type == HERE_DOC && redirection->file != NULL)
 		unlink(redirection->file);
+	clear_string_vector(&redirection->newtab);
 	free(redirection->file);
 }

@@ -48,6 +48,7 @@ SRC = \
 	  execution/perform_redirections.c \
 	  execution/run_builtin.c \
 	  execution/run_command.c \
+	  execution/run_get_result.c \
 	  execution/simplify_tokens.c \
 	  execution/wait_children.c \
 	  \

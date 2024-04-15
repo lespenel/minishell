@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:17:18 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/04 02:30:40 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/15 06:44:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static int	flag_handler(va_list *lst, t_vector *buffer, char *format)
 		if (curr == NULL)
 			return (-1);
 		if (add_vector(buffer, curr, ft_strlen(curr)) == -1)
+		{
+			free(curr);
 			return (-1);
+		}
 		free(curr);
 	}
 	else if (*format == 's')
@@ -80,10 +83,7 @@ static int	flag_handler(va_list *lst, t_vector *buffer, char *format)
 		if (curr == NULL)
 			return (-1);
 		if (add_vector(buffer, curr, ft_strlen(curr)) == -1)
-		{
-			free(curr);
 			return (-1);
-		}
 	}
 	else
 		return (-1);

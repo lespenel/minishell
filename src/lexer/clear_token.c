@@ -6,12 +6,13 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 23:25:36 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/04 16:21:48 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 06:35:48 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "vector.h"
+#include "util.h"
 #include <stdlib.h>
 
 static void	clear_subshell(t_lexer_tok *token);
@@ -60,5 +61,6 @@ static void	clear_command(t_lexer_tok *token)
 
 static void	clear_redirection(t_redirection *redirection)
 {
+	clear_string_vector(&redirection->newtab);
 	free(redirection->file);
 }

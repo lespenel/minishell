@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 03:31:16 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/15 03:36:58 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ int	run_builtin(t_ms *ms, t_lexer_tok *token)
 	if (save_stds(stds) == -1)
 		return (-1);
 	ret = perform_redirections(token);
-	if (ret)
-		restore_stds(stds);
 	if (ret == -1)
+	{
+		restore_stds(stds);
 		return (-1);
+	}
 	if (ret == 1)
+	{
+		if (restore_stds(stds) == -1)
+			return (-1);
 		return (1);
+	}
 	ret = exec_builtins(ms, token);
 	if (restore_stds(stds) == -1)
 		return (-1);

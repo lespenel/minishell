@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 07:50:13 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/12 07:52:30 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:45:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_valid_identifier(char *str)
 		return (0);
 	while (*str)
 	{
-		if (ft_isalnum(*str) == 0 && *str != '=')
+		if (ft_isalnum(*str) == 0 && *str != '=' && *str != '_')
 			return (0);
 		++str;
 	}

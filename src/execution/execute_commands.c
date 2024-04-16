@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 05:20:04 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/16 16:15:34 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:04:50 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static int		kaboul(t_ms *ms, t_lexer *lexer, size_t i);
+static int		execute_command(t_ms *ms, t_lexer *lexer, size_t i);
 static int		run_cmd(t_ms *ms, t_lexer *lexer, size_t i);
 static int		write_signal(t_ms *ms);
 static size_t	next_command(t_lexer *lexer, size_t i);
@@ -40,7 +40,7 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 			if (first == 0)
 				++i;
 			first = 0;
-			if (kaboul(ms, lexer, i) == -1)
+			if (execute_command(ms, lexer, i) == -1)
 				return (-1);
 			if (write_signal(ms) == -1)
 				return (-1);
@@ -52,7 +52,7 @@ int	execute_commands(t_ms *ms, t_lexer *lexer)
 	return (ms->lastexit);
 }
 
-static int	kaboul(t_ms *ms, t_lexer *lexer, size_t i)
+static int	execute_command(t_ms *ms, t_lexer *lexer, size_t i)
 {
 	t_lexer_tok	*token;
 

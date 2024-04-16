@@ -6,11 +6,12 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:56:22 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/16 08:00:33 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 08:54:53 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "signals.h"
 #include <stdio.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -38,6 +39,7 @@ int	wait_children(t_ms *ms, pid_t last)
 				ret = 128 + WTERMSIG(wstatus);
 		}
 	}
+	g_sig = 0;
 	if (errno != ECHILD)
 		return (-1);
 	return (ret);

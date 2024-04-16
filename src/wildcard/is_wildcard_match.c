@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 05:11:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/15 04:16:14 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:06:56 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	hidden_file(t_lexer *pattern, char *f_name, char *gignore);
 
 int	is_wildcard_match(t_wild *wild, t_lexer *pattern, char *f_name)
 {
+	if (pattern->size == 0)
+		return (0);
 	if (hidden_file(pattern, f_name, wild->globignore) == 0)
 		return (0);
 	if (compare_pattern_filenames(pattern, f_name) == 1)
@@ -45,10 +47,10 @@ static int	compare_pattern_filenames(t_lexer *pattern, char *f_name)
 	size_t		len;
 
 	tok = at_vector(pattern, 0);
-	if (pattern->size == 0)
-		return (0);
 	if (tok->type == WORD)
 	{
+		if (pattern->size == 1)
+			return (ft_strcmp(f_name, tok->content) == 0);
 		len = ft_strlen(tok->content);
 		if (ft_strncmp(tok->content, f_name, len))
 			return (0);

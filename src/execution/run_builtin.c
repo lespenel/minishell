@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/16 08:09:10 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 15:25:03 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,19 @@
 #include "execution.h"
 #include "ft_string.h"
 #include "signals.h"
+#include "vector.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static int	run_builtin_tok(t_ms *ms, t_lexer_tok *token);
-
 int	run_builtin(t_ms *ms, t_lexer *lexer, size_t i)
 {
-	t_lexer_tok	token;
+	t_lexer_tok	*token;
+	int			ret;
+	int			stds[2];
 
-	clear_lexer_except(lexer, i, &token);
-	return (run_builtin_tok(ms, &token));
-}
-
-static int	run_builtin_tok(t_ms *ms, t_lexer_tok *token)
-{
-	int	ret;
-	int	stds[2];
-
+	token = at_vector(lexer, i);
 	if (save_stds(stds) == -1)
 		return (-1);
 	ret = perform_redirections(token);
@@ -51,7 +44,7 @@ static int	run_builtin_tok(t_ms *ms, t_lexer_tok *token)
 			return (-1);
 		return (1);
 	}
-	ret = exec_builtins(ms, token);
+	ret = exec_builtins(ms, lexer, i);
 	if (restore_stds(stds) == -1)
 		return (-1);
 	if (g_sig == SIGINT)

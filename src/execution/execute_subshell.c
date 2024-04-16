@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/16 07:35:52 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:10:41 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
 	if (pid == 0)
 	{
 		clear_lexer_except(lexer, i, &token);
-		if (perform_redirections(&token) == -1)
-			return (-1);
+		ret = perform_redirections(&token);
+		if (ret)
+			return (ret);
 		ret = execute_commands(ms, &token.subshell);
 		clear_token(&token);
 		destroy_minishell(ms);

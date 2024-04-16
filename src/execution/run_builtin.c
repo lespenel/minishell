@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:54:45 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:24:22 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 08:09:10 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	run_builtin(t_ms *ms, t_lexer_tok *token)
+static int	run_builtin_tok(t_ms *ms, t_lexer_tok *token);
+
+int	run_builtin(t_ms *ms, t_lexer *lexer, size_t i)
+{
+	t_lexer_tok	token;
+
+	clear_lexer_except(lexer, i, &token);
+	return (run_builtin_tok(ms, &token));
+}
+
+static int	run_builtin_tok(t_ms *ms, t_lexer_tok *token)
 {
 	int	ret;
 	int	stds[2];

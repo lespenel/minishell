@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 06:37:15 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:39:22 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 08:09:45 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_get_result(t_ms *ms, t_lexer *lexer, size_t i)
 		if (g_sig == SIGINT)
 			return (130);
 		if (do_builtin(token))
-			return (run_builtin(ms, token));
+			return (run_builtin(ms, lexer, i));
 		pid = execute_simple_command(ms, lexer, i);
 	}
 	else if (token->type == SUBSHELL)

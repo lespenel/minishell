@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 05:23:14 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/09 07:17:12 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 07:35:52 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	execute_subshell(t_ms *ms, t_lexer *lexer, size_t i)
 	pid_t		pid;
 	int			ret;
 
-	pid = ms_fork();
+	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)

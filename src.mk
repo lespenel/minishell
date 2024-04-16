@@ -10,6 +10,7 @@ SRC = \
 	  builtins/ms_cd/change_directory.c \
 	  \
 	  builtins/exec_builtins.c \
+	  builtins/exec_builtins_cleared.c \
 	  builtins/get_argc.c \
 	  builtins/is_builtin.c \
 	  builtins/ms_alias.c \

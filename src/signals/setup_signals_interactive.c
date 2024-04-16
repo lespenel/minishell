@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 09:01:57 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/13 17:22:20 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/16 08:15:04 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,26 @@
 #include <unistd.h>
 
 static void	interactive_sigint(int sig);
-static void	interactive_sigquit(int sig);
 static int	event(void);
 
 void	setup_signals_interactive(void)
 {
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = interactive_sigint;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 	rl_event_hook = event;
-	signal(SIGINT, interactive_sigint);
-	signal(SIGQUIT, interactive_sigquit);
+	g_sig = 0;
 }
 
 static void	interactive_sigint(int sig)
 {
 	g_sig = sig;
 	rl_done = 1;
-}
-
-static void	interactive_sigquit(int sig)
-{
-	(void)sig;
 }
 
 static int	event(void)

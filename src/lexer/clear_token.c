@@ -6,7 +6,7 @@
 /*   By: ccouble <ccouble@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 23:25:36 by ccouble           #+#    #+#             */
-/*   Updated: 2024/04/15 06:35:48 by ccouble          ###   ########.fr       */
+/*   Updated: 2024/04/26 23:55:11 by ccouble          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@ void	clear_token(t_lexer_tok *token)
 
 static void	clear_subshell(t_lexer_tok *token)
 {
+	size_t	i;
+
 	clear_lexer(&token->subshell);
+	i = 0;
+	while (i < token->redirections.size)
+	{
+		clear_redirection(at_vector(&token->redirections, i));
+		++i;
+	}
+	clear_vector(&token->redirections);
 }
 
 static void	clear_command(t_lexer_tok *token)

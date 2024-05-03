@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:38:01 by lespenel          #+#    #+#             */
-/*   Updated: 2024/05/03 06:17:47 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/05/03 06:26:39 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ int	ms_echo(t_ms *ms, char **args)
 	while (i < argc)
 	{
 		if (echo_cmp(args[i]))
-		{
 			no_nl = 1;
-			++i;
-			continue ;
+		else
+		{
+			len = ft_strlen(args[i]);
+			if (write(1, args[i], len) != len
+				|| (i < argc - 1 && write(1, " ", 1) != 1))
+				return (1);
 		}
-		len = ft_strlen(args[i]);
-		if (write(1, args[i], len) != len
-			|| (i < argc - 1 && write(1, " ", 1) != 1))
-			return (1);
 		++i;
 	}
 	if (no_nl == 0 && write(1, "\n", 1) != 1)

@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:02:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/05/03 06:12:38 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/08/01 03:44:15 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	expand_comand(t_env *env, t_lexer_tok *token)
 			ret = add_filename_lexer(&token->args, &file_names, i);
 			if (ret == -1)
 				return (-1);
-			i += ret - 1;
+			i += ret;
 		}
 		++i;
 	}

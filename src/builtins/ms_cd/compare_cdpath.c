@@ -6,7 +6,7 @@
 /*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:55:46 by lespenel          #+#    #+#             */
-/*   Updated: 2024/04/10 00:32:58 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:13:30 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ static char	*get_full_path(t_env *env, char *curpath)
 	char	*n_curpath;
 	char	*wd;
 
+	if (curpath[0] == '/')
+		return (curpath);
 	wd = get_wd(env);
 	if (wd == NULL)
 		return (NULL);

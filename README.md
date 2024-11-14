@@ -7,12 +7,7 @@
 ## Features
 ### Core Shell Capabilities
 
-- **Prompt and Command Input**: Displays a prompt and waits for user input. History is managed using the `readline` library.
-- **Command Execution**: Supports command search and execution based on the `PATH` environment variable. Both relative and absolute paths are supported.
-- **Signal Handling**: Handles signals as in Bash for a smooth interactive experience:
-  - **Ctrl-C**: Cancels the current command, returning to a new prompt.
-  - **Ctrl-D**: Closes the shell session.
-  - **Ctrl-\\**: Ignored, as in Bash.
+- **Signal Handling**: Handles SIGINT and SIGQUIT:
 - **Exit Status Expansion**: `$?` expands to the exit status of the last foreground command.
 - **Environment Variables**: Supports expansion of environment variables (`$VAR`) and dynamic management with the `export` and `unset` builtins.
 - **Redirections**: Implements common I/O redirection:
@@ -24,6 +19,11 @@
 - **Quote Handling**:
   - **Single Quotes (`'`)**: Treats content as literal, ignoring special characters.
   - **Double Quotes (`"`)**: Expands variables but treats other characters as literal.
+  - **Logical Operators**: Support for `&&` and `||` operators with parenthesis for precedence.
+  - **Wildcards**: Supports `*` for wildcard matching across all the file structure.
+  - **Tilde Expansion**: Expands `~` to the user’s home directory.
+  - **Subshell Support**: Commands enclosed in parentheses are treated as subshells.
+  - **Prompt**: Displays path, Git branch, exit status in the prompt.
 
 ### Builtin Commands
 
@@ -38,18 +38,6 @@ The following builtins are implemented to match standard shell functionality:
 | `unset` | Removes specified environment variables. |
 | `env`   | Displays the current environment variables. |
 | `exit`  | Exits the shell. Accepts an optional exit status. |
-
-### Bonus Features
-
-In addition to the core requirements, several bonus features are implemented:
-- **Logical Operators**: Support for `&&` and `||` operators with parenthesis for precedence, enabling complex command sequences.
-- **Extended Wildcards**: Supports `*` for wildcard matching across the current directory, extended to allow recursive matches through the file structure.
-- **Tilde Expansion**: Expands `~` to the user’s home directory.
-- **IFS (Internal Field Separator)**: Handles custom field separation as defined in the IFS variable, allowing for custom tokenization of input.
-- **POSIX `cd` Compliance**: The `cd` command is POSIX-compliant, handling standard options and edge cases as specified in the POSIX `cd` manual.
-- **Subshell Support**: Commands enclosed in parentheses are treated as subshells, allowing for isolated command execution.
-- **Git Branch in Prompt**: Displays the current Git branch in the prompt, enhancing the interactive experience for users in development environments.
-
 
 ## Credits
 
